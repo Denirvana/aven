@@ -61,8 +61,10 @@
 
     /* ══ VINYL ZONE ══ */
     .vinyl-zone {
-      position:absolute; right:18px;
+      position:fixed; right:18px; top:0;
+      height:var(--nav-h);
       display:flex; align-items:center; gap:9px;
+      z-index:201;
     }
     .track-info { display:flex; align-items:center; gap:6px; }
     #track-label {
@@ -579,6 +581,26 @@ tracks.forEach((t,i)=>{
   trackList.appendChild(el);
 });
 
+/* ── Restauration sessionStorage (retour depuis une autre page) ── */
+try{
+  const saved=JSON.parse(sessionStorage.getItem('aven-player')||'null');
+  if(saved&&saved.idx>=0&&saved.idx<tracks.length){
+    const t=tracks[saved.idx];
+    currentIdx=saved.idx;
+    vinylSvg.style.display='none';
+    coverImg.src=t.cover; coverImg.style.display='block';
+    trackLabel.textContent=t.title; trackLabel.classList.add('on');
+    document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===saved.idx));
+    if(t.src&&saved.playing){
+      player.src=t.src;
+      if(saved.time) player.currentTime=saved.time;
+      player.play().then(()=>setState(true)).catch(()=>setState(saved.playing));
+    } else {
+      setState(saved.playing||false);
+    }
+  }
+}catch(e){}
+
 /* ── Popup : apparaît 2.5s après chargement si rien joué ── */
 const popupTimer=setTimeout(()=>{ if(currentIdx===-1) vinylPopup.classList.add('visible'); },2500);
 function hidePopup(){ vinylPopup.classList.remove('visible'); clearTimeout(popupTimer); }
@@ -609,7 +631,10 @@ vinyl.addEventListener('click',()=>{
   if(isPlaying){ if(tracks[currentIdx].src) player.pause(); setState(false); }
   else         { if(tracks[currentIdx].src) player.play().catch(()=>{}); setState(true); }
 });
-player.addEventListener('ended',()=>selectTrack((currentIdx+1)%tracks.length));
+player.addEventListener('ended',()=>{
+  if(tracks.length===1){ player.currentTime=0; player.play().catch(()=>{}); }
+  else { selectTrack((currentIdx+1)%tracks.length); }
+});
 
 /* ── Dropdown ── */
 function openDropdown() { ddOpen=true;  dropdown.classList.add('open');    chevronBtn.classList.add('open');    hidePopup(); }

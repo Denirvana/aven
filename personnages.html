@@ -37,7 +37,12 @@
     nav a:hover::after{transform:scaleX(1);}
 
     /* ══ VINYL ZONE ══ */
-    .vinyl-zone{position:absolute;right:18px;display:flex;align-items:center;gap:9px;}
+    .vinyl-zone{
+      position:fixed;right:18px;top:0;
+      height:var(--nav-h);
+      display:flex;align-items:center;gap:9px;
+      z-index:201;
+    }
     .track-info{display:flex;align-items:center;gap:6px;}
     #track-label{
       font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;
@@ -282,15 +287,24 @@
     .panel-close:hover{color:rgba(255,255,255,.7);}
     .panel-char-name{
       font-family:'Cinzel',serif;font-weight:700;
-      font-size:clamp(28px,3vw,40px);letter-spacing:.2em;color:#fff;line-height:1;
+      font-size:clamp(26px,3vw,38px);letter-spacing:.18em;color:#fff;line-height:1;
       text-shadow:0 0 40px rgba(200,120,48,.25);
     }
     .panel-char-title{
       font-family:'Raleway',sans-serif;font-weight:300;
-      font-size:10px;letter-spacing:.28em;text-transform:uppercase;
+      font-size:11px;letter-spacing:.28em;text-transform:uppercase;
       color:rgba(255,255,255,.35);margin-top:8px;
     }
     .panel-char-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px;}
+
+    /* Avatar du personnage dans le header */
+    .panel-header-top{display:flex;align-items:center;gap:18px;}
+    .panel-avatar{
+      width:62px;height:62px;border-radius:50%;overflow:hidden;flex-shrink:0;
+      border:.5px solid rgba(255,255,255,.12);
+    }
+    .panel-avatar img,.panel-avatar svg{width:62px;height:62px;display:block;object-fit:cover;}
+    .panel-header-text{flex:1;min-width:0;}
 
     /* Corps scrollable du panneau */
     .panel-body{
@@ -307,9 +321,9 @@
     .cs-section-header{
       width:100%;background:none;border:none;cursor:pointer;
       display:flex;align-items:center;justify-content:space-between;
-      padding:14px 32px;
+      padding:15px 32px;
       font-family:'Cinzel',serif;font-weight:400;
-      font-size:13px;letter-spacing:.1em;
+      font-size:14px;letter-spacing:.1em;
       color:rgba(255,255,255,.55);
       transition:color .25s,background .2s;
       text-align:left;
@@ -331,52 +345,51 @@
     }
     .cs-section-wrap.open{grid-template-rows:1fr;}
     .cs-section-body{overflow:hidden;}
-    .cs-section-inner{padding:0 32px 20px;}
+    .cs-section-inner{padding:0 32px 22px;}
 
     /* ══ CONTENU DES SECTIONS ══ */
-    /* Grille infos */
     .info-grid{
       display:grid;grid-template-columns:1fr 1fr;
       border:.5px solid rgba(255,255,255,.07);border-radius:6px;overflow:hidden;margin-top:4px;
     }
     .info-field{
-      padding:9px 12px;border-bottom:.5px solid rgba(255,255,255,.05);border-right:.5px solid rgba(255,255,255,.05);
+      padding:10px 13px;border-bottom:.5px solid rgba(255,255,255,.05);border-right:.5px solid rgba(255,255,255,.05);
     }
     .info-field:nth-child(even){border-right:none;}
     .info-field:nth-last-child(1),.info-field:nth-last-child(2){border-bottom:none;}
     .info-field.full{grid-column:1/-1;border-right:none;}
     .info-label{
-      font-family:'Raleway',sans-serif;font-size:8px;font-weight:400;
-      letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:3px;
+      font-family:'Raleway',sans-serif;font-size:9px;font-weight:400;
+      letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:4px;
     }
     .info-value{
-      font-family:'DM Sans',sans-serif;font-size:12px;color:rgba(255,255,255,.75);line-height:1.4;
+      font-family:'DM Sans',sans-serif;font-size:13px;color:rgba(255,255,255,.78);line-height:1.45;
     }
     .info-value.unknown{color:rgba(255,255,255,.25);font-style:italic;}
 
     /* Bullets magie */
-    .magic-list{display:flex;flex-direction:column;gap:12px;margin-top:4px;}
-    .magic-item{display:flex;gap:10px;}
+    .magic-list{display:flex;flex-direction:column;gap:14px;margin-top:4px;}
+    .magic-item{display:flex;gap:12px;}
     .magic-dot{
       width:5px;height:5px;border-radius:50%;background:rgba(200,100,48,.8);
-      flex-shrink:0;margin-top:6px;
+      flex-shrink:0;margin-top:7px;
     }
     .magic-content{}
     .magic-title{
-      font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;
-      color:rgba(255,255,255,.85);margin-bottom:3px;
+      font-family:'Raleway',sans-serif;font-size:12px;font-weight:500;
+      color:rgba(255,255,255,.88);margin-bottom:4px;
     }
     .magic-desc{
-      font-family:'DM Sans',sans-serif;font-size:12px;
-      color:rgba(255,255,255,.5);line-height:1.65;
+      font-family:'DM Sans',sans-serif;font-size:13px;
+      color:rgba(255,255,255,.52);line-height:1.7;
     }
 
     /* Texte générique */
     .cs-text{
-      font-family:'DM Sans',sans-serif;font-size:12px;
-      color:rgba(255,255,255,.55);line-height:1.75;margin-top:4px;
+      font-family:'DM Sans',sans-serif;font-size:13px;
+      color:rgba(255,255,255,.58);line-height:1.8;margin-top:4px;
     }
-    .cs-text p{margin-bottom:10px;}
+    .cs-text p{margin-bottom:12px;}
     .cs-text p:last-child{margin:0;}
 
     /* Bloc relation */
@@ -388,20 +401,34 @@
     .relation-header{
       padding:10px 14px;background:rgba(255,255,255,.03);
       border-bottom:.5px solid rgba(255,255,255,.05);
-      display:flex;align-items:baseline;gap:10px;
+      display:flex;align-items:center;gap:10px;
     }
+    /* Mini avatar dans la relation */
+    .rel-avatar{
+      width:30px;height:30px;border-radius:50%;overflow:hidden;flex-shrink:0;
+      border:.5px solid rgba(255,255,255,.1);
+    }
+    .rel-avatar img,.rel-avatar svg{width:30px;height:30px;display:block;object-fit:cover;}
+    /* Lien nom + avatar */
+    .rel-link{
+      display:flex;align-items:center;gap:8px;
+      text-decoration:none;cursor:pointer;flex-shrink:0;
+    }
+    .rel-link:hover .relation-name{color:#fff;}
+    .rel-link:hover .rel-avatar{border-color:rgba(200,120,48,.5);}
+    .rel-meta{display:flex;flex-direction:column;gap:1px;}
     .relation-name{
       font-family:'Cinzel',serif;font-weight:400;font-size:15px;
-      letter-spacing:.08em;color:rgba(255,255,255,.85);
+      letter-spacing:.08em;color:rgba(255,255,255,.85);transition:color .2s;
     }
     .relation-role{
       font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;
       letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);
     }
-    .relation-body{padding:12px 14px;}
+    .relation-body{padding:13px 14px;}
     .relation-body p{
-      font-family:'DM Sans',sans-serif;font-size:12px;
-      color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:8px;
+      font-family:'DM Sans',sans-serif;font-size:13px;
+      color:rgba(255,255,255,.52);line-height:1.75;margin-bottom:10px;
     }
     .relation-body p:last-child{margin:0;}
     .rel-bold{color:rgba(255,255,255,.8);font-weight:500;}
@@ -501,8 +528,13 @@
 <div id="char-panel">
   <div class="panel-header" style="position:relative;">
     <button class="panel-close" onclick="closePanel()">✕</button>
-    <div class="panel-char-name" id="panel-name"></div>
-    <div class="panel-char-title" id="panel-title"></div>
+    <div class="panel-header-top">
+      <div class="panel-avatar" id="panel-avatar"></div>
+      <div class="panel-header-text">
+        <div class="panel-char-name" id="panel-name"></div>
+        <div class="panel-char-title" id="panel-title"></div>
+      </div>
+    </div>
     <div class="panel-char-tags" id="panel-tags"></div>
   </div>
   <div class="panel-body" id="panel-body"></div>
@@ -533,6 +565,8 @@ const characters=[
     id:'hyuun',
     name:'Hyuun',
     title:'Le Loup',
+    /* avatar: remplacer makeAvatar() par 'img/hyuun-avatar.jpg' quand prêt */
+    get avatar(){ return makeAvatar('#3a0808','#8a1808','H'); },
     tags:[
       {label:'Protagoniste',style:'coral'},
       {label:'Marqué — Scylla',style:'amber'},
@@ -635,8 +669,13 @@ const characters=[
         render:()=>`
         <div class="relation-block">
           <div class="relation-header">
-            <div class="relation-name">Minako</div>
-            <div class="relation-role">Amour · Duo fondateur · Ouroboros</div>
+            <a class="rel-link" href="#" onclick="openPanel(charById['minako']);return false;">
+              <div class="rel-avatar" id="rel-av-minako-Mi"></div>
+              <div class="rel-meta">
+                <span class="relation-name">Minako</span>
+                <span class="relation-role">Amour · Duo fondateur · Ouroboros</span>
+              </div>
+            </a>
           </div>
           <div class="relation-body">
             <p>Deux prédateurs qui couvrent l'angle mort de l'autre. Hyuun ne nourrit pas sa malédiction — il ne réagit pas à la séduction — et elle peut exister à côté de lui sans se sentir parasite. Elle le pousse vers le monde, vers les autres. Son amour s'exprime par le lâcher-prise : elle sourit quand il a le dos tourné. L'Ouroboros — un loup qui mord la queue d'un renard qui mord la queue du loup — est le premier engagement officiel de sa vie.</p>
@@ -645,8 +684,13 @@ const characters=[
         </div>
         <div class="relation-block">
           <div class="relation-header">
-            <div class="relation-name">Nui</div>
-            <div class="relation-role">Amour · Chasseuse silencieuse · Bouclier</div>
+            <a class="rel-link" href="#" onclick="openPanel(charById['nui']);return false;">
+              <div class="rel-avatar" id="rel-av-nui-Nu"></div>
+              <div class="rel-meta">
+                <span class="relation-name">Nui</span>
+                <span class="relation-role">Amour · Chasseuse silencieuse · Bouclier</span>
+              </div>
+            </a>
           </div>
           <div class="relation-body">
             <p>Leur lien commence avant les mots. Ils chassent ensemble dans le silence absolu — communication par signes, affinité instinctive entre deux prédateurs naturels. Nui connaît Hyuun d'une manière que même Minako ne connaît pas. Son amour s'exprime entièrement par l'action : elle se renforce, s'entraîne, pousse ses limites. Chaque progression est un acte d'amour déguisé en discipline.</p>
@@ -655,8 +699,13 @@ const characters=[
         </div>
         <div class="relation-block">
           <div class="relation-header">
-            <div class="relation-name">Tetsuga</div>
-            <div class="relation-role">Respect martial · Le marteau et le scalpel</div>
+            <a class="rel-link" href="#" onclick="openPanel(charById['tetsuga']);return false;">
+              <div class="rel-avatar" id="rel-av-tetsuga-Te"></div>
+              <div class="rel-meta">
+                <span class="relation-name">Tetsuga</span>
+                <span class="relation-role">Respect martial · Le marteau et le scalpel</span>
+              </div>
+            </a>
           </div>
           <div class="relation-body">
             <p>Respect martial entre combattants, pas de transfert paternel. Tetsuga le traite comme un égal — rare et précieux. Première mission : catastrophique (Tetsuga crie pour attirer les monstres, brisant le plan de Hyuun). Tetsuga rit après. Hyuun ne comprend pas qu'on puisse rire ainsi. Sa colère se dissout dans l'incompréhension. Les missions suivantes s'améliorent : le marteau et le scalpel.</p>
@@ -664,8 +713,13 @@ const characters=[
         </div>
         <div class="relation-block">
           <div class="relation-header">
-            <div class="relation-name">Scylla</div>
-            <div class="relation-role">Mère toxique · Lien le plus destructeur</div>
+            <a class="rel-link" href="#" onclick="openPanel(charById['scylla']);return false;">
+              <div class="rel-avatar" id="rel-av-scylla-Sc"></div>
+              <div class="rel-meta">
+                <span class="relation-name">Scylla</span>
+                <span class="relation-role">Mère toxique · Lien le plus destructeur</span>
+              </div>
+            </a>
           </div>
           <div class="relation-body">
             <p>Devant Scylla, tous ses acquis disparaissent. Ses premières larmes de la série sont pour elle. Sa magie s'effondre non parce qu'elle la coupe (elle ne peut pas) mais parce que sa conviction se brise. Il utilise le langage de la meute contre elle ("N'oublie pas ta place"). Sa menace finale : "Un loup sans meute finit toujours par se raccrocher aux autres, il suffit simplement que la tienne disparaisse."</p>
@@ -678,6 +732,7 @@ const characters=[
     id:'minako',
     name:'Minako',
     title:'La Renarde',
+    get avatar(){ return makeAvatar('#3a1a04','#a04808','M'); },
     tags:[
       {label:'Kitsune maudite',style:'amber'},
       {label:'Co-fondatrice Ouroboros',style:'coral'},
@@ -784,8 +839,13 @@ const characters=[
         render:()=>`
         <div class="relation-block">
           <div class="relation-header">
-            <div class="relation-name">Hyuun</div>
-            <div class="relation-role">Amour · Duo fondateur · Ouroboros</div>
+            <a class="rel-link" href="#" onclick="openPanel(charById['hyuun']);return false;">
+              <div class="rel-avatar" id="rel-av-hyuun-Hy"></div>
+              <div class="rel-meta">
+                <span class="relation-name">Hyuun</span>
+                <span class="relation-role">Amour · Duo fondateur · Ouroboros</span>
+              </div>
+            </a>
           </div>
           <div class="relation-body">
             <p>Hyuun ne réagit pas à sa séduction — pour Minako c'est révolutionnaire. Elle peut exister à côté de lui sans se sentir parasite. Elle l'aime en le libérant : le pousse vers le monde, vers Tetsuga, Arsène, vers les filles d'Hadès. Son amour s'exprime par le lâcher-prise. Elle sourit quand il a le dos tourné. Son sacrifice le plus grand : vouloir qu'il devienne complet, même sans elle au centre.</p>
@@ -794,8 +854,13 @@ const characters=[
         </div>
         <div class="relation-block">
           <div class="relation-header">
-            <div class="relation-name">Nui</div>
-            <div class="relation-role">Rivale comprise · L'autre moitié</div>
+            <a class="rel-link" href="#" onclick="openPanel(charById['nui']);return false;">
+              <div class="rel-avatar" id="rel-av-nui-Nu"></div>
+              <div class="rel-meta">
+                <span class="relation-name">Nui</span>
+                <span class="relation-role">Rivale comprise · L'autre moitié</span>
+              </div>
+            </a>
           </div>
           <div class="relation-body">
             <p>Arc 3 : Minako lit l'amour de Nui — sa malédiction la rend perméable aux émotions — et hésite pour la première fois. Est-ce que cet amour-là est meilleur que le sien ? Pas de jalousie ouverte, une tension sourde et élégante dans sa retenue.</p>
@@ -804,8 +869,13 @@ const characters=[
         </div>
         <div class="relation-block">
           <div class="relation-header">
-            <div class="relation-name">Arsène</div>
-            <div class="relation-role">Respect mutuel · Test quotidien involontaire</div>
+            <a class="rel-link" href="#" onclick="openPanel(charById['arsene']);return false;">
+              <div class="rel-avatar" id="rel-av-arsene-Ar"></div>
+              <div class="rel-meta">
+                <span class="relation-name">Arsène</span>
+                <span class="relation-role">Respect mutuel · Test quotidien involontaire</span>
+              </div>
+            </a>
           </div>
           <div class="relation-body">
             <p>Arsène produit du plaisir en permanence — c'est un festin pour la malédiction de Minako. Elle le recrute en partie parce que c'est un test pour elle. Arsène ne sait pas qu'il est une épreuve quotidienne jusqu'à la confession mutuelle avant le tournoi. Respect mutuel entre manipulateurs.</p>
@@ -818,6 +888,7 @@ const characters=[
     id:'nui',
     name:'Nui',
     title:'La Chasseuse et la Protectrice',
+    get avatar(){ return makeAvatar('#041428','#0c2860','N'); },
     tags:[
       {label:'Filles d\'Hadès',style:'blue'},
       {label:'Princesse d\'Albarossa',style:'gray'},
@@ -904,8 +975,13 @@ const characters=[
         render:()=>`
         <div class="relation-block">
           <div class="relation-header">
-            <div class="relation-name">Hyuun</div>
-            <div class="relation-role">Amour · Chasseuse silencieuse · Bouclier</div>
+            <a class="rel-link" href="#" onclick="openPanel(charById['hyuun']);return false;">
+              <div class="rel-avatar" id="rel-av-hyuun-Hy"></div>
+              <div class="rel-meta">
+                <span class="relation-name">Hyuun</span>
+                <span class="relation-role">Amour · Chasseuse silencieuse · Bouclier</span>
+              </div>
+            </a>
           </div>
           <div class="relation-body">
             <p>Leur lien commence avant les mots — deux prédateurs naturels qui se reconnaissent dans l'obscurité. Elle le connaît d'une manière que même Minako ne connaît pas. Son amour s'exprime entièrement par l'action : se renforcer, s'entraîner, pousser ses limites. Jamais elle ne le dit. Les rares moments où son masque tombe — un regard trop long, une main qui tremble — sont dévastateurs par leur rareté.</p>
@@ -914,8 +990,13 @@ const characters=[
         </div>
         <div class="relation-block">
           <div class="relation-header">
-            <div class="relation-name">Minako</div>
-            <div class="relation-role">Rivale comprise · L'autre moitié</div>
+            <a class="rel-link" href="#" onclick="openPanel(charById['minako']);return false;">
+              <div class="rel-avatar" id="rel-av-minako-Mi"></div>
+              <div class="rel-meta">
+                <span class="relation-name">Minako</span>
+                <span class="relation-role">Rivale comprise · L'autre moitié</span>
+              </div>
+            </a>
           </div>
           <div class="relation-body">
             <p>Arc 3 : chacune comprend immédiatement ce que l'autre représente pour Hyuun. Nui observe Minako avec son regard impassible en serrant le poing sous sa manche. Pas de jalousie ouverte mais une tension sourde. La résolution vient quand elles cessent de se voir comme rivales : deux moitiés d'un même rôle. Quand elles l'acceptent, Hyuun est enfin libre.</p>
@@ -923,8 +1004,13 @@ const characters=[
         </div>
         <div class="relation-block">
           <div class="relation-header">
-            <div class="relation-name">Wendy</div>
-            <div class="relation-role">Petite sœur protégée</div>
+            <a class="rel-link" href="#" onclick="openPanel(charById['wendy']);return false;">
+              <div class="rel-avatar" id="rel-av-wendy-We"></div>
+              <div class="rel-meta">
+                <span class="relation-name">Wendy</span>
+                <span class="relation-role">Petite sœur protégée</span>
+              </div>
+            </a>
           </div>
           <div class="relation-body">
             <p>Wendy est plus proche de Nui que des autres. Nui pose sa main sur la tête de Wendy — geste de protection instinctive, sans paroles. Quand Wendy fond en larmes au départ de Hyuun, c'est dans les bras de Nui qu'elle finit. À la séparation, Nui ne pleure pas et s'occupe de Wendy — sa propre douleur, elle l'avale entière.</p>
@@ -949,6 +1035,47 @@ function fieldFull(label,value,unknown=false){
   </div>`;
 }
 function tagHtml(t){ return `<span class="ctag ctag-${t.style}">${t.label}</span>`; }
+
+/* Avatar SVG placeholder — remplacer par <img src="..."> dans characters[].avatar */
+function makeAvatar(c1,c2,initials='?'){
+  return `<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="30" cy="30" r="30" fill="url(#ag${initials})"/>
+    <defs><radialGradient id="ag${initials}" cx="35%" cy="30%">
+      <stop offset="0%" stop-color="${c1}"/>
+      <stop offset="100%" stop-color="${c2}"/>
+    </radialGradient></defs>
+    <text x="30" y="36" text-anchor="middle" font-family="serif" font-size="18"
+      fill="rgba(255,255,255,.85)" letter-spacing="1">${initials}</text>
+  </svg>`;
+}
+
+/* Lookup rapide : id → character (pour les liens de relation) */
+const charById={};
+characters.forEach(ch=>{charById[ch.id]=ch;});
+
+/* Rendu d'un bloc relation avec mini-avatar cliquable */
+function relationBlockHtml(charId, role, bodyHtml){
+  const target=charById[charId];
+  const avatarHtml=target
+    ? `<div class="rel-avatar">${target.avatar}</div>`
+    : '';
+  const nameHtml=target
+    ? `<span class="relation-name">${target.name}</span>`
+    : `<span class="relation-name">${charId}</span>`;
+
+  return `<div class="relation-block">
+    <div class="relation-header">
+      <a class="rel-link" href="#" onclick="openPanel(charById['${charId}']);return false;">
+        ${avatarHtml}
+        <div class="rel-meta">
+          ${nameHtml}
+          <span class="relation-role">${role}</span>
+        </div>
+      </a>
+    </div>
+    <div class="relation-body">${bodyHtml}</div>
+  </div>`;
+}
 
 /* ══ BUILD CARDS ══ */
 const grid=document.getElementById('chars-grid');
@@ -976,6 +1103,8 @@ const pTags   =document.getElementById('panel-tags');
 const pBody   =document.getElementById('panel-body');
 
 function openPanel(ch){
+  if(!ch) return;
+  document.getElementById('panel-avatar').innerHTML=ch.avatar;
   pName.textContent=ch.name;
   pTitle.textContent=ch.title;
   pTags.innerHTML=ch.tags.map(tagHtml).join('');
@@ -998,6 +1127,15 @@ function openPanel(ch){
   backdrop.classList.add('open');
   panel.classList.add('open');
   document.body.style.overflow='hidden';
+  /* Injecte les mini-avatars dans les blocs relation */
+  requestAnimationFrame(()=>{
+    panel.querySelectorAll('[id^="rel-av-"]').forEach(el=>{
+      const parts=el.id.split('-');
+      const cid=parts[2];
+      const target=charById[cid];
+      if(target) el.innerHTML=target.avatar;
+    });
+  });
 }
 
 function closePanel(){
@@ -1065,7 +1203,10 @@ vinyl.addEventListener('click',()=>{
   if(isPlaying){if(tracks[currentIdx].src)player.pause();setState(false);}
   else{if(tracks[currentIdx].src)player.play().catch(()=>{});setState(true);}
 });
-player.addEventListener('ended',()=>selectTrack((currentIdx+1)%tracks.length));
+player.addEventListener('ended',()=>{
+  if(tracks.length===1){ player.currentTime=0; player.play().catch(()=>{}); }
+  else { selectTrack((currentIdx+1)%tracks.length); }
+});
 
 function openDropdown(){ddOpen=true;dropdown.classList.add('open');chevronBtn.classList.add('open');hidePopup();}
 function closeDropdown(){ddOpen=false;dropdown.classList.remove('open');chevronBtn.classList.remove('open');}
