@@ -193,15 +193,47 @@
     .page-subtitle{
       font-family:'Raleway',sans-serif;font-weight:200;
       font-size:11px;letter-spacing:.3em;text-transform:uppercase;
-      color:rgba(255,255,255,.35);margin-bottom:48px;
+      color:rgba(255,255,255,.35);margin-bottom:24px;
     }
+
+    /* ══ FILTRE ══ */
+    .filter-bar{
+      display:flex;flex-wrap:wrap;gap:7px;
+      max-width:1100px;margin-bottom:32px;
+    }
+    .filter-btn{
+      font-family:'Raleway',sans-serif;font-size:9px;font-weight:400;
+      letter-spacing:.14em;text-transform:uppercase;
+      padding:5px 13px;border-radius:999px;cursor:pointer;
+      border:.5px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);color:rgba(255,255,255,.45);
+      transition:background .2s,border-color .2s,color .2s;
+    }
+    .filter-btn:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);}
+    .filter-btn.active{
+      background:rgba(200,120,48,.18);border-color:rgba(200,120,48,.5);
+      color:rgba(220,150,70,.95);
+    }
+    .filter-btn.all.active{
+      background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3);
+      color:rgba(255,255,255,.85);
+    }
+
+    /* ══ GROUPE ══ */
+    .char-group{ max-width:1100px; margin-bottom:40px; }
+    .char-group-label{
+      font-family:'Raleway',sans-serif;font-weight:200;
+      font-size:9px;letter-spacing:.32em;text-transform:uppercase;
+      color:rgba(255,255,255,.18);margin-bottom:14px;
+      padding-bottom:8px;border-bottom:.5px solid rgba(255,255,255,.05);
+    }
+    .char-group.hidden{ display:none; }
 
     /* ══ GRILLE DE CARDS ══ */
     .chars-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-      gap:20px;
-      max-width:1100px;
+      grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+      gap:16px;
     }
 
     /* ══ CARD PERSONNAGE ══ */
@@ -519,7 +551,8 @@
   <div class="page-content">
     <h1 class="page-title">Personnages</h1>
     <p class="page-subtitle">The Unwritten Journey</p>
-    <div class="chars-grid" id="chars-grid"></div>
+    <div class="filter-bar" id="filter-bar"></div>
+    <div id="groups-container"></div>
   </div>
 </div>
 
@@ -554,7 +587,7 @@ function makeCover(c1,c2){
 
 /* ══ PISTES (identique index.html) ══ */
 const tracks=[
-  {title:'Sunken Era',src:'sunken_era.mp3',cover:'sunken_era.jpg'},
+  {title:'Aube sur la Montagne',src:null,cover:makeCover('#c84030','#e8a020')},
   {title:'Le Désert de Sel',    src:null,cover:makeCover('#1a3a8c','#7a20c8')},
   {title:'Nuit à Albarossa',   src:null,cover:makeCover('#0e4a2e','#1e6888')},
 ];
@@ -1021,6 +1054,265 @@ const characters=[
   },
 ];
 
+/* ══ GROUPES (ordre d'affichage) ══ */
+const groups=[
+  {
+    id:'protagoniste',
+    label:'Protagoniste',
+    ids:['hyuun'],
+  },
+  {
+    id:'filles',
+    label:'Filles d\'Hadès',
+    ids:['maelle','beka','wendy','nui'],
+  },
+  {
+    id:'desert',
+    label:'Groupe du Désert',
+    ids:['minako','tetsuga','arsene'],
+  },
+];
+
+/* ══ NOUVEAUX PERSONNAGES ══ */
+const extraChars=[
+  {
+    id:'maelle',
+    name:'Maelle',
+    title:'La Leader',
+    get avatar(){ return makeAvatar('#1a0c08','#4a2010','Ma'); },
+    tags:[
+      {label:'Filles d\'Hadès',style:'blue'},
+      {label:'Leader',style:'amber'},
+      {label:'Arc 1',style:'gray'},
+    ],
+    cardBg:`linear-gradient(to bottom,#0e0808 0%,#1e1006 30%,#2c1a08 55%,#1e1206 75%,#0e0808 100%)`,
+    cardSvg:`<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;opacity:.28">
+      <line x1="150" y1="80" x2="150" y2="320" stroke="rgba(220,180,80,.5)" stroke-width="1"/>
+      <line x1="60" y1="200" x2="240" y2="200" stroke="rgba(220,180,80,.4)" stroke-width="1"/>
+      <circle cx="150" cy="200" r="55" fill="none" stroke="rgba(220,180,80,.25)" stroke-width="1"/>
+    </svg>`,
+    sections:[
+      {id:'info',title:'Informations',open:true,render:()=>`
+        <div class="info-grid">
+          ${field('Full name','Maelle')}
+          ${field('Age','24 ans (début arc 1)')}
+          ${field('Gender','Femme')}
+          ${field('Race','Humaine')}
+          ${field('Birth place','—',true)}
+          ${field('Birthday','—',true)}
+          ${field('Sexuality','—',true)}
+          ${field('Role','Leader · Grande sœur · Point de stabilité du groupe')}
+          ${field('Favorite food','—',true)}
+          ${field('Favorite drink','—',true)}
+          ${field('Favorite animal','—',true)}
+          ${field('Favorite color','—',true)}
+          ${field('Likes','—',true)}
+          ${field('Dislikes','—',true)}
+          ${fieldFull('Hobbies','—',true)}
+        </div>`},
+      {id:'background',title:'Background story',open:false,render:()=>`
+        <div class="cs-text"><p>À compléter.</p></div>`},
+      {id:'desc',title:'Description',open:false,render:()=>`
+        <div class="cs-text"><p>Blonde, regard déterminé. Elle dégage quelque chose de solide — pas d'invulnérable, mais de fiable. Cheffe du groupe, considère toutes les autres comme ses petites sœurs. A un pressentiment sur Hyuun dès la première rencontre. Fait des choix d'adulte — c'est-à-dire des choix où elle laisse quelque chose partir parce qu'elle sait qu'elle ne peut pas tout retenir. Elle voit le regard de Hyuun avant son départ, hésite, entre dans l'auberge.</p></div>`},
+      {id:'relations',title:'Relations',open:false,render:()=>`
+        <div class="cs-text"><p style="color:rgba(255,255,255,.25);font-style:italic;">Relations à compléter.</p></div>`},
+    ]
+  },
+  {
+    id:'beka',
+    name:'Beka',
+    title:'La Combattante',
+    get avatar(){ return makeAvatar('#1a0808','#5a1010','Be'); },
+    tags:[
+      {label:'Filles d\'Hadès',style:'blue'},
+      {label:'Combattante',style:'coral'},
+      {label:'Arc 1',style:'gray'},
+      {label:'Fille de Tetsuga',style:'pink'},
+    ],
+    cardBg:`linear-gradient(to bottom,#100808 0%,#201006 30%,#301008 55%,#200c06 75%,#100808 100%)`,
+    cardSvg:`<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;opacity:.28">
+      <line x1="100" y1="120" x2="200" y2="280" stroke="rgba(200,60,40,.6)" stroke-width="1.5"/>
+      <line x1="200" y1="120" x2="100" y2="280" stroke="rgba(200,60,40,.6)" stroke-width="1.5"/>
+      <circle cx="150" cy="200" r="50" fill="none" stroke="rgba(200,60,40,.2)" stroke-width="1"/>
+    </svg>`,
+    sections:[
+      {id:'info',title:'Informations',open:true,render:()=>`
+        <div class="info-grid">
+          ${field('Full name','Beka')}
+          ${field('Age','19 ans (début arc 1)')}
+          ${field('Gender','Femme')}
+          ${field('Race','Humaine')}
+          ${field('Birth place','Pays féodal ravagé par la guerre')}
+          ${field('Birthday','—',true)}
+          ${field('Sexuality','—',true)}
+          ${field('Role','Combattante · Protectrice autoproclamée')}
+          ${field('Favorite food','—',true)}
+          ${field('Favorite drink','—',true)}
+          ${field('Favorite animal','—',true)}
+          ${field('Favorite color','—',true)}
+          ${field('Likes','—',true)}
+          ${field('Dislikes','—',true)}
+          ${fieldFull('Hobbies','—',true)}
+        </div>`},
+      {id:'background',title:'Background story',open:false,render:()=>`
+        <div class="cs-text">
+          <p>Pays féodal d'inspiration japonaise ravagé par la guerre. Mère tuée. Disparue, puis recueillie par la faction d'Hadès. Elle est membre de la faction, pas marquée.</p>
+          <p><strong style="color:rgba(200,120,48,.8)">Secret majeur :</strong> Beka est la fille de Tetsuga. Ni l'un ni l'autre ne se reconnaît quand les deux groupes se retrouvent dans l'arc 3 — Tetsuga cherche une petite fille, pas une jeune guerrière. Leur tempérament identique (fierté, combativité, rage, besoin de prouver) est l'indice. La révélation arrive dans l'arc 5 au Mont de l'Épée.</p>
+        </div>`},
+      {id:'desc',title:'Description',open:false,render:()=>`
+        <div class="cs-text"><p>Cheveux ondulés, expression mature. Fierté, combativité, rage — et besoin de prouver. Refuse Hyuun au départ par fierté, puis devient la première à vouloir apprendre le combat de survie auprès de lui. La plus visiblement marquée par son départ — court au port. Dans l'arc 3, lui reproche d'être parti sans savoir qu'Hadès l'a rejeté.</p></div>`},
+      {id:'relations',title:'Relations',open:false,render:()=>`
+        <div class="cs-text"><p style="color:rgba(255,255,255,.25);font-style:italic;">Relations à compléter.</p></div>`},
+    ]
+  },
+  {
+    id:'wendy',
+    name:'Wendy',
+    title:'La Mémoire',
+    get avatar(){ return makeAvatar('#080e1a','#102040','We'); },
+    tags:[
+      {label:'Filles d\'Hadès',style:'blue'},
+      {label:'Arc 1',style:'gray'},
+      {label:'La Mémoire',style:'amber'},
+    ],
+    cardBg:`linear-gradient(to bottom,#060a12 0%,#0c1220 30%,#101828 55%,#0c1220 75%,#060a12 100%)`,
+    cardSvg:`<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;opacity:.3">
+      <rect x="90" y="110" width="120" height="160" rx="3" fill="none" stroke="rgba(180,200,220,.5)" stroke-width="1"/>
+      <line x1="105" y1="145" x2="195" y2="145" stroke="rgba(180,200,220,.3)" stroke-width=".8"/>
+      <line x1="105" y1="162" x2="195" y2="162" stroke="rgba(180,200,220,.25)" stroke-width=".8"/>
+      <line x1="105" y1="179" x2="175" y2="179" stroke="rgba(180,200,220,.2)" stroke-width=".8"/>
+      <line x1="105" y1="196" x2="185" y2="196" stroke="rgba(180,200,220,.2)" stroke-width=".8"/>
+    </svg>`,
+    sections:[
+      {id:'info',title:'Informations',open:true,render:()=>`
+        <div class="info-grid">
+          ${field('Full name','Wendy')}
+          ${field('Age','16 ans (début arc 1)')}
+          ${field('Gender','Femme')}
+          ${field('Race','Humaine')}
+          ${field('Birth place','—',true)}
+          ${field('Birthday','—',true)}
+          ${field('Sexuality','—',true)}
+          ${field('Role','Mémoire du groupe · Documentariste · Pont émotionnel')}
+          ${field('Favorite food','—',true)}
+          ${field('Favorite drink','—',true)}
+          ${field('Favorite animal','—',true)}
+          ${field('Favorite color','—',true)}
+          ${field('Likes','—',true)}
+          ${field('Dislikes','—',true)}
+          ${fieldFull('Hobbies','Documenter — carnet, croquis, botanique, bestiaire')}
+        </div>`},
+      {id:'background',title:'Background story',open:false,render:()=>`
+        <div class="cs-text">
+          <p>Pendant la survie dans la forêt, elle documente tout dans son carnet — champignons, plantes, créatures. Elle devient la mémoire du groupe et trouve ainsi sa dignité et son utilité. Le carnet évolue visuellement à travers les tomes.</p>
+          <p><strong style="color:rgba(200,120,48,.8)">Objet symbolique :</strong> elle noue un bout de tissu à la main de Hyuun dans un magasin après une coupure. Ce bandage devient l'objet le plus symbolique de toute l'histoire. Hyuun ne l'enlèvera jamais.</p>
+        </div>`},
+      {id:'desc',title:'Description',open:false,render:()=>`
+        <div class="cs-text"><p>Yeux clairs, air doux. La plus fragile émotionnellement — mais fragile ne veut pas dire inutile. Elle ne cache rien parce qu'elle ne pense pas à cacher. S'effondre en pleurant au départ de Hyuun. Dans l'arc 3 : tire le kimono de Minako pour l'inclure — elle est le pont entre Minako et le groupe.</p></div>`},
+      {id:'relations',title:'Relations',open:false,render:()=>`
+        <div class="cs-text"><p style="color:rgba(255,255,255,.25);font-style:italic;">Relations à compléter.</p></div>`},
+    ]
+  },
+  {
+    id:'tetsuga',
+    name:'Tetsuga',
+    title:'L\'Ancien Soldat',
+    get avatar(){ return makeAvatar('#0a0c0e','#2a3038','Te'); },
+    tags:[
+      {label:'Groupe du Désert',style:'gray'},
+      {label:'Quatuor',style:'amber'},
+      {label:'Non-marqué',style:'coral'},
+      {label:'Père de Beka',style:'pink'},
+    ],
+    cardBg:`linear-gradient(to bottom,#080a0c 0%,#141820 30%,#1c2430 55%,#141820 75%,#080a0c 100%)`,
+    cardSvg:`<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;opacity:.3">
+      <line x1="150" y1="80" x2="150" y2="320" stroke="rgba(160,180,200,.6)" stroke-width="2.5"/>
+      <line x1="110" y1="150" x2="190" y2="150" stroke="rgba(160,180,200,.4)" stroke-width="1.5"/>
+      <line x1="120" y1="130" x2="180" y2="130" stroke="rgba(160,180,200,.3)" stroke-width="1"/>
+    </svg>`,
+    sections:[
+      {id:'info',title:'Informations',open:true,render:()=>`
+        <div class="info-grid">
+          ${field('Full name','Tetsuga')}
+          ${field('Age','38 ans (arc 2)')}
+          ${field('Gender','Homme')}
+          ${field('Race','Humain — Non-marqué')}
+          ${field('Birth place','Pays féodal d\'inspiration japonaise')}
+          ${field('Birthday','—',true)}
+          ${field('Sexuality','—',true)}
+          ${field('Role','Force brute · Marteau du duo marteau-scalpel · Ancre martiale')}
+          ${field('Weapon','Katana')}
+          ${field('Favorite food','—',true)}
+          ${field('Favorite drink','Alcool (ex-alcoolique)')}
+          ${field('Favorite animal','—',true)}
+          ${field('Favorite color','—',true)}
+          ${field('Likes','—',true)}
+          ${field('Dislikes','Le théâtral · La lâcheté')}
+          ${fieldFull('Hobbies','—',true)}
+        </div>`},
+      {id:'background',title:'Background story',open:false,render:()=>`
+        <div class="cs-text">
+          <p>Ancien soldat d'une armée régulière d'un pays féodal. Pays mis à feu, femme tuée, fille disparue (c'est Beka — il ne le sait pas). Sombra dans l'alcool puis eut le déclic : "s'il ne fait rien, il ne se passera rien." Depuis, parcourt le monde en se battant pour que sa fille entende son nom.</p>
+          <p>Arc 5 : part au Mont de l'Épée avec Hyuun et Beka. S'entraîne à l'école du dieu de l'épée du vent — même école que Beka sans le savoir. La révélation se produit progressivement par accumulation de détails.</p>
+        </div>`},
+      {id:'desc',title:'Description',open:false,render:()=>`
+        <div class="cs-text"><p>Cassé. Il a survécu en se débarrassant de tout sauf d'une chose : sa fille. Franc par économie d'énergie. Peut être une ordure si ça sert sa quête. Se fout des faibles. Un seul interdit absolu : les enfants ne sont pas une cible. Son rire — rare, spontané — désarçonne complètement Hyuun lors de leur première mission.</p></div>`},
+      {id:'relations',title:'Relations',open:false,render:()=>`
+        <div class="cs-text"><p style="color:rgba(255,255,255,.25);font-style:italic;">Relations à compléter.</p></div>`},
+    ]
+  },
+  {
+    id:'arsene',
+    name:'Arsène',
+    title:'Le Voleur Magnifique',
+    get avatar(){ return makeAvatar('#0e0a18','#2a1a40','Ar'); },
+    tags:[
+      {label:'Groupe du Désert',style:'gray'},
+      {label:'Quatuor',style:'amber'},
+      {label:'Infiltrateur',style:'coral'},
+    ],
+    cardBg:`linear-gradient(to bottom,#0a0810 0%,#140e20 30%,#1e1430 55%,#140e20 75%,#0a0810 100%)`,
+    cardSvg:`<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;opacity:.28">
+      <circle cx="150" cy="200" r="70" fill="none" stroke="rgba(140,100,220,.4)" stroke-width="1" stroke-dasharray="6 4"/>
+      <circle cx="150" cy="200" r="40" fill="none" stroke="rgba(140,100,220,.25)" stroke-width=".8" stroke-dasharray="4 3"/>
+      <circle cx="150" cy="200" r="10" fill="rgba(140,100,220,.15)"/>
+    </svg>`,
+    sections:[
+      {id:'info',title:'Informations',open:true,render:()=>`
+        <div class="info-grid">
+          ${field('Full name','Arsène')}
+          ${field('Age','23 ans (arc 2)')}
+          ${field('Gender','Homme')}
+          ${field('Race','Humain')}
+          ${field('Birth place','—',true)}
+          ${field('Birthday','—',true)}
+          ${field('Sexuality','—',true)}
+          ${field('Role','Infiltrateur · Voleur d\'informations · Frisson permanent')}
+          ${field('Favorite food','—',true)}
+          ${field('Favorite drink','—',true)}
+          ${field('Favorite animal','—',true)}
+          ${field('Favorite color','—',true)}
+          ${field('Likes','L\'adrénaline · Le vol · Le plaisir')}
+          ${field('Dislikes','La rigidité · L\'ennui')}
+          ${fieldFull('Hobbies','Vol de charme · Redistribution aux pauvres')}
+        </div>`},
+      {id:'background',title:'Background story',open:false,render:()=>`
+        <div class="cs-text">
+          <p>Famille modeste. Parents tués par une famille noble pour dette impayée. Réponse : s'introduit au bal, charme la fille, la pousse par la fenêtre, coupe l'oreille du père et la sert en cocktail à la mère, redistribue la bourse aux pauvres. Depuis : vole les véreux, charme les demoiselles, embrasse leur main et se redresse leur bague entre les dents.</p>
+          <p>Recruté par Minako aux inscriptions du tournoi après une course-poursuite où elle le piste par le plaisir qu'il prend à fuir. Arc 5 : part avec Minako chercher la divinité qui a maudit les kitsune.</p>
+        </div>`},
+      {id:'desc',title:'Description',open:false,render:()=>`
+        <div class="cs-text"><p>Charmant un instant, glacial l'instant suivant. Il transforme la douleur en art. Moralité singulière : un code tordu mais existant. L'adrénaline du vol est une drogue — il ne peut pas s'empêcher. Trouve Hyuun ennuyeux dans sa rigueur au début. Tension permanente avec Tetsuga — miroir profond : deux réponses opposées à la même perte, Arsène vit dans le présent fébrile, Tetsuga court vers un futur impossible.</p></div>`},
+      {id:'relations',title:'Relations',open:false,render:()=>`
+        <div class="cs-text"><p style="color:rgba(255,255,255,.25);font-style:italic;">Relations à compléter.</p></div>`},
+    ]
+  },
+];
+
+/* Fusionne avec les personnages existants dans l'ordre des groupes */
+const allCharsById={};
+[...characters, ...extraChars].forEach(ch=>{ allCharsById[ch.id]=ch; });
+
 /* ══ HELPERS HTML ══ */
 function field(label,value,unknown=false){
   return `<div class="info-field">
@@ -1050,8 +1342,7 @@ function makeAvatar(c1,c2,initials='?'){
 }
 
 /* Lookup rapide : id → character (pour les liens de relation) */
-const charById={};
-characters.forEach(ch=>{charById[ch.id]=ch;});
+const charById=allCharsById;
 
 /* Rendu d'un bloc relation avec mini-avatar cliquable */
 function relationBlockHtml(charId, role, bodyHtml){
@@ -1077,22 +1368,96 @@ function relationBlockHtml(charId, role, bodyHtml){
   </div>`;
 }
 
-/* ══ BUILD CARDS ══ */
-const grid=document.getElementById('chars-grid');
-characters.forEach(ch=>{
-  const card=document.createElement('div');
-  card.className='char-card';
-  card.innerHTML=`
-    <div class="char-card-img" style="background:${ch.cardBg};">${ch.cardSvg||''}</div>
-    <div class="char-card-overlay"></div>
-    <div class="char-card-body">
-      <div class="char-card-name">${ch.name}</div>
-      <div class="char-card-title">${ch.title}</div>
-      <div class="char-card-tags">${ch.tags.map(tagHtml).join('')}</div>
-    </div>`;
-  card.addEventListener('click',()=>openPanel(ch));
-  grid.appendChild(card);
+/* ══ BUILD FILTRES + GROUPES + CARDS ══ */
+const filterBar    = document.getElementById('filter-bar');
+const groupsCont   = document.getElementById('groups-container');
+
+/* Collecte tous les labels de tags uniques */
+const allTags=[];
+const tagSeen=new Set();
+groups.forEach(g=>{
+  g.ids.forEach(id=>{
+    const ch=charById[id];
+    if(!ch) return;
+    ch.tags.forEach(t=>{
+      if(!tagSeen.has(t.label)){ tagSeen.add(t.label); allTags.push(t); }
+    });
+  });
 });
+
+let activeFilter=null; // null = tout afficher
+
+/* Bouton "Tous" */
+const btnAll=document.createElement('button');
+btnAll.className='filter-btn all active';
+btnAll.textContent='Tous';
+btnAll.addEventListener('click',()=>{ activeFilter=null; applyFilter(); setActiveBtn(btnAll); });
+filterBar.appendChild(btnAll);
+
+const filterBtns=[btnAll];
+allTags.forEach(t=>{
+  const btn=document.createElement('button');
+  btn.className=`filter-btn`;
+  btn.textContent=t.label;
+  btn.addEventListener('click',()=>{
+    if(activeFilter===t.label){ activeFilter=null; setActiveBtn(btnAll); }
+    else{ activeFilter=t.label; setActiveBtn(btn); }
+    applyFilter();
+  });
+  filterBar.appendChild(btn);
+  filterBtns.push(btn);
+});
+
+function setActiveBtn(target){
+  filterBtns.forEach(b=>b.classList.toggle('active',b===target));
+}
+
+/* Build groupes */
+const groupEls={};
+groups.forEach(g=>{
+  const groupEl=document.createElement('div');
+  groupEl.className='char-group';
+  groupEl.dataset.groupId=g.id;
+  groupEl.innerHTML=`<div class="char-group-label">${g.label}</div>`;
+  const grid=document.createElement('div');
+  grid.className='chars-grid';
+  g.ids.forEach(id=>{
+    const ch=charById[id];
+    if(!ch) return;
+    const card=document.createElement('div');
+    card.className='char-card';
+    card.dataset.tags=ch.tags.map(t=>t.label).join('|');
+    card.innerHTML=`
+      <div class="char-card-img" style="background:${ch.cardBg};">${ch.cardSvg||''}</div>
+      <div class="char-card-overlay"></div>
+      <div class="char-card-body">
+        <div class="char-card-name">${ch.name}</div>
+        <div class="char-card-title">${ch.title}</div>
+        <div class="char-card-tags">${ch.tags.map(tagHtml).join('')}</div>
+      </div>`;
+    card.addEventListener('click',()=>openPanel(ch));
+    grid.appendChild(card);
+  });
+  groupEl.appendChild(grid);
+  groupsCont.appendChild(groupEl);
+  groupEls[g.id]=groupEl;
+});
+
+function applyFilter(){
+  groups.forEach(g=>{
+    const groupEl=groupEls[g.id];
+    if(!groupEl) return;
+    const cards=groupEl.querySelectorAll('.char-card');
+    let anyVisible=false;
+    cards.forEach(card=>{
+      const tags=card.dataset.tags.split('|');
+      const show=!activeFilter||tags.includes(activeFilter);
+      card.style.display=show?'':'none';
+      if(show) anyVisible=true;
+    });
+    groupEl.classList.toggle('hidden',!anyVisible);
+  });
+}
 
 /* ══ PANNEAU LATÉRAL ══ */
 const backdrop=document.getElementById('modal-backdrop');
