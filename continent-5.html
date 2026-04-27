@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tetsuo — Aven Univers</title>
+  <title>Continent V — Aven Univers</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@200;300;400;500&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
@@ -53,46 +53,32 @@
     .playing-dot{width:5px;height:5px;border-radius:50%;background:rgba(200,120,48,.9);flex-shrink:0;opacity:0;animation:blink 1.4s ease-in-out infinite;}
     .track-item.active .playing-dot{opacity:1;}
     @keyframes blink{0%,100%{opacity:.5}50%{opacity:1}}
-    /* Page */
     .page{position:fixed;inset:0;top:var(--nav-h);overflow:hidden;}
     .page-bg{position:absolute;inset:0;pointer-events:none;}
-    .bg-grad{position:absolute;inset:0;background:linear-gradient(160deg,#04040e 0%,#06081a 20%,#080c20 40%,#060810 70%,#040408 100%);}
+    .bg-grad{position:absolute;inset:0;background:linear-gradient(160deg,#040e10 0%,#060e14 20%,#081218 40%,#060e12 70%,#040408 100%);}
     .bg-layer{position:absolute;inset:0;opacity:.6;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,transparent 35%,rgba(0,0,0,.6) 60%,black 82%);mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,transparent 35%,rgba(0,0,0,.6) 60%,black 82%);}
     .bg-r{filter:url(#ca-red);}
     .bg-b{filter:url(#ca-blue);}
-    .bg-r .bg-grad,.bg-b .bg-grad{position:absolute;inset:0;background:linear-gradient(160deg,#04040e 0%,#06081a 20%,#080c20 40%,#060810 70%,#040408 100%);}
+    .bg-r .bg-grad,.bg-b .bg-grad{position:absolute;inset:0;background:linear-gradient(160deg,#040e10 0%,#060e14 20%,#081218 40%,#060e12 70%,#040408 100%);}
     .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 75% at 50% 50%,transparent 28%,rgba(2,2,10,.55) 65%,rgba(2,2,10,.92) 100%);}
     .edge-blur{position:absolute;inset:0;pointer-events:none;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-mask-image:radial-gradient(ellipse 78% 72% at 50% 50%,transparent 32%,rgba(0,0,0,.5) 55%,black 78%);mask-image:radial-gradient(ellipse 78% 72% at 50% 50%,transparent 32%,rgba(0,0,0,.5) 55%,black 78%);}
     .page-scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;}
     .page-scroll::-webkit-scrollbar{width:3px;}
     .page-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px;}
     .page-inner{padding:44px 64px 80px;max-width:1000px;}
-    /* Breadcrumb */
-    .breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:32px;}
+    .breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:32px;flex-wrap:wrap;}
     .bc-link{font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.28);text-decoration:none;transition:color .2s;}
     .bc-link:hover{color:rgba(255,255,255,.6);}
     .bc-sep{color:rgba(255,255,255,.15);font-size:10px;}
     .bc-current{font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,120,48,.7);}
-    /* Header */
     .cont-num-label{font-family:'Raleway',sans-serif;font-size:10px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:rgba(200,120,48,.6);margin-bottom:8px;}
-    .cont-title{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(30px,4vw,52px);letter-spacing:.16em;color:#fff;line-height:1.1;margin-bottom:10px;text-shadow:0 0 80px rgba(100,120,200,.2);}
+    .cont-title{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(30px,4vw,52px);letter-spacing:.16em;color:#fff;line-height:1.1;margin-bottom:10px;text-shadow:0 0 80px rgba(0,180,200,.2);}
     .cont-arc-tag{display:inline-block;font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);border:.5px solid rgba(255,255,255,.1);padding:4px 12px;border-radius:999px;margin-bottom:36px;}
-    /* Sections */
     .section{margin-bottom:36px;}
     .section-title{font-family:'Cinzel',serif;font-weight:400;font-size:14px;letter-spacing:.12em;color:rgba(255,255,255,.6);margin-bottom:12px;padding-bottom:8px;border-bottom:.5px solid rgba(255,255,255,.06);}
     .section-text{font-family:'DM Sans',sans-serif;font-size:13.5px;color:rgba(255,255,255,.55);line-height:1.82;}
     .section-text p{margin-bottom:12px;}
-    .section-text p:last-child{margin:0;}
-    /* Lieux */
-    .places{display:flex;flex-direction:column;gap:10px;}
-    .place{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:rgba(255,255,255,.025);border:.5px solid rgba(255,255,255,.055);border-radius:6px;}
-    .place-dot{width:5px;height:5px;border-radius:50%;background:rgba(200,120,48,.7);flex-shrink:0;margin-top:6px;}
-    .place-name{font-family:'Raleway',sans-serif;font-size:11.5px;font-weight:500;color:rgba(255,255,255,.8);margin-bottom:4px;}
-    .place-desc{font-family:'DM Sans',sans-serif;font-size:12.5px;color:rgba(255,255,255,.42);line-height:1.65;}
-    /* Tags */
-    .tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:30px;}
-    .tag{font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:999px;background:rgba(255,255,255,.04);border:.5px solid rgba(255,255,255,.1);color:rgba(255,255,255,.38);}
-    /* Back btn */
+    .placeholder{font-style:italic;color:rgba(255,255,255,.2);border:.5px dashed rgba(255,255,255,.08);border-radius:5px;padding:14px 18px;font-size:12px;}
     .back-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);text-decoration:none;border:.5px solid rgba(255,255,255,.1);padding:7px 16px;border-radius:999px;transition:color .2s,border-color .2s;margin-bottom:48px;}
     .back-btn:hover{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.25);}
     .back-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;}
@@ -105,9 +91,7 @@
     <filter id="ca-blue" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/></filter>
   </defs>
 </svg>
-
 <div id="vinyl-popup"><div class="popup-dot"></div><span class="popup-text">Lancer une piste</span></div>
-
 <nav>
   <a href="index.html">Accueil</a>
   <a href="personnages.html">Personnages</a>
@@ -146,7 +130,6 @@
   <div class="dropdown-header">Pistes</div>
   <div id="track-list"></div>
 </div>
-
 <div class="page">
   <div class="page-bg">
     <div class="bg-grad"></div>
@@ -161,42 +144,16 @@
         <svg viewBox="0 0 16 16"><path d="M10 3L5 8l5 5"/></svg>
         Retour à la carte
       </a>
-      <div class="breadcrumb">
-        <a class="bc-link" href="univers.html">Univers</a>
+      <div class="breadcrumb"><a class="bc-link" href="univers.html">Univers</a>
         <span class="bc-sep">›</span>
-        <span class="bc-current">Tetsuo</span>
-      </div>
-      <p class="cont-num-label">Continent III</p>
-      <h1 class="cont-title">Tetsuo</h1>
-      <div class="cont-arc-tag">Arc 3 · Guerre</div>
-      <div class="tags"><span class="tag">Arc 3</span><span class="tag">Guerre</span><span class="tag">Albarossa</span><span class="tag">Dragons</span><span class="tag">Scylla</span></div>
-      <div class="section">
-        <h2 class="section-title">Géographie</h2>
-        <div class="section-text"><p>Continent immense dominé au nord par l'Empire d'Albarossa en expansion. À l'ouest, les forêts abritent la faction des mercenaires de la chasse — c'est là que les filles sont sauvées et intégrées dans la coalition. Au centre, la montagne où résident Paresse (Nero) et Patience (Camilia) — deux dragons dont l'ancien conflit a créé une mer circulaire autour d'eux.</p></div>
-      </div>      <div class="section">
-        <h2 class="section-title">Contexte politique</h2>
-        <div class="section-text"><p>Albarossa est une puissance expansionniste dirigée par une famille royale divisée en trois branches. La branche dominante, influencée par Nina (Hypocrisie), prône une idéologie de supériorité et de domination. La guerre crée une coalition fragile de nations voisines.</p>
-        <p>Double front : bataille principale (coalition avec Maelle, Minako, etc.) + infiltration (Hyuun + groupe d'élite dans la capitale). La fin de guerre est stabilisée par l'intervention d'un Athanaute. Scylla apparaît quelques jours après dans un duché du nord.</p></div>
-      </div>      <div class="section">
-        <h2 class="section-title">Lieux notables</h2>
-        <div class="places">      <div class="place">
-        <div class="place-dot"></div>
-        <div><div class="place-name">La Capitale d'Albarossa</div><div class="place-desc">Hyuun s'y infiltre pour retrouver et sauver Nui. Confrontation idéologique avec les Prophètes et Nina. Zone de haute tension — la ville entière est militarisée.</div></div>
-      </div>      <div class="place">
-        <div class="place-dot"></div>
-        <div><div class="place-name">La Forêt des Mercenaires</div><div class="place-desc">À l'ouest. Les filles y sont sauvées par la faction et intégrées dans la coalition. Zone de refuge, de préparation, de réorganisation avant le front.</div></div>
-      </div>      <div class="place">
-        <div class="place-dot"></div>
-        <div><div class="place-name">Montagne des Dragons — Paresse & Patience</div><div class="place-desc">Nero (Paresse) et Camilia (Patience) s'affrontent en joute verbale depuis deux cents ans. Patience donne à Hyuun la réponse sur Scylla. La mer circulaire autour de la montagne est le résultat de leur ancien conflit.</div></div>
-      </div>      <div class="place">
-        <div class="place-dot"></div>
-        <div><div class="place-name">Le Duché du Nord — Apparition de Scylla</div><div class="place-desc">Quelques jours de répit. Les nuits commencent à siffler. Arbres gelés, plantes mortes. Hyuun reconnaît la berceuse de son enfance. Scylla apparaît avec sa meute silencieuse — ses premières larmes de la série.</div></div>
-      </div>        </div>
-      </div>
+        <span class="bc-current">Continent V</span></div>
+      <p class="cont-num-label">Continent V</p>
+      <h1 class="cont-title">Continent V</h1>
+      <div class="cont-arc-tag">Nom temporaire · Archipel · À développer</div>
+      <div class="section"><div class="section-text"><p class="placeholder">Géographie, lore et lieux notables à rédiger.</p></div></div>
     </div>
   </div>
 </div>
-
 <audio id="player" preload="metadata"></audio>
 <script>
 function makeCover(c1,c2){return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='0,0 100,0 0,100' fill='${c1}'/><polygon points='100,0 100,100 0,100' fill='${c2}'/></svg>`);}

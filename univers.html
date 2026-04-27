@@ -124,6 +124,10 @@
       inset:0;width:100%;height:100%;
       display:block;
     }
+    .map-image{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:fill; /* stretch pour alignement exact avec le SVG */
+    }
 
     /* ══ PINS — dans map-inner, positionnés en % ══
        Clé du fix : les pins sont dans le MÊME plan que le SVG,
@@ -270,109 +274,66 @@
       <!-- ══ PLAN UNIQUE : SVG + PINS ensemble dans map-inner ══ -->
       <div class="map-inner" id="map-inner">
 
-        <!--
-          CARTE SVG PLACEHOLDER
-          → Remplacer par : <img src="votre-carte.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-          Les pins resteront alignés car ils sont dans le même plan.
-        -->
-        <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-          <!-- Océan -->
-          <rect width="1200" height="600" fill="#060a18"/>
-          <!-- Grille subtile -->
-          <defs>
-            <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-              <path d="M60 0L0 0 0 60" fill="none" stroke="rgba(100,130,200,.05)" stroke-width=".5"/>
-            </pattern>
-            <radialGradient id="glow1" cx="50%" cy="50%"><stop offset="0%" stop-color="rgba(100,160,80,.15)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-            <radialGradient id="glow2" cx="50%" cy="50%"><stop offset="0%" stop-color="rgba(180,140,40,.12)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-            <radialGradient id="glow3" cx="50%" cy="50%"><stop offset="0%" stop-color="rgba(80,100,200,.12)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-          </defs>
-          <rect width="1200" height="600" fill="url(#grid)"/>
-
-          <!-- Continent I — île compacte, gauche -->
-          <ellipse cx="240" cy="310" rx="130" ry="110" fill="url(#glow1)"/>
-          <path d="M130,280 C140,210 180,190 240,185 C300,180 340,200 355,250 C370,300 360,360 330,390 C300,420 250,430 210,415 C170,400 140,380 128,340 C118,305 125,290 130,280Z" fill="#0e1c0e" stroke="rgba(120,170,100,.3)" stroke-width="1.2"/>
-          <!-- Montagnes -->
-          <path d="M185,270 L202,245 L220,268 L244,235 L270,262 L292,242 L312,268" fill="none" stroke="rgba(160,185,140,.45)" stroke-width="1.8" stroke-linejoin="round"/>
-          <!-- Duchés -->
-          <rect x="158" y="300" width="22" height="15" rx="2" fill="rgba(140,165,120,.1)" stroke="rgba(140,165,120,.25)" stroke-width=".8"/>
-          <rect x="252" y="322" width="22" height="15" rx="2" fill="rgba(140,165,120,.1)" stroke="rgba(140,165,120,.25)" stroke-width=".8"/>
-          <rect x="295" y="295" width="22" height="15" rx="2" fill="rgba(140,165,120,.1)" stroke="rgba(140,165,120,.25)" stroke-width=".8"/>
-          <!-- Capitale (étoile) -->
-          <circle cx="240" cy="375" r="5" fill="rgba(220,200,100,.7)" stroke="rgba(240,220,120,.6)" stroke-width="1.2"/>
-          <text x="240" y="445" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(180,210,160,.3)" letter-spacing="2">CONTINENT I</text>
-
-          <!-- Continent II — désert, centre -->
-          <ellipse cx="620" cy="310" rx="170" ry="150" fill="url(#glow2)"/>
-          <path d="M465,180 C510,155 600,155 670,175 C740,195 778,240 785,300 C792,360 775,420 730,450 C685,480 620,485 565,462 C510,438 468,395 455,340 C443,285 450,225 465,180Z" fill="#1c1408" stroke="rgba(190,155,55,.28)" stroke-width="1.2"/>
-          <!-- Ondulations désert -->
-          <path d="M480,280 Q560,265 640,280 Q720,295 780,280" fill="none" stroke="rgba(190,155,55,.12)" stroke-width="14"/>
-          <path d="M468,330 Q550,315 640,330 Q730,345 785,330" fill="none" stroke="rgba(190,155,55,.09)" stroke-width="10"/>
-          <path d="M470,380 Q555,365 640,380 Q725,395 780,380" fill="none" stroke="rgba(190,155,55,.07)" stroke-width="8"/>
-          <!-- Ville centrale -->
-          <circle cx="625" cy="305" r="8" fill="rgba(210,170,55,.75)" stroke="rgba(240,200,80,.65)" stroke-width="1.5"/>
-          <circle cx="625" cy="305" r="18" fill="none" stroke="rgba(210,170,55,.18)" stroke-width="1"/>
-          <text x="625" y="458" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(220,185,90,.3)" letter-spacing="2">CONTINENT II</text>
-
-          <!-- Continent III — immense, droite -->
-          <ellipse cx="980" cy="290" rx="190" ry="200" fill="url(#glow3)"/>
-          <path d="M820,120 C875,90 980,88 1060,110 C1130,130 1165,185 1168,255 C1171,325 1148,400 1100,440 C1050,480 975,490 905,465 C835,440 796,385 785,320 C774,255 790,180 820,120Z" fill="#0c0e1e" stroke="rgba(100,120,195,.28)" stroke-width="1.2"/>
-          <!-- Albarossa (nord) -->
-          <rect x="870" y="120" width="220" height="115" rx="4" fill="rgba(80,100,170,.1)" stroke="rgba(80,100,170,.22)" stroke-width=".8"/>
-          <text x="980" y="175" text-anchor="middle" font-family="serif" font-size="9" fill="rgba(140,165,230,.38)" letter-spacing="1.5">ALBAROSSA</text>
-          <!-- Forêt -->
-          <ellipse cx="830" cy="360" rx="38" ry="62" fill="rgba(30,70,30,.2)" stroke="rgba(50,90,50,.2)" stroke-width=".8"/>
-          <!-- Montagnes dragons -->
-          <path d="M990,340 L1008,308 L1025,338 L1046,300 L1065,335" fill="none" stroke="rgba(190,75,35,.5)" stroke-width="2.2" stroke-linejoin="round"/>
-          <text x="975" y="485" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(155,170,230,.28)" letter-spacing="2">CONTINENT III</text>
-
-          <!-- Routes maritimes -->
-          <path d="M385,330 C460,305 490,295 465,300" fill="none" stroke="rgba(120,160,200,.18)" stroke-width="1.2" stroke-dasharray="6 5"/>
-          <path d="M795,305 C815,305 822,304 825,305" fill="none" stroke="rgba(120,160,200,.14)" stroke-width="1.2" stroke-dasharray="5 4"/>
-
-          <!-- Boussole -->
-          <g transform="translate(65,65)">
-            <circle r="22" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
-            <line x1="0" y1="-18" x2="0" y2="18" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
-            <line x1="-18" y1="0" x2="18" y2="0" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
-            <polygon points="0,-15 3.5,0 0,-5 -3.5,0" fill="rgba(200,120,48,.8)"/>
-            <text x="0" y="-25" text-anchor="middle" font-family="serif" font-size="8" fill="rgba(255,255,255,.22)">N</text>
-          </g>
-        </svg>
-
-        <!--
-          PINS — positionnés en % avec left/top
-          Ils sont dans map-inner donc ils zooment et panent AVEC la carte.
-          Aucun JS ne les repositionne : le CSS fait tout.
-
-          left  = % horizontal de la carte (0% = bord gauche, 100% = bord droit)
-          top   = % vertical de la carte (0% = haut, 100% = bas)
-        -->
-        <div class="map-pin" style="left:20%;top:62.5%;" onclick="goTo('continent-1.html')">
+        <!-- Image de la carte — replace map_aven.jpg with your final map -->
+        <img src="map_aven.jpg" alt="Carte du monde Aven"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:fill;"/>
+        <svg class="map-overlay" viewBox="0 0 1000 651"
+         xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+         style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;">
+      <style>
+      .ca{fill:rgba(255,255,255,0);stroke:rgba(255,255,255,0.22);stroke-width:2;cursor:pointer;transition:fill .3s,stroke .3s;}
+      .ca-caldris:hover{fill:rgba(50,220,50,0.32);stroke:rgba(100,255,100,0.7);}
+      .ca-bilguel:hover{fill:rgba(220,200,0,0.32);stroke:rgba(255,235,50,0.7);}
+      .ca-tetsuo:hover{fill:rgba(140,20,220,0.32);stroke:rgba(190,80,255,0.7);}
+      .ca-cont4:hover{fill:rgba(20,80,220,0.32);stroke:rgba(80,140,255,0.7);}
+      .ca-cont5:hover{fill:rgba(0,200,220,0.32);stroke:rgba(60,240,255,0.7);}
+      .ca-cont6:hover{fill:rgba(220,130,200,0.32);stroke:rgba(255,180,240,0.7);}
+      .cl{font-family:'Raleway',sans-serif;font-size:13px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;
+          fill:rgba(255,255,255,0.85);text-anchor:middle;pointer-events:none;
+          paint-order:stroke fill;stroke:rgba(0,0,0,0.65);stroke-width:3.5;stroke-linejoin:round;}
+    </style>
+      <g pointer-events="all">
+      <g>
+        <polygon class="ca ca-caldris" points="341,294 312,319 312,329 324,349 330,355 336,365 344,370 365,380 412,390 424,395 431,385 436,375 440,355 428,349 408,344 399,324 368,314 350,299 348,294"
+          onclick="window.location.href='continent-1.html'"/>
+        <text class="cl" x="372" y="347">Caldris</text>
+      </g>
+      <g>
+        <polygon class="ca ca-bilguel" points="283,122 270,140 252,168 252,195 258,213 263,231 261,249 263,258 270,268 276,277 283,286 308,304 326,295 391,268 461,240 479,222 486,195 485,186 456,177 448,168 431,158 416,149 392,140 363,131 352,122"
+          onclick="window.location.href='continent-2.html'"/>
+        <text class="cl" x="370" y="210">Bilguel</text>
+      </g>
+      <g>
+        <polygon class="ca ca-tetsuo" points="420,65 500,60 580,60 650,72 712,90 713,118 731,130 752,142 753,166 743,178 742,190 735,202 715,214 704,226 704,238 694,249 684,261 660,273 710,285 532,297 508,297 505,285 507,273 515,261 544,249 492,238 491,226 494,214 491,202 485,190 478,178 521,166 544,154 358,130 348,118 390,95"
+          onclick="window.location.href='continent-3.html'"/>
+        <text class="cl" x="580" y="195">Tetsuo</text>
+      </g>
+      <g>
+        <polygon class="ca ca-cont4" points="145,48 135,73 120,85 121,98 128,111 126,123 127,149 128,161 166,224 172,237 196,262 195,275 244,300 248,287 237,275 197,237 194,224 192,186 198,161 170,149 175,111 172,98 177,85 161,73 154,60 147,48"
+          onclick="window.location.href='continent-4.html'"/>
+        <text class="cl" x="175" y="160">Continent IV</text>
+      </g>
+      <g>
+        <polygon class="ca ca-cont5" points="579,281 573,285 566,300 566,305 576,310 573,315 526,320 509,325 510,330 513,339 491,349 491,354 494,364 500,379 558,379 601,374 614,364 622,359 633,349 635,330 637,320 625,315 613,310 622,305 626,295 620,285 610,281"
+          onclick="window.location.href='continent-5.html'"/>
+        <text class="cl" x="572" y="334">Continent V</text>
+      </g>
+      <g>
+        <polygon class="ca ca-cont6" points="807,57 802,87 677,118 659,133 653,148 751,163 740,179 714,209 708,224 698,239 760,255 707,285 700,300 698,315 732,331 749,346 754,361 777,346 819,315 828,285 782,255 788,239 782,209 798,179 810,163 812,148 805,118 808,87 819,57"
+          onclick="window.location.href='continent-6.html'"/>
+        <text class="cl" x="760" y="220">Continent VI</text>
+      </g>
+      </g>
+    </svg>
+        <!-- Pin Albarossa (sous-région dans Bilguel) -->
+        <div class="map-pin" style="left:37%;top:20%;"
+             onclick="window.location.href='albarossa.html'">
           <div class="pin-body">
-            <div class="pin-label">Continent I — Duchés</div>
-            <div class="pin-line"></div>
-            <div class="pin-dot"></div>
+            <div class="pin-label" style="border-color:rgba(220,200,40,.4);color:rgba(255,240,100,.8);">Albarossa</div>
+            <div class="pin-line" style="background:rgba(220,200,40,.5);"></div>
+            <div class="pin-dot" style="background:rgba(220,200,40,.85);border-color:rgba(255,240,100,.7);box-shadow:0 0 10px rgba(220,200,40,.5);"></div>
           </div>
-        </div>
-
-        <div class="map-pin" style="left:52%;top:51%;" onclick="goTo('continent-2.html')">
-          <div class="pin-body">
-            <div class="pin-label">Continent II — Désert</div>
-            <div class="pin-line"></div>
-            <div class="pin-dot"></div>
-          </div>
-        </div>
-
-        <div class="map-pin" style="left:82%;top:48.5%;" onclick="goTo('continent-3.html')">
-          <div class="pin-body">
-            <div class="pin-label">Continent III — Albarossa</div>
-            <div class="pin-line"></div>
-            <div class="pin-dot"></div>
-          </div>
-        </div>
-
-      </div><!-- /map-inner -->
+        </div></div><!-- /map-inner -->
 
       <div class="map-controls">
         <button class="map-ctrl-btn" id="zoom-in">+</button>
