@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Personnages — Aven</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@200;300;400;500&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--nav-h:56px;}
+    html,body{width:100%;height:100%;overflow:hidden;background:#06060f;}
+    .svg-defs{position:absolute;width:0;height:0;overflow:hidden}
+
+    /* ══ NAVBAR (identique index) ══ */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);
+      display:flex;align-items:center;justify-content:center;gap:3rem;
+      background:rgba(6,6,15,.4);
+      backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);
+      border-bottom:.5px solid rgba(255,255,255,.06);
+    }
+    nav a{
+      font-family:'Raleway',sans-serif;font-weight:300;
+      font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+      color:rgba(255,255,255,.68);text-decoration:none;transition:color .3s;position:relative;
+    }
+    nav a[href="personnages.html"]{color:rgba(255,255,255,.95);}
+    nav a[href="personnages.html"]::after{transform:scaleX(1)!important;}
+    nav a::after{
+      content:'';position:absolute;bottom:-3px;left:0;right:0;
+      height:.5px;background:rgba(200,120,48,.8);
+      transform:scaleX(0);transform-origin:center;transition:transform .35s ease;
+    }
+    nav a:hover{color:#fff;}
+    nav a:hover::after{transform:scaleX(1);}
+
+    /* ══ VINYL ZONE ══ */
+    .vinyl-zone{position:absolute;right:18px;display:flex;align-items:center;gap:9px;}
+    .track-info{display:flex;align-items:center;gap:6px;}
+    #track-label{
+      font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;
+      letter-spacing:.14em;text-transform:uppercase;
+      color:rgba(255,255,255,.3);max-width:130px;
+      overflow:hidden;white-space:nowrap;text-overflow:ellipsis;transition:color .4s;
+    }
+    #track-label.on{color:rgba(200,120,48,.8);}
+    .chevron-btn{
+      background:none;border:none;cursor:pointer;padding:2px 4px;
+      display:flex;align-items:center;opacity:.4;transition:opacity .2s;color:white;
+    }
+    .chevron-btn:hover{opacity:.9;}
+    .chevron-btn svg{width:10px;height:10px;fill:currentColor;transition:transform .25s;}
+    .chevron-btn.open svg{transform:rotate(180deg);}
+    .vinyl{position:relative;width:40px;height:40px;cursor:pointer;flex-shrink:0;}
+    .disc-wrap{
+      width:40px;height:40px;border-radius:50%;overflow:hidden;
+      transform-origin:center;
+      animation:spin 4s linear infinite;animation-play-state:paused;transition:box-shadow .5s;
+    }
+    .vinyl.spinning .disc-wrap{animation-play-state:running;box-shadow:0 0 10px rgba(200,120,48,.5);}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .disc-wrap img,.disc-wrap svg.vinyl-svg{width:40px;height:40px;display:block;}
+    .vinyl-icon{
+      position:absolute;inset:0;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(0,0,0,.45);opacity:0;transition:opacity .2s;
+    }
+    .vinyl:hover .vinyl-icon{opacity:1;}
+    .vinyl-icon svg{width:13px;height:13px;fill:rgba(255,255,255,.92);}
+
+    /* ══ POPUP VINYL ══ */
+    #vinyl-popup{
+      position:fixed;top:calc(var(--nav-h)+10px);right:14px;z-index:300;
+      background:rgba(10,6,2,.9);border:.5px solid rgba(200,120,48,.35);border-radius:20px;
+      padding:7px 14px;display:flex;align-items:center;gap:7px;white-space:nowrap;
+      pointer-events:none;opacity:0;transform:translateY(-6px);
+      transition:opacity .5s ease,transform .5s ease;
+    }
+    #vinyl-popup.visible{opacity:1;transform:translateY(0);}
+    #vinyl-popup::before{
+      content:'';position:absolute;bottom:100%;right:20px;
+      border:5px solid transparent;border-bottom-color:rgba(200,120,48,.35);
+    }
+    #vinyl-popup::after{
+      content:'';position:absolute;bottom:calc(100% - 1px);right:21px;
+      border:4px solid transparent;border-bottom-color:rgba(10,6,2,.9);
+    }
+    .popup-dot{
+      width:6px;height:6px;border-radius:50%;background:rgba(200,120,48,.85);flex-shrink:0;
+      animation:dotPulse 1.6s ease-in-out infinite;
+    }
+    @keyframes dotPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+    .popup-text{
+      font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;
+      letter-spacing:.18em;text-transform:uppercase;color:rgba(200,120,48,.85);
+    }
+
+    /* ══ DROPDOWN ══ */
+    .dropdown{
+      position:fixed;top:calc(var(--nav-h)+6px);right:16px;width:220px;z-index:400;
+      background:rgba(8,8,20,.88);
+      backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
+      border:.5px solid rgba(255,255,255,.08);border-radius:8px;overflow:hidden;
+      opacity:0;transform:translateY(-8px);pointer-events:none;
+      transition:opacity .22s ease,transform .22s ease;
+    }
+    .dropdown.open{opacity:1;transform:translateY(0);pointer-events:all;}
+    .dropdown-header{
+      padding:10px 14px 8px;
+      font-family:'Raleway',sans-serif;font-size:8px;letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(255,255,255,.25);border-bottom:.5px solid rgba(255,255,255,.06);
+    }
+    .track-item{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;transition:background .15s;}
+    .track-item:hover{background:rgba(255,255,255,.05);}
+    .track-item.active{background:rgba(200,120,48,.08);}
+    .track-thumb{width:26px;height:26px;border-radius:4px;overflow:hidden;flex-shrink:0;}
+    .track-thumb img{width:26px;height:26px;display:block;}
+    .track-meta{flex:1;min-width:0;}
+    .track-title{
+      font-family:'Raleway',sans-serif;font-size:10px;
+      color:rgba(255,255,255,.75);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+    }
+    .track-item.active .track-title{color:rgba(200,120,48,.95);}
+    .playing-dot{
+      width:5px;height:5px;border-radius:50%;background:rgba(200,120,48,.9);
+      flex-shrink:0;opacity:0;animation:blink 1.4s ease-in-out infinite;
+    }
+    .track-item.active .playing-dot{opacity:1;}
+    @keyframes blink{0%,100%{opacity:.5}50%{opacity:1}}
+
+    /* ══ PAGE LAYOUT ══ */
+    .page{
+      position:fixed;inset:0;top:var(--nav-h);
+      overflow:hidden;
+    }
+
+    /* ══ FOND ATMOSPHÉRIQUE (statique, aberration) ══ */
+    .page-bg{position:absolute;inset:0;pointer-events:none;}
+    .bg-grad{
+      position:absolute;inset:0;
+      background:linear-gradient(160deg,
+        #040410 0%,#080618 18%,#0e0a22 32%,
+        #140c1e 46%,#1a0e18 60%,#0e0810 80%,#040408 100%);
+    }
+    .bg-layer{
+      position:absolute;inset:0;
+      opacity:.65;mix-blend-mode:screen;
+      -webkit-mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,transparent 35%,rgba(0,0,0,.6) 60%,black 82%);
+      mask-image:        radial-gradient(ellipse 88% 84% at 50% 50%,transparent 35%,rgba(0,0,0,.6) 60%,black 82%);
+    }
+    .bg-r{filter:url(#ca-red);}
+    .bg-b{filter:url(#ca-blue);}
+    .bg-r .bg-grad,.bg-b .bg-grad{
+      position:absolute;inset:0;
+      background:linear-gradient(160deg,
+        #040410 0%,#080618 18%,#0e0a22 32%,
+        #140c1e 46%,#1a0e18 60%,#0e0810 80%,#040408 100%);
+    }
+    .vignette{
+      position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse 75% 70% at 50% 50%,transparent 30%,rgba(2,2,8,.55) 65%,rgba(2,2,8,.9) 100%);
+    }
+    .edge-blur{
+      position:absolute;inset:0;pointer-events:none;
+      backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+      -webkit-mask-image:radial-gradient(ellipse 74% 70% at 50% 50%,transparent 32%,rgba(0,0,0,.5) 55%,black 78%);
+      mask-image:        radial-gradient(ellipse 74% 70% at 50% 50%,transparent 32%,rgba(0,0,0,.5) 55%,black 78%);
+    }
+
+    /* ══ CONTENU SCROLLABLE ══ */
+    .page-content{
+      position:absolute;inset:0;
+      overflow-y:auto;overflow-x:hidden;
+      padding:48px 60px 80px;
+      scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent;
+    }
+    .page-content::-webkit-scrollbar{width:4px;}
+    .page-content::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px;}
+
+    .page-title{
+      font-family:'Cinzel',serif;font-weight:700;
+      font-size:clamp(28px,3.5vw,46px);letter-spacing:.18em;
+      color:#fff;margin-bottom:6px;
+      text-shadow:0 0 60px rgba(200,120,48,.3);
+    }
+    .page-subtitle{
+      font-family:'Raleway',sans-serif;font-weight:200;
+      font-size:11px;letter-spacing:.3em;text-transform:uppercase;
+      color:rgba(255,255,255,.35);margin-bottom:48px;
+    }
+
+    /* ══ GRILLE DE CARDS ══ */
+    .chars-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+      gap:20px;
+      max-width:1100px;
+    }
+
+    /* ══ CARD PERSONNAGE ══ */
+    .char-card{
+      position:relative;border-radius:8px;overflow:hidden;
+      cursor:pointer;
+      border:.5px solid rgba(255,255,255,.07);
+      aspect-ratio:3/4;
+      transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .3s;
+    }
+    .char-card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.15);}
+    .char-card-img{
+      position:absolute;inset:0;background-size:cover;background-position:top center;
+      transition:transform .6s cubic-bezier(.22,1,.36,1),filter .4s;
+      filter:brightness(.6) saturate(.85);
+    }
+    .char-card:hover .char-card-img{transform:scale(1.05);filter:brightness(.75) saturate(1);}
+    .char-card-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(4,4,14,.92) 0%,rgba(4,4,14,.3) 45%,transparent 70%);
+    }
+    .char-card-body{
+      position:absolute;bottom:0;left:0;right:0;padding:16px 18px;
+    }
+    .char-card-name{
+      font-family:'Cinzel',serif;font-weight:600;
+      font-size:20px;letter-spacing:.1em;color:#fff;
+      text-shadow:0 2px 10px rgba(0,0,0,.6);margin-bottom:4px;
+    }
+    .char-card-title{
+      font-family:'Raleway',sans-serif;font-weight:300;
+      font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+      color:rgba(255,255,255,.45);margin-bottom:10px;
+    }
+    .char-card-tags{display:flex;flex-wrap:wrap;gap:4px;}
+    .ctag{
+      font-family:'Raleway',sans-serif;font-size:8px;font-weight:400;
+      letter-spacing:.08em;text-transform:uppercase;
+      padding:3px 8px;border-radius:999px;
+    }
+    .ctag-amber{background:rgba(200,100,20,.2);color:rgba(220,150,60,.9);border:.5px solid rgba(200,100,20,.3);}
+    .ctag-coral{background:rgba(180,60,30,.2);color:rgba(220,100,70,.9);border:.5px solid rgba(180,60,30,.3);}
+    .ctag-gray {background:rgba(120,115,110,.15);color:rgba(180,175,170,.8);border:.5px solid rgba(120,115,110,.25);}
+    .ctag-pink {background:rgba(160,40,80,.2);color:rgba(210,100,140,.9);border:.5px solid rgba(160,40,80,.3);}
+    .ctag-blue {background:rgba(40,80,160,.2);color:rgba(100,150,220,.9);border:.5px solid rgba(40,80,160,.3);}
+
+    /* ══ MODAL — PANNEAU LATÉRAL ══ */
+    #modal-backdrop{
+      position:fixed;inset:0;z-index:500;
+      background:rgba(0,0,0,.55);
+      backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+      opacity:0;pointer-events:none;
+      transition:opacity .4s ease;
+    }
+    #modal-backdrop.open{opacity:1;pointer-events:all;}
+
+    #char-panel{
+      position:fixed;top:0;right:0;bottom:0;z-index:600;
+      width:min(62vw,780px);
+      background:rgba(7,7,18,.97);
+      border-left:.5px solid rgba(255,255,255,.07);
+      transform:translateX(100%);
+      transition:transform .45s cubic-bezier(.22,1,.36,1);
+      display:flex;flex-direction:column;
+      overflow:hidden;
+    }
+    #char-panel.open{transform:translateX(0);}
+
+    /* Header du panneau */
+    .panel-header{
+      flex-shrink:0;
+      padding:28px 32px 20px;
+      border-bottom:.5px solid rgba(255,255,255,.06);
+      background:rgba(6,6,16,.6);
+      display:flex;flex-direction:column;gap:0;
+    }
+    .panel-close{
+      position:absolute;top:18px;right:20px;
+      background:none;border:none;cursor:pointer;
+      color:rgba(255,255,255,.35);transition:color .2s;
+      font-size:20px;line-height:1;padding:4px 8px;
+    }
+    .panel-close:hover{color:rgba(255,255,255,.7);}
+    .panel-char-name{
+      font-family:'Cinzel',serif;font-weight:700;
+      font-size:clamp(28px,3vw,40px);letter-spacing:.2em;color:#fff;line-height:1;
+      text-shadow:0 0 40px rgba(200,120,48,.25);
+    }
+    .panel-char-title{
+      font-family:'Raleway',sans-serif;font-weight:300;
+      font-size:10px;letter-spacing:.28em;text-transform:uppercase;
+      color:rgba(255,255,255,.35);margin-top:8px;
+    }
+    .panel-char-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px;}
+
+    /* Corps scrollable du panneau */
+    .panel-body{
+      flex:1;overflow-y:auto;overflow-x:hidden;
+      padding:0;
+      scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;
+    }
+    .panel-body::-webkit-scrollbar{width:3px;}
+    .panel-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px;}
+
+    /* ══ SECTIONS PLIABLES ══ */
+    .cs-section{border-bottom:.5px solid rgba(255,255,255,.05);}
+
+    .cs-section-header{
+      width:100%;background:none;border:none;cursor:pointer;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 32px;
+      font-family:'Cinzel',serif;font-weight:400;
+      font-size:13px;letter-spacing:.1em;
+      color:rgba(255,255,255,.55);
+      transition:color .25s,background .2s;
+      text-align:left;
+    }
+    .cs-section-header:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.02);}
+    .cs-section-header.open{color:rgba(255,255,255,.9);}
+
+    .cs-chevron{
+      width:14px;height:14px;flex-shrink:0;
+      stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;
+      transition:transform .35s cubic-bezier(.22,1,.36,1);opacity:.6;
+    }
+    .cs-section-header.open .cs-chevron{transform:rotate(180deg);opacity:1;}
+
+    /* Trick grid-template-rows pour animation hauteur propre */
+    .cs-section-wrap{
+      display:grid;grid-template-rows:0fr;
+      transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1);
+    }
+    .cs-section-wrap.open{grid-template-rows:1fr;}
+    .cs-section-body{overflow:hidden;}
+    .cs-section-inner{padding:0 32px 20px;}
+
+    /* ══ CONTENU DES SECTIONS ══ */
+    /* Grille infos */
+    .info-grid{
+      display:grid;grid-template-columns:1fr 1fr;
+      border:.5px solid rgba(255,255,255,.07);border-radius:6px;overflow:hidden;margin-top:4px;
+    }
+    .info-field{
+      padding:9px 12px;border-bottom:.5px solid rgba(255,255,255,.05);border-right:.5px solid rgba(255,255,255,.05);
+    }
+    .info-field:nth-child(even){border-right:none;}
+    .info-field:nth-last-child(1),.info-field:nth-last-child(2){border-bottom:none;}
+    .info-field.full{grid-column:1/-1;border-right:none;}
+    .info-label{
+      font-family:'Raleway',sans-serif;font-size:8px;font-weight:400;
+      letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:3px;
+    }
+    .info-value{
+      font-family:'DM Sans',sans-serif;font-size:12px;color:rgba(255,255,255,.75);line-height:1.4;
+    }
+    .info-value.unknown{color:rgba(255,255,255,.25);font-style:italic;}
+
+    /* Bullets magie */
+    .magic-list{display:flex;flex-direction:column;gap:12px;margin-top:4px;}
+    .magic-item{display:flex;gap:10px;}
+    .magic-dot{
+      width:5px;height:5px;border-radius:50%;background:rgba(200,100,48,.8);
+      flex-shrink:0;margin-top:6px;
+    }
+    .magic-content{}
+    .magic-title{
+      font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;
+      color:rgba(255,255,255,.85);margin-bottom:3px;
+    }
+    .magic-desc{
+      font-family:'DM Sans',sans-serif;font-size:12px;
+      color:rgba(255,255,255,.5);line-height:1.65;
+    }
+
+    /* Texte générique */
+    .cs-text{
+      font-family:'DM Sans',sans-serif;font-size:12px;
+      color:rgba(255,255,255,.55);line-height:1.75;margin-top:4px;
+    }
+    .cs-text p{margin-bottom:10px;}
+    .cs-text p:last-child{margin:0;}
+
+    /* Bloc relation */
+    .relation-block{
+      border:.5px solid rgba(255,255,255,.06);border-radius:6px;
+      overflow:hidden;margin-bottom:12px;
+    }
+    .relation-block:last-child{margin-bottom:0;}
+    .relation-header{
+      padding:10px 14px;background:rgba(255,255,255,.03);
+      border-bottom:.5px solid rgba(255,255,255,.05);
+      display:flex;align-items:baseline;gap:10px;
+    }
+    .relation-name{
+      font-family:'Cinzel',serif;font-weight:400;font-size:15px;
+      letter-spacing:.08em;color:rgba(255,255,255,.85);
+    }
+    .relation-role{
+      font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;
+      letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);
+    }
+    .relation-body{padding:12px 14px;}
+    .relation-body p{
+      font-family:'DM Sans',sans-serif;font-size:12px;
+      color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:8px;
+    }
+    .relation-body p:last-child{margin:0;}
+    .rel-bold{color:rgba(255,255,255,.8);font-weight:500;}
+
+    /* Image placeholder dans section */
+    .section-img{
+      width:100%;border-radius:6px;overflow:hidden;margin-bottom:12px;
+    }
+    .section-img svg,.section-img img{width:100%;display:block;}
+
+    @keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
+  </style>
+</head>
+<body>
+
+<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="ca-red"  color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/>
+    </filter>
+    <filter id="ca-blue" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+    </filter>
+  </defs>
+</svg>
+
+<div id="vinyl-popup">
+  <div class="popup-dot"></div>
+  <span class="popup-text">Lancer une piste</span>
+</div>
+
+<nav>
+  <a href="index.html">Accueil</a>
+  <a href="personnages.html">Personnages</a>
+  <a href="univers.html">Univers</a>
+  <a href="projet.html">Projet</a>
+  <a href="contact.html">Contact</a>
+  <div class="vinyl-zone">
+    <div class="track-info">
+      <span id="track-label">Aucune piste</span>
+      <button class="chevron-btn" id="chevron-btn" aria-label="Pistes">
+        <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="vinyl" id="vinyl">
+      <div class="disc-wrap" id="disc-wrap">
+        <svg id="vinyl-svg" class="vinyl-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="50" fill="#111"/>
+          <circle cx="50" cy="50" r="47" fill="none" stroke="#1e1e1e" stroke-width=".9"/>
+          <circle cx="50" cy="50" r="43" fill="none" stroke="#1e1e1e" stroke-width=".9"/>
+          <circle cx="50" cy="50" r="38" fill="none" stroke="#1a1a1a" stroke-width=".7"/>
+          <circle cx="50" cy="50" r="33" fill="none" stroke="#1e1e1e" stroke-width=".7"/>
+          <circle cx="50" cy="50" r="28" fill="none" stroke="#1a1a1a" stroke-width=".6"/>
+          <circle cx="50" cy="50" r="23" fill="none" stroke="#1e1e1e" stroke-width=".6"/>
+          <ellipse cx="38" cy="30" rx="8" ry="3.5" fill="white" opacity=".04" transform="rotate(-25 38 30)"/>
+          <circle cx="50" cy="50" r="19" fill="#180a02"/>
+          <circle cx="50" cy="50" r="18.5" fill="none" stroke="rgba(200,120,48,.45)" stroke-width=".7"/>
+          <text x="50" y="48"   text-anchor="middle" font-family="'Cinzel',serif" font-size="5.5" fill="rgba(200,120,48,.85)" letter-spacing=".5">AVEN</text>
+          <text x="50" y="55.5" text-anchor="middle" font-family="sans-serif"      font-size="2.6" fill="rgba(200,120,48,.4)"  letter-spacing=".8">JOURNEY</text>
+          <circle cx="50" cy="50" r="3" fill="#0a0a0a"/>
+        </svg>
+        <img id="cover-img" src="" alt="" style="display:none;border-radius:50%;object-fit:cover;"/>
+      </div>
+      <div class="vinyl-icon">
+        <svg id="i-play"  viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
+        <svg id="i-pause" viewBox="0 0 24 24" style="display:none"><rect x="5" y="4" width="4" height="16"/><rect x="15" y="4" width="4" height="16"/></svg>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="dropdown" id="dropdown">
+  <div class="dropdown-header">Pistes</div>
+  <div id="track-list"></div>
+</div>
+
+<div class="page">
+  <!-- Fond atmosphérique -->
+  <div class="page-bg">
+    <div class="bg-grad"></div>
+    <div class="bg-layer bg-r"><div class="bg-grad"></div></div>
+    <div class="bg-layer bg-b"><div class="bg-grad"></div></div>
+    <div class="vignette"></div>
+    <div class="edge-blur"></div>
+  </div>
+
+  <!-- Contenu scrollable -->
+  <div class="page-content">
+    <h1 class="page-title">Personnages</h1>
+    <p class="page-subtitle">The Unwritten Journey</p>
+    <div class="chars-grid" id="chars-grid"></div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="modal-backdrop" onclick="closePanel()"></div>
+<div id="char-panel">
+  <div class="panel-header" style="position:relative;">
+    <button class="panel-close" onclick="closePanel()">✕</button>
+    <div class="panel-char-name" id="panel-name"></div>
+    <div class="panel-char-title" id="panel-title"></div>
+    <div class="panel-char-tags" id="panel-tags"></div>
+  </div>
+  <div class="panel-body" id="panel-body"></div>
+</div>
+
+<audio id="player" preload="metadata"></audio>
+
+<script>
+/* ══ COVERS ══ */
+function makeCover(c1,c2){
+  return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+      <polygon points='0,0 100,0 0,100' fill='${c1}'/>
+      <polygon points='100,0 100,100 0,100' fill='${c2}'/>
+    </svg>`);
+}
+
+/* ══ PISTES (identique index.html) ══ */
+const tracks=[
+  {title:'Aube sur la Montagne',src:null,cover:makeCover('#c84030','#e8a020')},
+  {title:'Le Désert de Sel',    src:null,cover:makeCover('#1a3a8c','#7a20c8')},
+  {title:'Nuit à Albarossa',   src:null,cover:makeCover('#0e4a2e','#1e6888')},
+];
+
+/* ══ DONNÉES PERSONNAGES ══ */
+const characters=[
+  {
+    id:'hyuun',
+    name:'Hyuun',
+    title:'Le Loup',
+    tags:[
+      {label:'Protagoniste',style:'coral'},
+      {label:'Marqué — Scylla',style:'amber'},
+      {label:'Chasseur',style:'gray'},
+    ],
+    /* Image de card — remplacer par url('img/hyuun.jpg') */
+    cardBg:`linear-gradient(to bottom, #0e0408 0%, #200808 30%, #3a1004 55%, #4a1808 75%, #1a0804 100%)`,
+    cardSvg:`<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;opacity:.35">
+      <line x1="80" y1="140" x2="140" y2="200" stroke="rgba(200,60,20,.6)" stroke-width="2"/>
+      <line x1="140" y1="140" x2="80" y2="200" stroke="rgba(200,60,20,.6)" stroke-width="2"/>
+      <line x1="160" y1="140" x2="220" y2="200" stroke="rgba(200,60,20,.6)" stroke-width="2"/>
+      <line x1="220" y1="140" x2="160" y2="200" stroke="rgba(200,60,20,.6)" stroke-width="2"/>
+      <circle cx="150" cy="170" r="40" fill="none" stroke="rgba(200,60,20,.2)" stroke-width="1"/>
+    </svg>`,
+    sections:[
+      {
+        id:'info', title:'Informations', open:true,
+        render:()=>`
+        <div class="info-grid">
+          ${field('Full name','Hyuun')}
+          ${field('Age','18 (arc 1) · 21 (arc 2) · 23–24 (Panthéon)')}
+          ${field('Gender','Homme')}
+          ${field('Race','Humain, marqué par Scylla (Gourmandise)')}
+          ${field('Birth place','—',true)}
+          ${field('Birthday','—',true)}
+          ${field('Sexuality','—',true)}
+          ${field('Role','Protagoniste · Chasseur · Infiltrateur · Combat corps-à-corps')}
+          ${field('Favorite animal','Loup (implicite)')}
+          ${field('Favorite food','—',true)}
+          ${field('Favorite drink','—',true)}
+          ${field('Favorite color','—',true)}
+          ${field('Likes','—',true)}
+          ${field('Dislikes','—',true)}
+          ${fieldFull('Hobbies','—',true)}
+        </div>`
+      },
+      {
+        id:'magic', title:'Magic', open:false,
+        render:()=>`
+        <div class="magic-list">
+          <div class="magic-item">
+            <div class="magic-dot"></div>
+            <div class="magic-content">
+              <div class="magic-title">Double noyau — Second noyau parasite</div>
+              <div class="magic-desc">Son second noyau est totalement incandescent. Il envoie des enzymes qui imitent des signaux cérébraux, ordonnant au flux de brûler. D'abord il brûle le flux (feu), puis brûle réellement les tissus si l'utilisation se prolonge. La fumée qu'il expire en permanence est le symptôme de ce noyau qui ne s'arrête jamais, même au repos. Cette brûlure interne constante explique sa tolérance exceptionnelle à la douleur.</div>
+            </div>
+          </div>
+          <div class="magic-item">
+            <div class="magic-dot"></div>
+            <div class="magic-content">
+              <div class="magic-title">Yeux divins — X rouges sur fond noir</div>
+              <div class="magic-desc">Marqueur de Scylla (Gourmandise, Roue Bestiale). Pouvoir léger : X dans l'œil. Pouvoir moyen : tout l'œil. Pouvoir intense : lignes rouges débordent sur le visage et le corps. Un marqué expérimenté peut utiliser son pouvoir sans activer ses yeux — acte de rébellion fondamental contre sa déesse.</div>
+            </div>
+          </div>
+          <div class="magic-item">
+            <div class="magic-dot"></div>
+            <div class="magic-content">
+              <div class="magic-title">Conflit mental de visualisation</div>
+              <div class="magic-desc">Pour utiliser ce feu, il doit visualiser la combustion interne — ce qui entre en conflit avec son instinct de survie. Devant Scylla, sa conviction se brise et sa magie s'effondre. Pas parce qu'elle la coupe (elle ne peut pas) : parce qu'il se désactive lui-même. Dans l'arc 5, quand sa visualisation passe de "le feu me brûle" à "je suis le feu", son contrôle explose.</div>
+            </div>
+          </div>
+        </div>`
+      },
+      {
+        id:'weapon', title:'Weapon / Tool', open:false,
+        render:()=>`
+        <div class="cs-text"><p>Lames courtes (épées). Style infiltration — faire saigner, fatiguer, poursuivre, être plus rapide que l'adversaire. Il privilégie le combat physique car sa magie est dangereuse pour lui-même.</p>
+        <p>Arc 5 — Mont de l'Épée : jambières métalliques lestées ajoutées à son style sous le dieu de l'épée bestiale. Les coups de pied détruisent les obstacles et empêchent la fuite. La lame saigne et fatigue. C'est un style de prédateur apex qui ne laisse aucune échappatoire.</p>
+        <p><strong style="color:rgba(200,120,48,.8)">Objet symbolique :</strong> le bandage de Wendy. Noué à sa main dans un magasin pendant l'arc 1. Visible à chaque moment clé — combats, port, désert. Il ne l'enlèvera jamais. Il évolue visuellement : blanc et propre, puis froissé, sale, méconnaissable, mais toujours là.</p></div>`
+      },
+      {
+        id:'background', title:'Background story', open:false,
+        render:()=>`
+        <div class="section-img">
+          <svg viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
+            <rect width="600" height="120" fill="#0e0408"/>
+            <polygon points="0,120 100,50 200,80 300,30 400,65 500,20 600,45 600,120" fill="rgba(60,10,5,.8)"/>
+            <polygon points="0,120 80,70 180,95 280,55 380,80 480,40 600,60 600,120" fill="rgba(40,8,4,.9)"/>
+            <circle cx="300" cy="55" r="2" fill="rgba(200,80,30,.6)"/>
+            <text x="300" y="20" text-anchor="middle" font-family="serif" font-size="10" fill="rgba(200,80,30,.3)" letter-spacing="3">PLACEHOLDER — remplacer par votre illustration</text>
+          </svg>
+        </div>
+        <div class="cs-text">
+          <p>Enlevé enfant, élevé comme une arme par Scylla (Gourmandise). Manipulé, traumatisé, amnésie partielle. La chasse est ancrée profondément — il ne sait pas faire autre chose au début. La faction Scylla a été démantelée mais pas détruite. "La louve errante cherche encore ses petits, surtout lui."</p>
+          <p>Son secret fondamental : sa mère biologique est Mira, déesse de la Générosité (Vertu Fondamentale, Main Blanche). Il a été enlevé enfant et ne le sait pas. Son identité est un champ de bataille cosmologique — l'enfant de la Générosité élevé par la Gourmandise. Sa compassion naturelle vient de Mira. Son instinct de prédateur vient de Scylla. Cette guerre se joue en lui sans qu'il le comprenne.</p>
+          <p>Sa rencontre avec les filles d'Hadès dans l'arc 1 est le premier vrai contact humain. Hadès le rejette. Il part seul. Minako le retrouve dans le désert. Le quatuor se forme dans l'arc 2. L'arc 3 le confronte à Scylla pour la première fois depuis son départ — ses premières larmes de la série.</p>
+        </div>`
+      },
+      {
+        id:'desc', title:'Description', open:false,
+        render:()=>`
+        <div class="cs-text">
+          <p>Silencieux, instinctif, moralement instable au début. Posture de prédateur. Pas de rêve ni de quête claire, juste un instinct : continuer. Son cynisme émerge progressivement, ses remarques deviennent lucides parfois moqueuses. Il ne sait pas dire au revoir — il fuit comme un animal blessé.</p>
+          <p>Quand il échoue, il pense en termes de loup et de meute : chasse échouée, chassé par un prédateur supérieur, rejeté de la meute. Devant Scylla, tous ses acquis disparaissent. Il lâche ses armes et lève les poings nus — réflexe régressif de l'enfant de la meute. Il utilise le langage de la meute contre elle ("N'oublie pas ta place"), signe qu'il n'a pas tout quitté de cette nature.</p>
+          <p><strong style="color:rgba(255,255,255,.7)">Arc global :</strong> passer de bête de survie à humain capable de lien. Arc 1 : apprendre à ressentir. Arc 2 : apprendre à fonctionner avec les autres. Arc 3 : apprendre à dire ("Je suis désolé"). Arc 5 : comprendre ce qu'est l'amour grâce au garçon sans magie. Arc 6 : revendiquer son identité devant le monde entier.</p>
+        </div>`
+      },
+      {
+        id:'relations', title:'Relations', open:false,
+        render:()=>`
+        <div class="relation-block">
+          <div class="relation-header">
+            <div class="relation-name">Minako</div>
+            <div class="relation-role">Amour · Duo fondateur · Ouroboros</div>
+          </div>
+          <div class="relation-body">
+            <p>Deux prédateurs qui couvrent l'angle mort de l'autre. Hyuun ne nourrit pas sa malédiction — il ne réagit pas à la séduction — et elle peut exister à côté de lui sans se sentir parasite. Elle le pousse vers le monde, vers les autres. Son amour s'exprime par le lâcher-prise : elle sourit quand il a le dos tourné. L'Ouroboros — un loup qui mord la queue d'un renard qui mord la queue du loup — est le premier engagement officiel de sa vie.</p>
+            <p>Ils peuvent s'embrasser, passer une nuit ensemble — mais ils ne se figent pas dans un couple. Par lucidité : si elle devient sa fontaine de bonheur, sa malédiction la dévorerait. Si elle est son seul lien, il ne grandit pas.</p>
+          </div>
+        </div>
+        <div class="relation-block">
+          <div class="relation-header">
+            <div class="relation-name">Nui</div>
+            <div class="relation-role">Amour · Chasseuse silencieuse · Bouclier</div>
+          </div>
+          <div class="relation-body">
+            <p>Leur lien commence avant les mots. Ils chassent ensemble dans le silence absolu — communication par signes, affinité instinctive entre deux prédateurs naturels. Nui connaît Hyuun d'une manière que même Minako ne connaît pas. Son amour s'exprime entièrement par l'action : elle se renforce, s'entraîne, pousse ses limites. Chaque progression est un acte d'amour déguisé en discipline.</p>
+            <p>Les deux amours (Minako et Nui) sont complémentaires : Minako le lance, Nui le rattrape. Minako ouvre la porte, Nui traverse avec lui. Quand elles comprennent ça, Hyuun est enfin libre — sa culpabilité de s'être senti déchiré s'évapore.</p>
+          </div>
+        </div>
+        <div class="relation-block">
+          <div class="relation-header">
+            <div class="relation-name">Tetsuga</div>
+            <div class="relation-role">Respect martial · Le marteau et le scalpel</div>
+          </div>
+          <div class="relation-body">
+            <p>Respect martial entre combattants, pas de transfert paternel. Tetsuga le traite comme un égal — rare et précieux. Première mission : catastrophique (Tetsuga crie pour attirer les monstres, brisant le plan de Hyuun). Tetsuga rit après. Hyuun ne comprend pas qu'on puisse rire ainsi. Sa colère se dissout dans l'incompréhension. Les missions suivantes s'améliorent : le marteau et le scalpel.</p>
+          </div>
+        </div>
+        <div class="relation-block">
+          <div class="relation-header">
+            <div class="relation-name">Scylla</div>
+            <div class="relation-role">Mère toxique · Lien le plus destructeur</div>
+          </div>
+          <div class="relation-body">
+            <p>Devant Scylla, tous ses acquis disparaissent. Ses premières larmes de la série sont pour elle. Sa magie s'effondre non parce qu'elle la coupe (elle ne peut pas) mais parce que sa conviction se brise. Il utilise le langage de la meute contre elle ("N'oublie pas ta place"). Sa menace finale : "Un loup sans meute finit toujours par se raccrocher aux autres, il suffit simplement que la tienne disparaisse."</p>
+          </div>
+        </div>`
+      },
+    ]
+  },
+  {
+    id:'minako',
+    name:'Minako',
+    title:'La Renarde',
+    tags:[
+      {label:'Kitsune maudite',style:'amber'},
+      {label:'Co-fondatrice Ouroboros',style:'coral'},
+      {label:'Tacticienne',style:'gray'},
+    ],
+    cardBg:`linear-gradient(to bottom, #100a04 0%, #201006 30%, #341808 55%, #281408 75%, #100804 100%)`,
+    cardSvg:`<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;opacity:.3">
+      <line x1="60" y1="200" x2="240" y2="200" stroke="rgba(200,140,40,.5)" stroke-width="1"/>
+      <line x1="150" y1="120" x2="90" y2="250" stroke="rgba(200,140,40,.4)" stroke-width="1"/>
+      <line x1="150" y1="120" x2="210" y2="250" stroke="rgba(200,140,40,.4)" stroke-width="1"/>
+      <ellipse cx="150" cy="190" rx="55" ry="35" fill="none" stroke="rgba(200,140,40,.2)" stroke-width="1"/>
+    </svg>`,
+    sections:[
+      {
+        id:'info',title:'Informations',open:true,
+        render:()=>`
+        <div class="info-grid">
+          ${field('Full name','Minako')}
+          ${field('Age','25 ans (rencontre Hyuun) · 26 ans (arc 2)')}
+          ${field('Gender','Femme')}
+          ${field('Race','Kitsune (femme-renard, clan maudit)')}
+          ${field('Birth place','—',true)}
+          ${field('Birthday','—',true)}
+          ${field('Sexuality','—',true)}
+          ${field('Role','Tacticienne · Recruteur · Meneur stratégique du quatuor')}
+          ${field('Favorite food','—',true)}
+          ${field('Favorite drink','—',true)}
+          ${field('Favorite animal','—',true)}
+          ${field('Favorite color','—',true)}
+          ${field('Likes','—',true)}
+          ${field('Dislikes','—',true)}
+          ${fieldFull('Hobbies','—',true)}
+        </div>`
+      },
+      {
+        id:'magic',title:'Magic',open:false,
+        render:()=>`
+        <div class="magic-list">
+          <div class="magic-item">
+            <div class="magic-dot"></div>
+            <div class="magic-content">
+              <div class="magic-title">Malédiction kitsune</div>
+              <div class="magic-desc">Se nourrit du plaisir des autres — sexe, bonheur, retrouvailles. Fonctionne via un organe supplémentaire lié à la malédiction (magie innée par mutation). Elle ne peut pas contrôler ce désir. Sa séduction est à la fois un outil et un symptôme. Arsène est pour elle un test quotidien involontaire : chaque vol et frisson qu'il ressent est un festin.</div>
+            </div>
+          </div>
+          <div class="magic-item">
+            <div class="magic-dot"></div>
+            <div class="magic-content">
+              <div class="magic-title">Magie d'eau mineure</div>
+              <div class="magic-desc">Probablement apprise indépendamment, non liée au marquage. Suffisante pour l'hydratation dans le désert — insuffisante pour le combat offensif.</div>
+            </div>
+          </div>
+          <div class="magic-item">
+            <div class="magic-dot"></div>
+            <div class="magic-content">
+              <div class="magic-title">Yeux divins — Pupilles fines, longues, rouges</div>
+              <div class="magic-desc">Pupilles de prédateur. Activation synchronisée avec Hyuun dans l'impasse du tournoi — première visualisation de la meute qu'ils forment. Le regard seul de Scylla suffit à pétrifier Minako.</div>
+            </div>
+          </div>
+          <div class="magic-item">
+            <div class="magic-dot"></div>
+            <div class="magic-content">
+              <div class="magic-title">Pistage par le plaisir</div>
+              <div class="magic-desc">Sa malédiction lui permet de détecter et traquer quelqu'un par le plaisir qu'il ressent. Démontré lors de la course-poursuite avec Arsène aux inscriptions du tournoi — plus il prend du plaisir à fuir, plus elle le piste.</div>
+            </div>
+          </div>
+        </div>`
+      },
+      {
+        id:'weapon',title:'Weapon / Tool',open:false,
+        render:()=>`
+        <div class="cs-text">
+          <p>Aucune arme spécifique mentionnée. Son outil principal est la manipulation et l'intelligence tactique — elle voit dix coups d'avance. Sa malédiction fonctionne comme un outil de pistage et de lecture émotionnelle.</p>
+        </div>`
+      },
+      {
+        id:'background',title:'Background story',open:false,
+        render:()=>`
+        <div class="section-img">
+          <svg viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
+            <rect width="600" height="120" fill="#100a04"/>
+            <polygon points="0,120 150,60 300,90 450,40 600,70 600,120" fill="rgba(80,40,5,.7)"/>
+            <polygon points="0,120 100,80 250,100 400,65 550,85 600,120" fill="rgba(50,25,3,.8)"/>
+            <text x="300" y="20" text-anchor="middle" font-family="serif" font-size="10" fill="rgba(200,140,40,.3)" letter-spacing="3">PLACEHOLDER — remplacer par votre illustration</text>
+          </svg>
+        </div>
+        <div class="cs-text">
+          <p>Kitsune du clan maudit — trahis par une divinité du divertissement ou des vices, condamnés à se nourrir du plaisir des autres. Cette malédiction n'est pas une arme choisie : c'est une faim constante à gérer, contenir, surveiller à chaque instant.</p>
+          <p>Elle voyage dans le même bateau que Hyuun le soir où il quitte les filles d'Hadès. Elle observe la scène de la cale : un homme brisé portant un bandage sale qui fait trembler un colosse d'un regard. Ce n'est pas de la pitié — c'est de la curiosité. Une reconnaissance entre prédateurs. Elle le suit dans le désert sans se montrer, attendant qu'il tombe. Quand il s'effondre, elle le sauve.</p>
+          <p>C'est elle qui propose la guilde, dessine le motif Ouroboros, recrute Tetsuga par les événements et traque Arsène dans les rues pour le convaincre. Le quatuor est sa construction autant que celle de Hyuun.</p>
+          <p>Arc 5 : part avec Arsène retrouver la trace de la divinité qui a maudit son clan. Elle le fait principalement pour Hyuun — pour enlever ce poids de ses épaules. Ce n'est même pas pour elle.</p>
+        </div>`
+      },
+      {
+        id:'desc',title:'Description',open:false,
+        render:()=>`
+        <div class="cs-text">
+          <p>Regard en coin futé comme un renard, mais aussi apaisant. Elle ouvre et ferme l'intensité exactement comme elle veut, passe du jeu à l'action sans transition et sans signal. Elle est opaque là où les filles d'Hadès sont transparentes. Elle choisit ce qu'elle montre avec une précision chirurgicale.</p>
+          <p>Les rares moments où son masque tombe vraiment — le sourire rassuré vers le dos de Hyuun dans la tente, le grand sourire sans défense lors des retrouvailles de l'arc 3 — ont une violence particulière parce qu'ils sont rares. Elle cache son amour à moitié et extériorise le reste dans sa quête. Son amour pour Hyuun nourrit sa lutte personnelle.</p>
+        </div>`
+      },
+      {
+        id:'relations',title:'Relations',open:false,
+        render:()=>`
+        <div class="relation-block">
+          <div class="relation-header">
+            <div class="relation-name">Hyuun</div>
+            <div class="relation-role">Amour · Duo fondateur · Ouroboros</div>
+          </div>
+          <div class="relation-body">
+            <p>Hyuun ne réagit pas à sa séduction — pour Minako c'est révolutionnaire. Elle peut exister à côté de lui sans se sentir parasite. Elle l'aime en le libérant : le pousse vers le monde, vers Tetsuga, Arsène, vers les filles d'Hadès. Son amour s'exprime par le lâcher-prise. Elle sourit quand il a le dos tourné. Son sacrifice le plus grand : vouloir qu'il devienne complet, même sans elle au centre.</p>
+            <p>Retrouvailles arc 3 : tout le monde rit. Elle se tient à l'écart. Wendy tire son kimono. Hyuun lui tend la main, bandage visible. Son grand sourire — le premier sans masque : <em>"Tu avais dès le départ de la place pour tout le monde, et pourtant tu m'as quand même acceptée."</em></p>
+          </div>
+        </div>
+        <div class="relation-block">
+          <div class="relation-header">
+            <div class="relation-name">Nui</div>
+            <div class="relation-role">Rivale comprise · L'autre moitié</div>
+          </div>
+          <div class="relation-body">
+            <p>Arc 3 : Minako lit l'amour de Nui — sa malédiction la rend perméable aux émotions — et hésite pour la première fois. Est-ce que cet amour-là est meilleur que le sien ? Pas de jalousie ouverte, une tension sourde et élégante dans sa retenue.</p>
+            <p>La compréhension vient quand elles cessent de se voir comme rivales : elles sont les deux moitiés d'un même rôle. Minako le lance. Nui le rattrape. Quand elles l'acceptent, Hyuun est enfin libre.</p>
+          </div>
+        </div>
+        <div class="relation-block">
+          <div class="relation-header">
+            <div class="relation-name">Arsène</div>
+            <div class="relation-role">Respect mutuel · Test quotidien involontaire</div>
+          </div>
+          <div class="relation-body">
+            <p>Arsène produit du plaisir en permanence — c'est un festin pour la malédiction de Minako. Elle le recrute en partie parce que c'est un test pour elle. Arsène ne sait pas qu'il est une épreuve quotidienne jusqu'à la confession mutuelle avant le tournoi. Respect mutuel entre manipulateurs.</p>
+          </div>
+        </div>`
+      },
+    ]
+  },
+  {
+    id:'nui',
+    name:'Nui',
+    title:'La Chasseuse et la Protectrice',
+    tags:[
+      {label:'Filles d\'Hadès',style:'blue'},
+      {label:'Princesse d\'Albarossa',style:'gray'},
+      {label:'Prédateur',style:'amber'},
+    ],
+    cardBg:`linear-gradient(to bottom, #060810 0%, #0a0e20 30%, #101828 55%, #0c1420 75%, #060810 100%)`,
+    cardSvg:`<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;opacity:.3">
+      <circle cx="150" cy="185" r="60" fill="none" stroke="rgba(100,140,220,.5)" stroke-width="1"/>
+      <circle cx="150" cy="185" r="40" fill="none" stroke="rgba(100,140,220,.3)" stroke-width=".8"/>
+      <circle cx="150" cy="185" r="20" fill="none" stroke="rgba(100,140,220,.2)" stroke-width=".6"/>
+      <line x1="150" y1="125" x2="150" y2="245" stroke="rgba(100,140,220,.2)" stroke-width=".8"/>
+      <line x1="90"  y1="185" x2="210" y2="185" stroke="rgba(100,140,220,.2)" stroke-width=".8"/>
+    </svg>`,
+    sections:[
+      {
+        id:'info',title:'Informations',open:true,
+        render:()=>`
+        <div class="info-grid">
+          ${field('Full name','Nui')}
+          ${field('Age','21 ans (début arc 1)')}
+          ${field('Gender','Femme')}
+          ${field('Race','Humaine — Princesse d\'Albarossa (branche dominante)')}
+          ${field('Birth place','Empire d\'Albarossa')}
+          ${field('Birthday','—',true)}
+          ${field('Sexuality','—',true)}
+          ${field('Role','Protectrice · Chasseuse · La plus forte du groupe des filles')}
+          ${field('Favorite food','—',true)}
+          ${field('Favorite drink','—',true)}
+          ${field('Favorite animal','—',true)}
+          ${field('Favorite color','—',true)}
+          ${field('Likes','—',true)}
+          ${field('Dislikes','—',true)}
+          ${fieldFull('Hobbies','—',true)}
+        </div>`
+      },
+      {
+        id:'magic',title:'Magic / Combat',open:false,
+        render:()=>`
+        <div class="magic-list">
+          <div class="magic-item">
+            <div class="magic-dot"></div>
+            <div class="magic-content">
+              <div class="magic-title">Capacités non précisées en détail</div>
+              <div class="magic-desc">La plus forte du groupe des filles d'Hadès. Elle chasse — ancré dans son identité, pas appris par nécessité. Elle n'est pas marquée par Hadès : membre de faction uniquement, tout ce qu'elle fait elle le fait par ses propres capacités.</div>
+            </div>
+          </div>
+          <div class="magic-item">
+            <div class="magic-dot"></div>
+            <div class="magic-content">
+              <div class="magic-title">Montée en puissance permanente</div>
+              <div class="magic-desc">Sa courbe de puissance tente de suivre celle de Hyuun au maximum — il ne faut que quelques mois avant qu'elle le double à nouveau, et inversement. Chaque progression est un acte d'amour déguisé en discipline martiale. Arc 5 : veut plus que tout devenir plus forte pour protéger Hyuun après un incident de l'arc 4.</div>
+            </div>
+          </div>
+        </div>`
+      },
+      {
+        id:'background',title:'Background story',open:false,
+        render:()=>`
+        <div class="section-img">
+          <svg viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
+            <rect width="600" height="120" fill="#060810"/>
+            <polygon points="0,120 200,50 400,80 600,30 600,120" fill="rgba(10,20,50,.8)"/>
+            <polygon points="0,120 150,75 350,95 550,55 600,120" fill="rgba(8,15,40,.9)"/>
+            <text x="300" y="20" text-anchor="middle" font-family="serif" font-size="10" fill="rgba(100,140,220,.3)" letter-spacing="3">PLACEHOLDER — remplacer par votre illustration</text>
+          </svg>
+        </div>
+        <div class="cs-text">
+          <p>Princesse d'Albarossa, branche dominante. Élevée pour devenir impératrice. Influencée par Nina (Hypocrisie) dans son éducation. La nature exacte de son départ d'Albarossa et de son arrivée dans la faction d'Hadès n'est pas encore développée.</p>
+          <p>Pendant la survie dans l'arc 1, elle chasse avec Hyuun dans le silence absolu — communication par signes, affinité instinctive entre deux prédateurs naturels. Leur lien est sans nom, et précède l'amour.</p>
+          <p>Arc 3 : elle est sauvée par Hyuun lors de son infiltration dans la capitale d'Albarossa, sans qu'il sache initialement qu'elle s'y trouvait. C'est elle qui fait le premier pas vers la réconciliation après la tension des retrouvailles.</p>
+          <p>Arc 5 : part en mission spéciale avec Maelle et Wendy. Elle veut plus que tout devenir plus forte, probablement suite à un incident de l'arc 4 où elle n'a pas pu protéger Hyuun.</p>
+        </div>`
+      },
+      {
+        id:'desc',title:'Description',open:false,
+        render:()=>`
+        <div class="cs-text">
+          <p>Bijoux, posture altière — princesse même en forêt, même couverte de sang. Cette posture n'est pas de l'arrogance : c'est une éducation totale du corps. Visage impassible. Elle laisse rarement transparaître des émotions, et uniquement avec ses proches — une main posée sur la tête de Wendy, un regard doux vers Maelle, un demi-sourire quand Beka fait une bêtise.</p>
+          <p>Quand quelque chose lui fait mal, sa propre douleur disparaît derrière celle des autres. À la séparation avec Hyuun : elle s'accroupit, enlace Wendy, ne pleure pas, a la mine d'une dernière chasse ratée. Et sa main tremble pendant qu'elle tient Wendy. Elle cache tout dans cette main qui tremble. Les rares moments où son masque tombe sont dévastateurs précisément parce qu'ils sont rares.</p>
+        </div>`
+      },
+      {
+        id:'relations',title:'Relations',open:false,
+        render:()=>`
+        <div class="relation-block">
+          <div class="relation-header">
+            <div class="relation-name">Hyuun</div>
+            <div class="relation-role">Amour · Chasseuse silencieuse · Bouclier</div>
+          </div>
+          <div class="relation-body">
+            <p>Leur lien commence avant les mots — deux prédateurs naturels qui se reconnaissent dans l'obscurité. Elle le connaît d'une manière que même Minako ne connaît pas. Son amour s'exprime entièrement par l'action : se renforcer, s'entraîner, pousser ses limites. Jamais elle ne le dit. Les rares moments où son masque tombe — un regard trop long, une main qui tremble — sont dévastateurs par leur rareté.</p>
+            <p>Son amour est complémentaire à celui de Minako : Minako le lance, Nui le rattrape. Minako ouvre la porte, Nui traverse avec lui. L'une est le moteur, l'autre est le bouclier. Deux amours libres — aucune ne veut posséder Hyuun.</p>
+          </div>
+        </div>
+        <div class="relation-block">
+          <div class="relation-header">
+            <div class="relation-name">Minako</div>
+            <div class="relation-role">Rivale comprise · L'autre moitié</div>
+          </div>
+          <div class="relation-body">
+            <p>Arc 3 : chacune comprend immédiatement ce que l'autre représente pour Hyuun. Nui observe Minako avec son regard impassible en serrant le poing sous sa manche. Pas de jalousie ouverte mais une tension sourde. La résolution vient quand elles cessent de se voir comme rivales : deux moitiés d'un même rôle. Quand elles l'acceptent, Hyuun est enfin libre.</p>
+          </div>
+        </div>
+        <div class="relation-block">
+          <div class="relation-header">
+            <div class="relation-name">Wendy</div>
+            <div class="relation-role">Petite sœur protégée</div>
+          </div>
+          <div class="relation-body">
+            <p>Wendy est plus proche de Nui que des autres. Nui pose sa main sur la tête de Wendy — geste de protection instinctive, sans paroles. Quand Wendy fond en larmes au départ de Hyuun, c'est dans les bras de Nui qu'elle finit. À la séparation, Nui ne pleure pas et s'occupe de Wendy — sa propre douleur, elle l'avale entière.</p>
+          </div>
+        </div>`
+      },
+    ]
+  },
+];
+
+/* ══ HELPERS HTML ══ */
+function field(label,value,unknown=false){
+  return `<div class="info-field">
+    <div class="info-label">${label}</div>
+    <div class="info-value${unknown?' unknown':''}">${value}</div>
+  </div>`;
+}
+function fieldFull(label,value,unknown=false){
+  return `<div class="info-field full">
+    <div class="info-label">${label}</div>
+    <div class="info-value${unknown?' unknown':''}">${value}</div>
+  </div>`;
+}
+function tagHtml(t){ return `<span class="ctag ctag-${t.style}">${t.label}</span>`; }
+
+/* ══ BUILD CARDS ══ */
+const grid=document.getElementById('chars-grid');
+characters.forEach(ch=>{
+  const card=document.createElement('div');
+  card.className='char-card';
+  card.innerHTML=`
+    <div class="char-card-img" style="background:${ch.cardBg};">${ch.cardSvg||''}</div>
+    <div class="char-card-overlay"></div>
+    <div class="char-card-body">
+      <div class="char-card-name">${ch.name}</div>
+      <div class="char-card-title">${ch.title}</div>
+      <div class="char-card-tags">${ch.tags.map(tagHtml).join('')}</div>
+    </div>`;
+  card.addEventListener('click',()=>openPanel(ch));
+  grid.appendChild(card);
+});
+
+/* ══ PANNEAU LATÉRAL ══ */
+const backdrop=document.getElementById('modal-backdrop');
+const panel   =document.getElementById('char-panel');
+const pName   =document.getElementById('panel-name');
+const pTitle  =document.getElementById('panel-title');
+const pTags   =document.getElementById('panel-tags');
+const pBody   =document.getElementById('panel-body');
+
+function openPanel(ch){
+  pName.textContent=ch.name;
+  pTitle.textContent=ch.title;
+  pTags.innerHTML=ch.tags.map(tagHtml).join('');
+  pBody.innerHTML='';
+  ch.sections.forEach(sec=>{
+    const wrap=document.createElement('div');
+    wrap.className='cs-section';
+    wrap.innerHTML=`
+      <button class="cs-section-header${sec.open?' open':''}" onclick="toggleSection(this)">
+        <span>${sec.title}</span>
+        <svg class="cs-chevron" viewBox="0 0 14 8"><path d="M1 1l6 6 6-6"/></svg>
+      </button>
+      <div class="cs-section-wrap${sec.open?' open':''}">
+        <div class="cs-section-body">
+          <div class="cs-section-inner">${sec.render()}</div>
+        </div>
+      </div>`;
+    pBody.appendChild(wrap);
+  });
+  backdrop.classList.add('open');
+  panel.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closePanel(){
+  backdrop.classList.remove('open');
+  panel.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function toggleSection(header){
+  const wrap=header.nextElementSibling;
+  const isOpen=wrap.classList.contains('open');
+  wrap.classList.toggle('open',!isOpen);
+  header.classList.toggle('open',!isOpen);
+}
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closePanel(); });
+
+/* ══ VINYL — état restauré depuis sessionStorage ══ */
+const player    =document.getElementById('player');
+const vinyl     =document.getElementById('vinyl');
+const vinylSvg  =document.getElementById('vinyl-svg');
+const coverImg  =document.getElementById('cover-img');
+const trackLabel=document.getElementById('track-label');
+const trackList =document.getElementById('track-list');
+const dropdown  =document.getElementById('dropdown');
+const chevronBtn=document.getElementById('chevron-btn');
+const iPlay     =document.getElementById('i-play');
+const iPause    =document.getElementById('i-pause');
+const vinylPopup=document.getElementById('vinyl-popup');
+
+let currentIdx=-1,isPlaying=false,ddOpen=false;
+
+/* Build dropdown */
+tracks.forEach((t,i)=>{
+  const el=document.createElement('div');
+  el.className='track-item';
+  el.innerHTML=`<div class="track-thumb"><img src="${t.cover}" alt="${t.title}"></div>
+    <div class="track-meta"><div class="track-title">${t.title}</div></div>
+    <div class="playing-dot"></div>`;
+  el.addEventListener('click',()=>selectTrack(i));
+  trackList.appendChild(el);
+});
+
+/* Popup */
+let popupTimer=setTimeout(()=>{if(currentIdx===-1)vinylPopup.classList.add('visible');},2500);
+function hidePopup(){vinylPopup.classList.remove('visible');clearTimeout(popupTimer);}
+
+function selectTrack(idx){
+  hidePopup();currentIdx=idx;
+  const t=tracks[idx];
+  vinylSvg.style.display='none';
+  coverImg.src=t.cover;coverImg.style.display='block';
+  trackLabel.textContent=t.title;trackLabel.classList.add('on');
+  if(t.src){player.src=t.src;player.play().then(()=>setState(true)).catch(()=>setState(true));}
+  else{setState(true);}
+  document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===idx));
+  closeDropdown();
+}
+function setState(on){
+  isPlaying=on;vinyl.classList.toggle('spinning',on);
+  iPlay.style.display=on?'none':'block';iPause.style.display=on?'block':'none';
+}
+vinyl.addEventListener('click',()=>{
+  if(currentIdx===-1){toggleDropdown();return;}
+  if(isPlaying){if(tracks[currentIdx].src)player.pause();setState(false);}
+  else{if(tracks[currentIdx].src)player.play().catch(()=>{});setState(true);}
+});
+player.addEventListener('ended',()=>selectTrack((currentIdx+1)%tracks.length));
+
+function openDropdown(){ddOpen=true;dropdown.classList.add('open');chevronBtn.classList.add('open');hidePopup();}
+function closeDropdown(){ddOpen=false;dropdown.classList.remove('open');chevronBtn.classList.remove('open');}
+function toggleDropdown(){ddOpen?closeDropdown():openDropdown();}
+chevronBtn.addEventListener('click',e=>{e.stopPropagation();toggleDropdown();});
+document.addEventListener('click',e=>{
+  if(ddOpen&&!dropdown.contains(e.target)&&!chevronBtn.contains(e.target))closeDropdown();
+});
+
+/* ── Restauration sessionStorage ── */
+try{
+  const saved=JSON.parse(sessionStorage.getItem('aven-player')||'null');
+  if(saved&&saved.idx>=0&&saved.idx<tracks.length){
+    hidePopup();
+    const t=tracks[saved.idx];
+    currentIdx=saved.idx;
+    vinylSvg.style.display='none';
+    coverImg.src=t.cover;coverImg.style.display='block';
+    trackLabel.textContent=t.title;trackLabel.classList.add('on');
+    document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===saved.idx));
+    if(t.src&&saved.playing){
+      player.src=t.src;
+      if(saved.time)player.currentTime=saved.time;
+      player.play().then(()=>setState(true)).catch(()=>setState(saved.playing));
+    } else {
+      setState(saved.playing||false);
+    }
+  }
+}catch(e){}
+
+/* Sauvegarde avant navigation */
+window.addEventListener('beforeunload',()=>{
+  if(currentIdx>=0){
+    sessionStorage.setItem('aven-player',JSON.stringify({
+      idx:currentIdx,playing:isPlaying,
+      time:tracks[currentIdx].src?player.currentTime:0
+    }));
+  }
+});
+</script>
+</body>
+</html>
