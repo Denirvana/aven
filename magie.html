@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Magie — Aven</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@200;300;400;500&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--nav-h:56px;}
+    html,body{width:100%;height:100%;overflow:hidden;background:#06060f;}
+    .svg-defs{position:absolute;width:0;height:0;overflow:hidden}
+
+    /* ══ NAVBAR ══ */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;justify-content:center;gap:3rem;background:rgba(6,6,15,.4);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border-bottom:.5px solid rgba(255,255,255,.06);}
+    nav a{font-family:'Raleway',sans-serif;font-weight:300;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.68);text-decoration:none;transition:color .3s;position:relative;}
+    nav a[href="magie.html"]{color:#fff;}
+    nav a[href="magie.html"]::after{transform:scaleX(1)!important;}
+    nav a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:.5px;background:rgba(200,120,48,.8);transform:scaleX(0);transform-origin:center;transition:transform .35s ease;}
+    nav a:hover{color:#fff;}
+    nav a:hover::after{transform:scaleX(1);}
+    .vinyl-zone{position:fixed;right:18px;top:0;height:var(--nav-h);display:flex;align-items:center;gap:9px;z-index:201;}
+    .track-info{display:flex;align-items:center;gap:6px;}
+    #track-label{font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);max-width:130px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;transition:color .4s;}
+    #track-label.on{color:rgba(200,120,48,.8);}
+    .chevron-btn{background:none;border:none;cursor:pointer;padding:2px 4px;display:flex;align-items:center;opacity:.4;transition:opacity .2s;color:white;}
+    .chevron-btn:hover{opacity:.9;}
+    .chevron-btn svg{width:10px;height:10px;fill:currentColor;transition:transform .25s;}
+    .chevron-btn.open svg{transform:rotate(180deg);}
+    .vinyl{position:relative;width:40px;height:40px;cursor:pointer;flex-shrink:0;}
+    .disc-wrap{width:40px;height:40px;border-radius:50%;overflow:hidden;transform-origin:center;animation:spin 4s linear infinite;animation-play-state:paused;transition:box-shadow .5s;}
+    .vinyl.spinning .disc-wrap{animation-play-state:running;box-shadow:0 0 10px rgba(200,120,48,.5);}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .disc-wrap img,.disc-wrap svg.vinyl-svg{width:40px;height:40px;display:block;}
+    .vinyl-icon{position:absolute;inset:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);opacity:0;transition:opacity .2s;}
+    .vinyl:hover .vinyl-icon{opacity:1;}
+    .vinyl-icon svg{width:13px;height:13px;fill:rgba(255,255,255,.92);}
+    #vinyl-popup{position:fixed;top:calc(var(--nav-h)+10px);right:14px;z-index:300;background:rgba(10,6,2,.9);border:.5px solid rgba(200,120,48,.35);border-radius:20px;padding:7px 14px;display:flex;align-items:center;gap:7px;white-space:nowrap;pointer-events:none;opacity:0;transform:translateY(-6px);transition:opacity .5s ease,transform .5s ease;}
+    #vinyl-popup.visible{opacity:1;transform:translateY(0);}
+    #vinyl-popup::before{content:'';position:absolute;bottom:100%;right:20px;border:5px solid transparent;border-bottom-color:rgba(200,120,48,.35);}
+    #vinyl-popup::after{content:'';position:absolute;bottom:calc(100% - 1px);right:21px;border:4px solid transparent;border-bottom-color:rgba(10,6,2,.9);}
+    .popup-dot{width:6px;height:6px;border-radius:50%;background:rgba(200,120,48,.85);flex-shrink:0;animation:dotPulse 1.6s ease-in-out infinite;}
+    @keyframes dotPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+    .popup-text{font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,120,48,.85);}
+    .dropdown{position:fixed;top:calc(var(--nav-h)+6px);right:16px;width:220px;z-index:400;background:rgba(8,8,20,.88);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border:.5px solid rgba(255,255,255,.08);border-radius:8px;overflow:hidden;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .22s ease,transform .22s ease;}
+    .dropdown.open{opacity:1;transform:translateY(0);pointer-events:all;}
+    .dropdown-header{padding:10px 14px 8px;font-family:'Raleway',sans-serif;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);border-bottom:.5px solid rgba(255,255,255,.06);}
+    .track-item{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;transition:background .15s;}
+    .track-item:hover{background:rgba(255,255,255,.05);}
+    .track-item.active{background:rgba(200,120,48,.08);}
+    .track-thumb{width:26px;height:26px;border-radius:4px;overflow:hidden;flex-shrink:0;}
+    .track-thumb img{width:26px;height:26px;display:block;}
+    .track-meta{flex:1;min-width:0;}
+    .track-title{font-family:'Raleway',sans-serif;font-size:10px;color:rgba(255,255,255,.75);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+    .track-item.active .track-title{color:rgba(200,120,48,.95);}
+    .playing-dot{width:5px;height:5px;border-radius:50%;background:rgba(200,120,48,.9);flex-shrink:0;opacity:0;animation:blink 1.4s ease-in-out infinite;}
+    .track-item.active .playing-dot{opacity:1;}
+    @keyframes blink{0%,100%{opacity:.5}50%{opacity:1}}
+
+    /* ══ PAGE ══ */
+    .page{position:fixed;inset:0;top:var(--nav-h);overflow:hidden;}
+    .page-bg{position:absolute;inset:0;pointer-events:none;}
+    .bg-grad{position:absolute;inset:0;background:linear-gradient(160deg,#040410 0%,#060618 20%,#080820 40%,#060610 70%,#040408 100%);}
+    .bg-layer{position:absolute;inset:0;opacity:.6;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,transparent 35%,rgba(0,0,0,.6) 60%,black 82%);mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,transparent 35%,rgba(0,0,0,.6) 60%,black 82%);}
+    .bg-r{filter:url(#ca-red);}
+    .bg-b{filter:url(#ca-blue);}
+    .bg-r .bg-grad,.bg-b .bg-grad{position:absolute;inset:0;background:linear-gradient(160deg,#040410 0%,#060618 20%,#080820 40%,#060610 70%,#040408 100%);}
+    .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 75% at 50% 50%,transparent 28%,rgba(2,2,10,.55) 65%,rgba(2,2,10,.92) 100%);}
+    .edge-blur{position:absolute;inset:0;pointer-events:none;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-mask-image:radial-gradient(ellipse 78% 72% at 50% 50%,transparent 32%,rgba(0,0,0,.5) 55%,black 78%);mask-image:radial-gradient(ellipse 78% 72% at 50% 50%,transparent 32%,rgba(0,0,0,.5) 55%,black 78%);}
+
+    .page-scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;}
+    .page-scroll::-webkit-scrollbar{width:3px;}
+    .page-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px;}
+    .page-inner{padding:44px 60px 80px;}
+
+    .page-title{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(28px,3.5vw,46px);letter-spacing:.18em;color:#fff;margin-bottom:6px;text-shadow:0 0 60px rgba(140,100,220,.3);}
+    .page-subtitle{font-family:'Raleway',sans-serif;font-weight:200;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:52px;}
+
+    /* ══ GRILLE DE CARDS ══ */
+    .magic-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:20px;
+      max-width:900px;
+    }
+    @media(max-width:700px){.magic-grid{grid-template-columns:1fr;}}
+
+    /* ══ CARD MAGIE ══ */
+    .magic-card{
+      position:relative;
+      border-radius:8px;overflow:hidden;
+      cursor:pointer;
+      border:.5px solid rgba(255,255,255,.07);
+      aspect-ratio:4/3;
+      transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .3s;
+    }
+    .magic-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.14);}
+
+    .mc-bg{
+      position:absolute;inset:0;
+      background-size:cover;background-position:center;
+      transition:transform .6s cubic-bezier(.22,1,.36,1),filter .4s;
+      filter:brightness(.5) saturate(.8);
+    }
+    .magic-card:hover .mc-bg{transform:scale(1.05);filter:brightness(.65) saturate(1);}
+
+    /* SVG de fond décoratif */
+    .mc-bg svg{position:absolute;inset:0;width:100%;height:100%;}
+
+    .mc-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(4,4,16,.92) 0%,rgba(4,4,16,.25) 50%,transparent 100%);}
+
+    .mc-icon{
+      position:absolute;top:24px;left:24px;
+      width:36px;height:36px;opacity:.55;
+    }
+    .mc-icon svg{width:36px;height:36px;stroke:rgba(255,255,255,.8);fill:none;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;}
+
+    .mc-body{position:absolute;bottom:0;left:0;right:0;padding:20px 22px;}
+    .mc-category{font-family:'Raleway',sans-serif;font-size:8px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:rgba(200,120,48,.8);margin-bottom:5px;}
+    .mc-name{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(16px,1.8vw,22px);letter-spacing:.1em;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6);}
+
+    /* ══ OVERLAY MODAL ══ */
+    #modal-backdrop{
+      position:fixed;inset:0;z-index:500;
+      background:rgba(0,0,0,.6);
+      backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+      opacity:0;pointer-events:none;
+      transition:opacity .35s ease;
+    }
+    #modal-backdrop.open{opacity:1;pointer-events:all;}
+
+    /* ══ POPUP CENTRÉ ══ */
+    #magic-modal{
+      position:fixed;
+      top:50%;left:50%;
+      transform:translate(-50%,-48%) scale(.97);
+      z-index:600;
+      width:min(88vw,820px);
+      max-height:82vh;
+      background:rgba(7,7,20,.97);
+      border:.5px solid rgba(255,255,255,.07);
+      border-radius:10px;
+      display:flex;flex-direction:column;
+      overflow:hidden;
+      opacity:0;pointer-events:none;
+      transition:opacity .35s ease,transform .35s cubic-bezier(.22,1,.36,1);
+    }
+    #magic-modal.open{
+      opacity:1;pointer-events:all;
+      transform:translate(-50%,-50%) scale(1);
+    }
+
+    /* Header modal */
+    .modal-header{
+      flex-shrink:0;
+      padding:26px 32px 20px;
+      border-bottom:.5px solid rgba(255,255,255,.06);
+      background:rgba(6,6,18,.6);
+      position:relative;
+    }
+    .modal-close{
+      position:absolute;top:18px;right:20px;
+      background:none;border:none;cursor:pointer;
+      color:rgba(255,255,255,.3);font-size:20px;
+      padding:4px 8px;transition:color .2s;
+      line-height:1;
+    }
+    .modal-close:hover{color:rgba(255,255,255,.7);}
+    .modal-category{font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.25em;text-transform:uppercase;color:rgba(200,120,48,.65);margin-bottom:6px;}
+    .modal-title{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(22px,3vw,34px);letter-spacing:.16em;color:#fff;line-height:1;text-shadow:0 0 50px rgba(140,100,220,.25);}
+    .modal-subtitle{font-family:'Raleway',sans-serif;font-size:10px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:8px;}
+
+    /* Corps scrollable */
+    .modal-body{
+      flex:1;overflow-y:auto;
+      scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;
+    }
+    .modal-body::-webkit-scrollbar{width:3px;}
+    .modal-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px;}
+
+    /* ══ SECTIONS DÉPLIABLES ══ */
+    .ms-section{border-bottom:.5px solid rgba(255,255,255,.05);}
+    .ms-header{
+      width:100%;background:none;border:none;cursor:pointer;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:15px 32px;
+      font-family:'Cinzel',serif;font-weight:400;font-size:13px;letter-spacing:.1em;
+      color:rgba(255,255,255,.5);
+      transition:color .25s,background .2s;text-align:left;
+    }
+    .ms-header:hover{color:rgba(255,255,255,.82);background:rgba(255,255,255,.02);}
+    .ms-header.open{color:rgba(255,255,255,.9);}
+    .ms-chevron{width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;transition:transform .35s cubic-bezier(.22,1,.36,1);opacity:.55;}
+    .ms-header.open .ms-chevron{transform:rotate(180deg);opacity:1;}
+    .ms-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1);}
+    .ms-wrap.open{grid-template-rows:1fr;}
+    .ms-body{overflow:hidden;}
+    .ms-inner{
+      padding:0 32px 24px;
+      font-family:'DM Sans',sans-serif;font-size:13.5px;
+      color:rgba(255,255,255,.52);line-height:1.82;
+    }
+    .ms-inner p{margin-bottom:12px;}
+    .ms-inner p:last-child{margin:0;}
+    /* Placeholder vide */
+    .ms-placeholder{
+      font-style:italic;color:rgba(255,255,255,.2);
+      border:.5px dashed rgba(255,255,255,.08);
+      border-radius:5px;padding:14px 18px;
+      font-size:12px;letter-spacing:.04em;
+    }
+  </style>
+</head>
+<body>
+
+<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="ca-red" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/></filter>
+    <filter id="ca-blue" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/></filter>
+  </defs>
+</svg>
+
+<div id="vinyl-popup"><div class="popup-dot"></div><span class="popup-text">Lancer une piste</span></div>
+
+<nav>
+  <a href="index.html">Accueil</a>
+  <a href="personnages.html">Personnages</a>
+  <a href="magie.html">Magie</a>
+  <a href="univers.html">Univers</a>
+  <a href="projet.html">Projet</a>
+  <a href="contact.html">Contact</a>
+  <div class="vinyl-zone">
+    <div class="track-info">
+      <span id="track-label">Aucune piste</span>
+      <button class="chevron-btn" id="chevron-btn"><svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="vinyl" id="vinyl">
+      <div class="disc-wrap" id="disc-wrap">
+        <svg id="vinyl-svg" class="vinyl-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="50" fill="#111"/>
+          <circle cx="50" cy="50" r="47" fill="none" stroke="#1e1e1e" stroke-width=".9"/>
+          <circle cx="50" cy="50" r="43" fill="none" stroke="#1e1e1e" stroke-width=".9"/>
+          <circle cx="50" cy="50" r="38" fill="none" stroke="#1a1a1a" stroke-width=".7"/>
+          <circle cx="50" cy="50" r="33" fill="none" stroke="#1e1e1e" stroke-width=".7"/>
+          <circle cx="50" cy="50" r="28" fill="none" stroke="#1a1a1a" stroke-width=".6"/>
+          <circle cx="50" cy="50" r="23" fill="none" stroke="#1e1e1e" stroke-width=".6"/>
+          <ellipse cx="38" cy="30" rx="8" ry="3.5" fill="white" opacity=".04" transform="rotate(-25 38 30)"/>
+          <circle cx="50" cy="50" r="19" fill="#180a02"/><circle cx="50" cy="50" r="18.5" fill="none" stroke="rgba(200,120,48,.45)" stroke-width=".7"/>
+          <text x="50" y="48" text-anchor="middle" font-family="'Cinzel',serif" font-size="5.5" fill="rgba(200,120,48,.85)" letter-spacing=".5">AVEN</text>
+          <text x="50" y="55.5" text-anchor="middle" font-family="sans-serif" font-size="2.6" fill="rgba(200,120,48,.4)" letter-spacing=".8">JOURNEY</text>
+          <circle cx="50" cy="50" r="3" fill="#0a0a0a"/>
+        </svg>
+        <img id="cover-img" src="" alt="" style="display:none;border-radius:50%;object-fit:cover;"/>
+      </div>
+      <div class="vinyl-icon">
+        <svg id="i-play" viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
+        <svg id="i-pause" viewBox="0 0 24 24" style="display:none"><rect x="5" y="4" width="4" height="16"/><rect x="15" y="4" width="4" height="16"/></svg>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="dropdown" id="dropdown">
+  <div class="dropdown-header">Pistes</div>
+  <div id="track-list"></div>
+</div>
+
+<!-- MODAL BACKDROP -->
+<div id="modal-backdrop" onclick="closeModal()"></div>
+
+<!-- POPUP CENTRÉ -->
+<div id="magic-modal">
+  <div class="modal-header">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-category" id="modal-category"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-subtitle" id="modal-subtitle"></div>
+  </div>
+  <div class="modal-body" id="modal-body"></div>
+</div>
+
+<div class="page">
+  <div class="page-bg">
+    <div class="bg-grad"></div>
+    <div class="bg-layer bg-r"><div class="bg-grad"></div></div>
+    <div class="bg-layer bg-b"><div class="bg-grad"></div></div>
+    <div class="vignette"></div>
+    <div class="edge-blur"></div>
+  </div>
+
+  <div class="page-scroll">
+    <div class="page-inner">
+      <h1 class="page-title">Magie</h1>
+      <p class="page-subtitle">The Unwritten Journey — Système Magique</p>
+
+      <div class="magic-grid" id="magic-grid"></div>
+    </div>
+  </div>
+</div>
+
+<audio id="player" preload="metadata"></audio>
+
+<script>
+/* ══ DONNÉES MAGIE ══ */
+const magicTypes = [
+  {
+    id: 'naturelle',
+    category: 'Système de Magie',
+    name: 'Magie Naturelle',
+    subtitle: 'L\'organe magique · Les noyaux · Les portes · Le gouvernail',
+    icon: `<svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" stroke-width="1.2"/>
+      <path d="M18 8 C18 8 10 14 10 20 C10 25 14 28 18 28 C22 28 26 25 26 20 C26 14 18 8 18 8Z" stroke-width="1.2"/>
+      <line x1="18" y1="8" x2="18" y2="28" stroke-width=".8"/>
+      <line x1="10" y1="20" x2="26" y2="20" stroke-width=".8"/></svg>`,
+    bg: `linear-gradient(135deg,#04100a 0%,#081a0c 40%,#0c2010 65%,#081408 100%)`,
+    bgSvg: `<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" style="opacity:.3">
+      <circle cx="200" cy="150" r="100" fill="none" stroke="rgba(80,180,80,.4)" stroke-width="1"/>
+      <circle cx="200" cy="150" r="70" fill="none" stroke="rgba(80,180,80,.25)" stroke-width=".8"/>
+      <circle cx="200" cy="150" r="40" fill="none" stroke="rgba(80,180,80,.15)" stroke-width=".6"/>
+      <circle cx="200" cy="150" r="12" fill="rgba(80,180,80,.12)"/>
+      <line x1="200" y1="50" x2="200" y2="250" stroke="rgba(80,180,80,.15)" stroke-width=".8"/>
+      <line x1="100" y1="150" x2="300" y2="150" stroke="rgba(80,180,80,.15)" stroke-width=".8"/>
+    </svg>`,
+    sections: [
+      { title: "Principes fondamentaux",       open: true  },
+      { title: "L'organe magique",             open: false },
+      { title: "Les noyaux magiques",          open: false },
+      { title: "Les portes",                   open: false },
+      { title: "Le réseau de vaisseaux",       open: false },
+      { title: "Le gouvernail",                open: false },
+      { title: "La respiration",               open: false },
+      { title: "Les contrecoups",              open: false },
+      { title: "L'aura",                       open: false },
+    ]
+  },
+  {
+    id: 'spirituelle',
+    category: 'Système de Magie',
+    name: 'Magie Spirituelle',
+    subtitle: 'Visualisation · Conviction · Concentration · Les yeux divins',
+    icon: `<svg viewBox="0 0 36 36"><ellipse cx="18" cy="18" rx="14" ry="9" stroke-width="1.2"/>
+      <ellipse cx="18" cy="18" rx="5" ry="5" stroke-width="1.2"/>
+      <line x1="18" y1="5" x2="18" y2="9" stroke-width="1"/><line x1="18" y1="27" x2="18" y2="31" stroke-width="1"/>
+      <line x1="5" y1="18" x2="10" y2="18" stroke-width="1"/><line x1="26" y1="18" x2="31" y2="18" stroke-width="1"/></svg>`,
+    bg: `linear-gradient(135deg,#080410 0%,#100818 40%,#180c24 65%,#100814 100%)`,
+    bgSvg: `<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" style="opacity:.28">
+      <ellipse cx="200" cy="150" rx="160" ry="100" fill="none" stroke="rgba(140,80,220,.4)" stroke-width="1"/>
+      <ellipse cx="200" cy="150" rx="100" ry="62" fill="none" stroke="rgba(140,80,220,.25)" stroke-width=".8"/>
+      <ellipse cx="200" cy="150" rx="50" ry="30" fill="none" stroke="rgba(140,80,220,.15)" stroke-width=".6"/>
+      <ellipse cx="200" cy="150" rx="15" ry="9" fill="rgba(140,80,220,.15)"/>
+    </svg>`,
+    sections: [
+      { title: "Le côté mental de la magie",  open: true  },
+      { title: "La visualisation",            open: false },
+      { title: "La conviction",               open: false },
+      { title: "La concentration",            open: false },
+      { title: "Les trois piliers",           open: false },
+      { title: "Les yeux divins",             open: false },
+      { title: "Le marquage divin",           open: false },
+      { title: "La Pupille Divine",           open: false },
+    ]
+  },
+  {
+    id: 'cercles',
+    category: 'Système de Magie',
+    name: 'Magie des Cercles',
+    subtitle: 'Incantations · Cercles magiques · Affinités · Les Dons',
+    icon: `<svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="13" stroke-width="1.2" stroke-dasharray="3 2"/>
+      <circle cx="18" cy="18" r="7" stroke-width="1"/><circle cx="18" cy="18" r="2" fill="rgba(255,255,255,.6)"/>
+      <line x1="18" y1="5" x2="18" y2="11" stroke-width="1"/><line x1="18" y1="25" x2="18" y2="31" stroke-width="1"/>
+      <line x1="5" y1="18" x2="11" y2="18" stroke-width="1"/><line x1="25" y1="18" x2="31" y2="18" stroke-width="1"/>
+      <line x1="9" y1="9" x2="13" y2="13" stroke-width=".8"/><line x1="23" y1="23" x2="27" y2="27" stroke-width=".8"/>
+      <line x1="27" y1="9" x2="23" y2="13" stroke-width=".8"/><line x1="13" y1="23" x2="9" y2="27" stroke-width=".8"/></svg>`,
+    bg: `linear-gradient(135deg,#060a10 0%,#08101c 40%,#0c1828 65%,#080e18 100%)`,
+    bgSvg: `<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" style="opacity:.28">
+      <circle cx="200" cy="150" r="120" fill="none" stroke="rgba(60,120,200,.35)" stroke-width="1" stroke-dasharray="4 3"/>
+      <circle cx="200" cy="150" r="80" fill="none" stroke="rgba(60,120,200,.25)" stroke-width=".8" stroke-dasharray="3 2"/>
+      <circle cx="200" cy="150" r="40" fill="none" stroke="rgba(60,120,200,.15)" stroke-width=".6"/>
+      <polygon points="200,50 278,212 122,212" fill="none" stroke="rgba(60,120,200,.2)" stroke-width=".8"/>
+      <polygon points="200,250 122,88 278,88" fill="none" stroke="rgba(60,120,200,.15)" stroke-width=".6"/>
+    </svg>`,
+    sections: [
+      { title: "Les incantations",            open: true  },
+      { title: "Les cercles magiques",        open: false },
+      { title: "Les affinités élémentaires",  open: false },
+      { title: "Les types de magie",          open: false },
+      { title: "Les Dons",                    open: false },
+      { title: "Niveaux de maîtrise",         open: false },
+    ]
+  },
+  {
+    id: 'martiale',
+    category: 'Système de Magie',
+    name: 'Magie Martiale',
+    subtitle: 'Corps · Armes · Écoles d\'épée · Canalisation',
+    icon: `<svg viewBox="0 0 36 36"><line x1="8" y1="28" x2="28" y2="8" stroke-width="1.5"/>
+      <line x1="8" y1="28" x2="12" y2="24" stroke-width="2.5"/>
+      <polygon points="28,8 24,12 30,14" fill="rgba(255,255,255,.6)" stroke-width=".5"/>
+      <circle cx="18" cy="18" r="5" fill="none" stroke-width=".8" stroke-dasharray="2 1.5"/>
+      <line x1="18" y1="13" x2="18" y2="23" stroke-width=".6"/><line x1="13" y1="18" x2="23" y2="18" stroke-width=".6"/></svg>`,
+    bg: `linear-gradient(135deg,#100604 0%,#1c0c06 40%,#280e04 65%,#180806 100%)`,
+    bgSvg: `<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" style="opacity:.28">
+      <line x1="60" y1="240" x2="340" y2="60" stroke="rgba(200,80,40,.5)" stroke-width="2"/>
+      <circle cx="200" cy="150" r="60" fill="none" stroke="rgba(200,80,40,.2)" stroke-width="1" stroke-dasharray="3 2"/>
+      <circle cx="200" cy="150" r="30" fill="none" stroke="rgba(200,80,40,.15)" stroke-width=".8"/>
+      <line x1="200" y1="90" x2="200" y2="210" stroke="rgba(200,80,40,.15)" stroke-width=".8"/>
+      <line x1="140" y1="150" x2="260" y2="150" stroke="rgba(200,80,40,.15)" stroke-width=".8"/>
+    </svg>`,
+    sections: [
+      { title: "Principes de la magie martiale", open: true  },
+      { title: "Renforcement du corps",          open: false },
+      { title: "Canalisation dans les armes",    open: false },
+      { title: "Les Écoles d'Armes",             open: false },
+      { title: "Le Mont de l'Épée",              open: false },
+      { title: "Les quatre dieux de l'épée",     open: false },
+    ]
+  },
+];
+
+/* ══ BUILD CARDS ══ */
+const grid = document.getElementById('magic-grid');
+magicTypes.forEach(m => {
+  const card = document.createElement('div');
+  card.className = 'magic-card';
+  card.innerHTML = `
+    <div class="mc-bg" style="background:${m.bg};">
+      ${m.bgSvg}
+    </div>
+    <div class="mc-overlay"></div>
+    <div class="mc-icon">${m.icon}</div>
+    <div class="mc-body">
+      <div class="mc-category">${m.category}</div>
+      <div class="mc-name">${m.name}</div>
+    </div>`;
+  card.addEventListener('click', () => openModal(m));
+  grid.appendChild(card);
+});
+
+/* ══ MODAL ══ */
+const backdrop = document.getElementById('modal-backdrop');
+const modal    = document.getElementById('magic-modal');
+const mCat     = document.getElementById('modal-category');
+const mTitle   = document.getElementById('modal-title');
+const mSub     = document.getElementById('modal-subtitle');
+const mBody    = document.getElementById('modal-body');
+
+function openModal(m) {
+  mCat.textContent   = m.category;
+  mTitle.textContent = m.name;
+  mSub.textContent   = m.subtitle;
+  mBody.innerHTML    = '';
+
+  m.sections.forEach(sec => {
+    const wrap = document.createElement('div');
+    wrap.className = 'ms-section';
+    wrap.innerHTML = `
+      <button class="ms-header${sec.open?' open':''}" onclick="toggleMagicSection(this)">
+        <span>${sec.title}</span>
+        <svg class="ms-chevron" viewBox="0 0 14 8"><path d="M1 1l6 6 6-6"/></svg>
+      </button>
+      <div class="ms-wrap${sec.open?' open':''}">
+        <div class="ms-body">
+          <div class="ms-inner">
+            <p class="ms-placeholder">Contenu à rédiger.</p>
+          </div>
+        </div>
+      </div>`;
+    mBody.appendChild(wrap);
+  });
+
+  backdrop.classList.add('open');
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  backdrop.classList.remove('open');
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function toggleMagicSection(header) {
+  const wrap = header.nextElementSibling;
+  const open = wrap.classList.contains('open');
+  wrap.classList.toggle('open', !open);
+  header.classList.toggle('open', !open);
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ══ VINYL ══ */
+function makeCover(c1,c2){return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='0,0 100,0 0,100' fill='${c1}'/><polygon points='100,0 100,100 0,100' fill='${c2}'/></svg>`);}
+const tracks=[{title:'Aube sur la Montagne',src:null,cover:makeCover('#c84030','#e8a020')},{title:'Le Désert de Sel',src:null,cover:makeCover('#1a3a8c','#7a20c8')},{title:'Nuit à Albarossa',src:null,cover:makeCover('#0e4a2e','#1e6888')}];
+const player=document.getElementById('player'),vinyl=document.getElementById('vinyl'),vinylSvg=document.getElementById('vinyl-svg'),coverImg=document.getElementById('cover-img'),trackLabel=document.getElementById('track-label'),trackList=document.getElementById('track-list'),dropdown=document.getElementById('dropdown'),chevronBtn=document.getElementById('chevron-btn'),iPlay=document.getElementById('i-play'),iPause=document.getElementById('i-pause'),vinylPopup=document.getElementById('vinyl-popup');
+let currentIdx=-1,isPlaying=false,ddOpen=false;
+tracks.forEach((t,i)=>{const el=document.createElement('div');el.className='track-item';el.innerHTML=`<div class="track-thumb"><img src="${t.cover}"></div><div class="track-meta"><div class="track-title">${t.title}</div></div><div class="playing-dot"></div>`;el.addEventListener('click',()=>selectTrack(i));trackList.appendChild(el);});
+let popupTimer=setTimeout(()=>{if(currentIdx===-1)vinylPopup.classList.add('visible');},2500);
+function hidePopup(){vinylPopup.classList.remove('visible');clearTimeout(popupTimer);}
+function selectTrack(idx){hidePopup();currentIdx=idx;const t=tracks[idx];vinylSvg.style.display='none';coverImg.src=t.cover;coverImg.style.display='block';trackLabel.textContent=t.title;trackLabel.classList.add('on');if(t.src){player.src=t.src;player.play().then(()=>setState(true)).catch(()=>setState(true));}else setState(true);document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===idx));closeDropdown();}
+function setState(on){isPlaying=on;vinyl.classList.toggle('spinning',on);iPlay.style.display=on?'none':'block';iPause.style.display=on?'block':'none';}
+vinyl.addEventListener('click',()=>{if(currentIdx===-1){toggleDropdown();return;}if(isPlaying){if(tracks[currentIdx].src)player.pause();setState(false);}else{if(tracks[currentIdx].src)player.play().catch(()=>{});setState(true);}});
+player.addEventListener('ended',()=>{if(tracks.length===1){player.currentTime=0;player.play().catch(()=>{});}else selectTrack((currentIdx+1)%tracks.length);});
+function openDropdown(){ddOpen=true;dropdown.classList.add('open');chevronBtn.classList.add('open');hidePopup();}
+function closeDropdown(){ddOpen=false;dropdown.classList.remove('open');chevronBtn.classList.remove('open');}
+function toggleDropdown(){ddOpen?closeDropdown():openDropdown();}
+chevronBtn.addEventListener('click',e=>{e.stopPropagation();toggleDropdown();});
+document.addEventListener('click',e=>{if(ddOpen&&!dropdown.contains(e.target)&&!chevronBtn.contains(e.target))closeDropdown();});
+try{const saved=JSON.parse(sessionStorage.getItem('aven-player')||'null');if(saved&&saved.idx>=0&&saved.idx<tracks.length){const t=tracks[saved.idx];currentIdx=saved.idx;vinylSvg.style.display='none';coverImg.src=t.cover;coverImg.style.display='block';trackLabel.textContent=t.title;trackLabel.classList.add('on');document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===saved.idx));if(t.src&&saved.playing){player.src=t.src;if(saved.time)player.currentTime=saved.time;player.play().then(()=>setState(true)).catch(()=>setState(saved.playing));}else setState(saved.playing||false);}}catch(e){}
+window.addEventListener('beforeunload',()=>{if(currentIdx>=0)sessionStorage.setItem('aven-player',JSON.stringify({idx:currentIdx,playing:isPlaying,time:tracks[currentIdx].src?player.currentTime:0}));});
+</script>
+</body>
+</html>

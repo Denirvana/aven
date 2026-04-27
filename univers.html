@@ -88,8 +88,11 @@
       position:absolute;inset:0;
       display:flex;flex-direction:column;
       padding:40px 60px 32px;
-      overflow:hidden;
+      overflow-y:auto;overflow-x:hidden;
+      scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;
     }
+    .page-inner::-webkit-scrollbar{width:3px;}
+    .page-inner::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px;}
     .page-title{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(28px,3.5vw,46px);letter-spacing:.18em;color:#fff;margin-bottom:6px;text-shadow:0 0 60px rgba(100,140,220,.25);}
     .page-subtitle{font-family:'Raleway',sans-serif;font-weight:200;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px;}
     .map-hint-text{font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.18);margin-bottom:20px;}
@@ -172,6 +175,24 @@
     .map-ctrl-btn{width:28px;height:28px;border-radius:5px;background:rgba(8,8,24,.85);border:.5px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;transition:background .15s,color .15s;}
     .map-ctrl-btn:hover{background:rgba(200,120,48,.25);color:#fff;}
     .map-bottom-hint{position:absolute;bottom:14px;left:14px;z-index:20;font-family:'Raleway',sans-serif;font-size:8px;letter-spacing:.1em;color:rgba(255,255,255,.18);}
+
+    /* ══ CARDS CONTINENTS ══ */
+    .conts-label{font-family:'Raleway',sans-serif;font-weight:200;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:rgba(255,255,255,.2);margin:28px 0 14px;}
+    .conts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding-bottom:40px;}
+    .cont-card{
+      position:relative;border-radius:7px;overflow:hidden;cursor:pointer;
+      border:.5px solid rgba(255,255,255,.07);aspect-ratio:16/7;
+      transition:transform .32s cubic-bezier(.22,1,.36,1),border-color .3s;
+      text-decoration:none;display:block;
+    }
+    .cont-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.15);}
+    .cont-card-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .55s cubic-bezier(.22,1,.36,1),filter .35s;filter:brightness(.5) saturate(.8);}
+    .cont-card:hover .cont-card-bg{transform:scale(1.05);filter:brightness(.68) saturate(1);}
+    .cont-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(4,4,14,.92) 0%,transparent 70%);}
+    .cont-card-body{position:absolute;bottom:0;left:0;right:0;padding:14px 16px;}
+    .cont-card-num{font-family:'Raleway',sans-serif;font-size:8px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:rgba(200,120,48,.7);margin-bottom:4px;}
+    .cont-card-name{font-family:'Cinzel',serif;font-weight:500;font-size:clamp(13px,1.4vw,17px);letter-spacing:.1em;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6);}
+    .cont-card-arc{font-family:'Raleway',sans-serif;font-size:8px;font-weight:300;letter-spacing:.12em;color:rgba(255,255,255,.35);margin-top:3px;}
   </style>
 </head>
 <body>
@@ -188,6 +209,7 @@
 <nav>
   <a href="index.html">Accueil</a>
   <a href="personnages.html">Personnages</a>
+  <a href="magie.html">Magie</a>
   <a href="univers.html">Univers</a>
   <a href="projet.html">Projet</a>
   <a href="contact.html">Contact</a>
@@ -242,7 +264,8 @@
     <p class="page-subtitle">The Unwritten Journey — Géographie & Lore</p>
     <p class="map-hint-text">Molette pour zoomer · Drag pour naviguer · Cliquer un point pour explorer</p>
 
-    <div class="map-wrap" id="map-wrap">
+    <!-- ══ CARTE ══ -->
+    <div class="map-wrap" id="map-wrap" style="flex:none;height:340px;">
 
       <!-- ══ PLAN UNIQUE : SVG + PINS ensemble dans map-inner ══ -->
       <div class="map-inner" id="map-inner">
@@ -357,9 +380,62 @@
         <button class="map-ctrl-btn" id="zoom-reset" title="Réinitialiser">⊙</button>
       </div>
       <div class="map-bottom-hint">Molette · Drag · Clic sur les points</div>
-    </div>
-  </div>
-</div>
+    </div><!-- /map-wrap -->
+
+    <!-- ══ CARDS CONTINENTS ══ -->
+    <p class="conts-label">Explorer les continents</p>
+    <div class="conts-grid">
+
+      <a class="cont-card" href="continent-1.html">
+        <div class="cont-card-bg" style="background:linear-gradient(135deg,#04100a 0%,#0c2010 50%,#081408 100%);">
+          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.35" viewBox="0 0 400 175" xmlns="http://www.w3.org/2000/svg">
+            <path d="M60,140 L85,100 L110,125 L140,80 L170,110 L200,65 L230,95 L260,55 L290,85 L320,50 L340,140" fill="none" stroke="rgba(140,180,110,.5)" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M40,175 L40,140 L360,140 L360,175Z" fill="rgba(40,70,30,.4)"/>
+          </svg>
+        </div>
+        <div class="cont-card-overlay"></div>
+        <div class="cont-card-body">
+          <div class="cont-card-num">Continent I</div>
+          <div class="cont-card-name">Le Continent des Duchés</div>
+          <div class="cont-card-arc">Arc 1 — Filles d'Hadès</div>
+        </div>
+      </a>
+
+      <a class="cont-card" href="continent-2.html">
+        <div class="cont-card-bg" style="background:linear-gradient(135deg,#0e0a04 0%,#1c1206 50%,#140e04 100%);">
+          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.35" viewBox="0 0 400 175" xmlns="http://www.w3.org/2000/svg">
+            <path d="M30,120 Q200,85 370,120" fill="none" stroke="rgba(190,155,55,.4)" stroke-width="12"/>
+            <path d="M40,145 Q200,110 360,145" fill="none" stroke="rgba(190,155,55,.25)" stroke-width="8"/>
+            <circle cx="200" cy="95" r="12" fill="rgba(210,170,55,.6)" stroke="rgba(240,200,80,.5)" stroke-width="1.5"/>
+            <circle cx="200" cy="95" r="22" fill="none" stroke="rgba(210,170,55,.15)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="cont-card-overlay"></div>
+        <div class="cont-card-body">
+          <div class="cont-card-num">Continent II</div>
+          <div class="cont-card-name">Le Continent du Désert</div>
+          <div class="cont-card-arc">Arc 2 — Quatuor</div>
+        </div>
+      </a>
+
+      <a class="cont-card" href="continent-3.html">
+        <div class="cont-card-bg" style="background:linear-gradient(135deg,#04040e 0%,#080c20 50%,#060810 100%);">
+          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.35" viewBox="0 0 400 175" xmlns="http://www.w3.org/2000/svg">
+            <rect x="80" y="20" width="240" height="80" rx="3" fill="rgba(80,100,170,.12)" stroke="rgba(80,100,170,.25)" stroke-width=".8"/>
+            <path d="M120,140 L140,110 L160,135 L185,95 L210,128" fill="none" stroke="rgba(190,75,35,.5)" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="cont-card-overlay"></div>
+        <div class="cont-card-body">
+          <div class="cont-card-num">Continent III</div>
+          <div class="cont-card-name">Le Continent d'Albarossa</div>
+          <div class="cont-card-arc">Arc 3 — Guerre</div>
+        </div>
+      </a>
+
+    </div><!-- /conts-grid -->
+  </div><!-- /page-inner -->
+</div><!-- /page -->
 
 <audio id="player" preload="metadata"></audio>
 
