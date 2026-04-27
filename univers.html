@@ -22,75 +22,42 @@
       border-bottom:.5px solid rgba(255,255,255,.06);
     }
     nav a{
-      font-family:'Raleway',sans-serif;font-weight:300;
-      font-size:11px;letter-spacing:.22em;text-transform:uppercase;
-      color:rgba(255,255,255,.68);text-decoration:none;transition:color .3s;position:relative;
+      font-family:'Raleway',sans-serif;font-weight:300;font-size:11px;letter-spacing:.22em;
+      text-transform:uppercase;color:rgba(255,255,255,.68);text-decoration:none;
+      transition:color .3s;position:relative;
     }
-    nav a[href="univers.html"]{color:rgba(255,255,255,.95);}
+    nav a[href="univers.html"]{color:#fff;}
     nav a[href="univers.html"]::after{transform:scaleX(1)!important;}
     nav a::after{
-      content:'';position:absolute;bottom:-3px;left:0;right:0;
-      height:.5px;background:rgba(200,120,48,.8);
-      transform:scaleX(0);transform-origin:center;transition:transform .35s ease;
+      content:'';position:absolute;bottom:-3px;left:0;right:0;height:.5px;
+      background:rgba(200,120,48,.8);transform:scaleX(0);transform-origin:center;transition:transform .35s ease;
     }
     nav a:hover{color:#fff;}
     nav a:hover::after{transform:scaleX(1);}
-    .vinyl-zone{
-      position:fixed;right:18px;top:0;height:var(--nav-h);
-      display:flex;align-items:center;gap:9px;z-index:201;
-    }
+    .vinyl-zone{position:fixed;right:18px;top:0;height:var(--nav-h);display:flex;align-items:center;gap:9px;z-index:201;}
     .track-info{display:flex;align-items:center;gap:6px;}
-    #track-label{
-      font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;
-      letter-spacing:.14em;text-transform:uppercase;
-      color:rgba(255,255,255,.3);max-width:130px;
-      overflow:hidden;white-space:nowrap;text-overflow:ellipsis;transition:color .4s;
-    }
+    #track-label{font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);max-width:130px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;transition:color .4s;}
     #track-label.on{color:rgba(200,120,48,.8);}
-    .chevron-btn{
-      background:none;border:none;cursor:pointer;padding:2px 4px;
-      display:flex;align-items:center;opacity:.4;transition:opacity .2s;color:white;
-    }
+    .chevron-btn{background:none;border:none;cursor:pointer;padding:2px 4px;display:flex;align-items:center;opacity:.4;transition:opacity .2s;color:white;}
     .chevron-btn:hover{opacity:.9;}
     .chevron-btn svg{width:10px;height:10px;fill:currentColor;transition:transform .25s;}
     .chevron-btn.open svg{transform:rotate(180deg);}
     .vinyl{position:relative;width:40px;height:40px;cursor:pointer;flex-shrink:0;}
-    .disc-wrap{
-      width:40px;height:40px;border-radius:50%;overflow:hidden;
-      transform-origin:center;
-      animation:spin 4s linear infinite;animation-play-state:paused;transition:box-shadow .5s;
-    }
+    .disc-wrap{width:40px;height:40px;border-radius:50%;overflow:hidden;transform-origin:center;animation:spin 4s linear infinite;animation-play-state:paused;transition:box-shadow .5s;}
     .vinyl.spinning .disc-wrap{animation-play-state:running;box-shadow:0 0 10px rgba(200,120,48,.5);}
     @keyframes spin{to{transform:rotate(360deg);}}
     .disc-wrap img,.disc-wrap svg.vinyl-svg{width:40px;height:40px;display:block;}
-    .vinyl-icon{
-      position:absolute;inset:0;border-radius:50%;
-      display:flex;align-items:center;justify-content:center;
-      background:rgba(0,0,0,.45);opacity:0;transition:opacity .2s;
-    }
+    .vinyl-icon{position:absolute;inset:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);opacity:0;transition:opacity .2s;}
     .vinyl:hover .vinyl-icon{opacity:1;}
     .vinyl-icon svg{width:13px;height:13px;fill:rgba(255,255,255,.92);}
-    #vinyl-popup{
-      position:fixed;top:calc(var(--nav-h)+10px);right:14px;z-index:300;
-      background:rgba(10,6,2,.9);border:.5px solid rgba(200,120,48,.35);border-radius:20px;
-      padding:7px 14px;display:flex;align-items:center;gap:7px;white-space:nowrap;
-      pointer-events:none;opacity:0;transform:translateY(-6px);
-      transition:opacity .5s ease,transform .5s ease;
-    }
+    #vinyl-popup{position:fixed;top:calc(var(--nav-h)+10px);right:14px;z-index:300;background:rgba(10,6,2,.9);border:.5px solid rgba(200,120,48,.35);border-radius:20px;padding:7px 14px;display:flex;align-items:center;gap:7px;white-space:nowrap;pointer-events:none;opacity:0;transform:translateY(-6px);transition:opacity .5s ease,transform .5s ease;}
     #vinyl-popup.visible{opacity:1;transform:translateY(0);}
     #vinyl-popup::before{content:'';position:absolute;bottom:100%;right:20px;border:5px solid transparent;border-bottom-color:rgba(200,120,48,.35);}
     #vinyl-popup::after{content:'';position:absolute;bottom:calc(100% - 1px);right:21px;border:4px solid transparent;border-bottom-color:rgba(10,6,2,.9);}
     .popup-dot{width:6px;height:6px;border-radius:50%;background:rgba(200,120,48,.85);flex-shrink:0;animation:dotPulse 1.6s ease-in-out infinite;}
     @keyframes dotPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
     .popup-text{font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,120,48,.85);}
-    .dropdown{
-      position:fixed;top:calc(var(--nav-h)+6px);right:16px;width:220px;z-index:400;
-      background:rgba(8,8,20,.88);
-      backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
-      border:.5px solid rgba(255,255,255,.08);border-radius:8px;overflow:hidden;
-      opacity:0;transform:translateY(-8px);pointer-events:none;
-      transition:opacity .22s ease,transform .22s ease;
-    }
+    .dropdown{position:fixed;top:calc(var(--nav-h)+6px);right:16px;width:220px;z-index:400;background:rgba(8,8,20,.88);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border:.5px solid rgba(255,255,255,.08);border-radius:8px;overflow:hidden;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .22s ease,transform .22s ease;}
     .dropdown.open{opacity:1;transform:translateY(0);pointer-events:all;}
     .dropdown-header{padding:10px 14px 8px;font-family:'Raleway',sans-serif;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);border-bottom:.5px solid rgba(255,255,255,.06);}
     .track-item{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;transition:background .15s;}
@@ -105,250 +72,114 @@
     .track-item.active .playing-dot{opacity:1;}
     @keyframes blink{0%,100%{opacity:.5}50%{opacity:1}}
 
-    /* ══ PAGE LAYOUT ══ */
+    /* ══ PAGE ══ */
     .page{position:fixed;inset:0;top:var(--nav-h);overflow:hidden;}
     .page-bg{position:absolute;inset:0;pointer-events:none;}
     .bg-grad{position:absolute;inset:0;background:linear-gradient(160deg,#04040e 0%,#06081a 20%,#080c20 40%,#060810 70%,#040408 100%);}
-    .bg-layer{position:absolute;inset:0;opacity:.6;mix-blend-mode:screen;
-      -webkit-mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,transparent 35%,rgba(0,0,0,.6) 60%,black 82%);
-      mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,transparent 35%,rgba(0,0,0,.6) 60%,black 82%);}
+    .bg-layer{position:absolute;inset:0;opacity:.6;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,transparent 35%,rgba(0,0,0,.6) 60%,black 82%);mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,transparent 35%,rgba(0,0,0,.6) 60%,black 82%);}
     .bg-r{filter:url(#ca-red);}
     .bg-b{filter:url(#ca-blue);}
     .bg-r .bg-grad,.bg-b .bg-grad{position:absolute;inset:0;background:linear-gradient(160deg,#04040e 0%,#06081a 20%,#080c20 40%,#060810 70%,#040408 100%);}
     .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 75% at 50% 50%,transparent 28%,rgba(2,2,10,.5) 65%,rgba(2,2,10,.9) 100%);}
-    .edge-blur{position:absolute;inset:0;pointer-events:none;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-      -webkit-mask-image:radial-gradient(ellipse 78% 72% at 50% 50%,transparent 32%,rgba(0,0,0,.5) 55%,black 78%);
-      mask-image:radial-gradient(ellipse 78% 72% at 50% 50%,transparent 32%,rgba(0,0,0,.5) 55%,black 78%);}
+    .edge-blur{position:absolute;inset:0;pointer-events:none;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-mask-image:radial-gradient(ellipse 78% 72% at 50% 50%,transparent 32%,rgba(0,0,0,.5) 55%,black 78%);mask-image:radial-gradient(ellipse 78% 72% at 50% 50%,transparent 32%,rgba(0,0,0,.5) 55%,black 78%);}
 
-    /* ══ SCROLL CONTAINER ══ */
-    .page-scroll{
+    /* ══ CONTENU ══ */
+    .page-inner{
       position:absolute;inset:0;
-      overflow-y:auto;overflow-x:hidden;
-      scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;
+      display:flex;flex-direction:column;
+      padding:40px 60px 32px;
+      overflow:hidden;
     }
-    .page-scroll::-webkit-scrollbar{width:3px;}
-    .page-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px;}
-    .page-inner{padding:40px 60px 80px;min-height:100%;}
+    .page-title{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(28px,3.5vw,46px);letter-spacing:.18em;color:#fff;margin-bottom:6px;text-shadow:0 0 60px rgba(100,140,220,.25);}
+    .page-subtitle{font-family:'Raleway',sans-serif;font-weight:200;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px;}
+    .map-hint-text{font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.18);margin-bottom:20px;}
 
-    .page-title{
-      font-family:'Cinzel',serif;font-weight:700;
-      font-size:clamp(28px,3.5vw,46px);letter-spacing:.18em;
-      color:#fff;margin-bottom:6px;text-shadow:0 0 60px rgba(100,140,220,.25);
-    }
-    .page-subtitle{
-      font-family:'Raleway',sans-serif;font-weight:200;
-      font-size:11px;letter-spacing:.3em;text-transform:uppercase;
-      color:rgba(255,255,255,.3);margin-bottom:40px;
-    }
-
-    /* ══ MAP SECTION ══ */
-    .map-section{
-      position:relative;
-      width:100%;max-width:1100px;
-      margin-bottom:56px;
-    }
-    .map-label{
-      font-family:'Raleway',sans-serif;font-weight:200;
-      font-size:9px;letter-spacing:.32em;text-transform:uppercase;
-      color:rgba(255,255,255,.2);margin-bottom:12px;
-    }
-
-    /* Conteneur de la carte — fixe, overflow hidden pour le zoom */
+    /* ══ CARTE — occupe tout l'espace restant ══ */
     .map-wrap{
+      flex:1;
       position:relative;
-      width:100%;height:380px;
       border-radius:8px;overflow:hidden;
       border:.5px solid rgba(255,255,255,.07);
       background:#050510;
       cursor:grab;
+      min-height:0;
     }
     .map-wrap:active{cursor:grabbing;}
 
-    /* Couche interne qui reçoit zoom + pan */
+    /* Couche qui reçoit zoom + pan — contient SVG ET pins ensemble */
     .map-inner{
       position:absolute;
+      /* Taille = 100% du wrapper, le scale fait le zoom */
       width:100%;height:100%;
       transform-origin:0 0;
       will-change:transform;
-      /* transition douce uniquement pour le zoom bouton, pas pour le drag */
     }
 
-    /* SVG de la carte */
-    .map-inner svg{width:100%;height:100%;display:block;}
+    /* SVG plein plan */
+    .map-inner > svg{
+      position:absolute;
+      inset:0;width:100%;height:100%;
+      display:block;
+    }
 
-    /* ══ PINS ══ */
+    /* ══ PINS — dans map-inner, positionnés en % ══
+       Clé du fix : les pins sont dans le MÊME plan que le SVG,
+       donc le transform du parent les déplace exactement comme la carte.
+       Pas besoin de JS de repositionnement.
+    ══ */
     .map-pin{
       position:absolute;
-      transform:translate(-50%,-100%);
+      /* left/top définis en style inline en % */
+      transform:translate(-50%, -100%);
       cursor:pointer;
       z-index:10;
+      pointer-events:all;
     }
     .pin-body{
       display:flex;flex-direction:column;align-items:center;
-      filter:drop-shadow(0 2px 6px rgba(0,0,0,.7));
+      filter:drop-shadow(0 2px 8px rgba(0,0,0,.8));
       transition:transform .2s cubic-bezier(.22,1,.36,1);
     }
-    .map-pin:hover .pin-body{transform:scale(1.15) translateY(-3px);}
-    .pin-dot{
-      width:10px;height:10px;border-radius:50%;
-      background:rgba(200,120,48,.9);
-      border:1.5px solid rgba(255,200,120,.8);
-      box-shadow:0 0 8px rgba(200,120,48,.6);
-    }
-    .map-pin.active .pin-dot{
-      background:rgba(240,180,80,1);
-      box-shadow:0 0 14px rgba(240,180,80,.8);
-    }
-    .pin-line{width:1.5px;height:12px;background:rgba(200,120,48,.5);}
+    .map-pin:hover .pin-body{transform:translateY(-4px) scale(1.12);}
     .pin-label{
-      font-family:'Raleway',sans-serif;font-size:8px;font-weight:400;
+      font-family:'Raleway',sans-serif;font-size:9px;font-weight:400;
       letter-spacing:.1em;text-transform:uppercase;
-      color:rgba(255,255,255,.7);
-      background:rgba(4,4,16,.75);
-      border:.5px solid rgba(255,255,255,.1);
-      padding:3px 7px;border-radius:3px;white-space:nowrap;
-      margin-bottom:2px;
+      color:rgba(255,255,255,.8);
+      background:rgba(4,4,16,.8);
+      border:.5px solid rgba(255,255,255,.12);
+      padding:4px 9px;border-radius:4px;white-space:nowrap;
+      margin-bottom:4px;
+    }
+    .map-pin:hover .pin-label{
+      background:rgba(20,12,4,.9);border-color:rgba(200,120,48,.4);
+      color:#fff;
+    }
+    .pin-line{width:1.5px;height:14px;background:rgba(200,120,48,.45);}
+    .pin-dot{
+      width:11px;height:11px;border-radius:50%;
+      background:rgba(200,120,48,.85);
+      border:2px solid rgba(255,200,120,.7);
+      box-shadow:0 0 10px rgba(200,120,48,.5);
+      transition:box-shadow .2s,transform .2s;
+    }
+    .map-pin:hover .pin-dot{
+      box-shadow:0 0 18px rgba(200,120,48,.85);
+      transform:scale(1.2);
     }
 
     /* Contrôles zoom */
-    .map-controls{
-      position:absolute;bottom:12px;right:12px;
-      display:flex;flex-direction:column;gap:4px;z-index:20;
-    }
-    .map-ctrl-btn{
-      width:26px;height:26px;border-radius:4px;
-      background:rgba(8,8,24,.8);border:.5px solid rgba(255,255,255,.1);
-      color:rgba(255,255,255,.6);cursor:pointer;
-      display:flex;align-items:center;justify-content:center;
-      font-size:14px;font-weight:300;
-      transition:background .15s,color .15s;
-    }
-    .map-ctrl-btn:hover{background:rgba(200,120,48,.2);color:rgba(255,255,255,.9);}
-
-    /* Hint */
-    .map-hint{
-      position:absolute;bottom:12px;left:12px;z-index:20;
-      font-family:'Raleway',sans-serif;font-size:8px;letter-spacing:.1em;
-      color:rgba(255,255,255,.2);
-    }
-
-    /* ══ CONTINENTS SECTIONS ══ */
-    .continents-grid{
-      display:grid;grid-template-columns:1fr;gap:0;
-      max-width:1100px;
-    }
-    .continent-block{
-      border-top:.5px solid rgba(255,255,255,.05);
-      scroll-margin-top:20px;
-    }
-    .continent-header{
-      width:100%;background:none;border:none;cursor:pointer;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:18px 0;
-      transition:opacity .2s;
-      text-align:left;
-    }
-    .continent-header:hover{opacity:.8;}
-    .cont-title-wrap{display:flex;align-items:baseline;gap:14px;}
-    .cont-num{
-      font-family:'Cinzel',serif;font-weight:400;font-size:11px;
-      color:rgba(255,255,255,.2);letter-spacing:.1em;
-    }
-    .cont-name{
-      font-family:'Cinzel',serif;font-weight:600;
-      font-size:clamp(18px,2vw,24px);letter-spacing:.12em;color:#fff;
-    }
-    .cont-arc{
-      font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;
-      letter-spacing:.2em;text-transform:uppercase;color:rgba(200,120,48,.7);
-      margin-left:4px;
-    }
-    .cont-chevron{
-      width:14px;height:14px;flex-shrink:0;
-      stroke:rgba(255,255,255,.3);fill:none;stroke-width:1.5;stroke-linecap:round;
-      transition:transform .35s cubic-bezier(.22,1,.36,1),stroke .2s;
-    }
-    .continent-header.open .cont-chevron{transform:rotate(180deg);stroke:rgba(255,255,255,.6);}
-
-    .continent-wrap{
-      display:grid;grid-template-rows:0fr;
-      transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1);
-    }
-    .continent-wrap.open{grid-template-rows:1fr;}
-    .continent-body{overflow:hidden;}
-    .continent-inner{padding:0 0 32px;}
-
-    /* Layout intérieur du continent */
-    .continent-layout{
-      display:grid;grid-template-columns:1fr 280px;gap:32px;
-      align-items:start;
-    }
-    @media(max-width:900px){.continent-layout{grid-template-columns:1fr;}}
-
-    /* Texte */
-    .cont-section-label{
-      font-family:'Raleway',sans-serif;font-size:9px;font-weight:400;
-      letter-spacing:.2em;text-transform:uppercase;
-      color:rgba(200,120,48,.65);margin-bottom:8px;
-    }
-    .cont-text{
-      font-family:'DM Sans',sans-serif;font-size:13px;
-      color:rgba(255,255,255,.55);line-height:1.8;margin-bottom:20px;
-    }
-    .cont-text p{margin-bottom:10px;}
-    .cont-text p:last-child{margin:0;}
-
-    /* Lieux notables */
-    .places-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
-    .place-item{
-      display:flex;gap:10px;align-items:flex-start;
-      padding:9px 12px;
-      background:rgba(255,255,255,.03);
-      border:.5px solid rgba(255,255,255,.06);border-radius:5px;
-    }
-    .place-dot{
-      width:5px;height:5px;border-radius:50%;
-      background:rgba(200,120,48,.7);flex-shrink:0;margin-top:5px;
-    }
-    .place-content{}
-    .place-name{
-      font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;
-      color:rgba(255,255,255,.8);margin-bottom:2px;
-    }
-    .place-desc{
-      font-family:'DM Sans',sans-serif;font-size:12px;
-      color:rgba(255,255,255,.42);line-height:1.6;
-    }
-
-    /* Carte miniature du continent */
-    .cont-minimap{
-      border-radius:6px;overflow:hidden;
-      border:.5px solid rgba(255,255,255,.07);
-      aspect-ratio:4/3;
-    }
-    .cont-minimap svg{width:100%;height:100%;display:block;}
-
-    /* Factions / Tags */
-    .cont-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
-    .cont-tag{
-      font-family:'Raleway',sans-serif;font-size:8px;font-weight:300;
-      letter-spacing:.12em;text-transform:uppercase;
-      padding:3px 10px;border-radius:999px;
-      background:rgba(255,255,255,.05);border:.5px solid rgba(255,255,255,.1);
-      color:rgba(255,255,255,.4);
-    }
+    .map-controls{position:absolute;bottom:14px;right:14px;display:flex;flex-direction:column;gap:5px;z-index:20;}
+    .map-ctrl-btn{width:28px;height:28px;border-radius:5px;background:rgba(8,8,24,.85);border:.5px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;transition:background .15s,color .15s;}
+    .map-ctrl-btn:hover{background:rgba(200,120,48,.25);color:#fff;}
+    .map-bottom-hint{position:absolute;bottom:14px;left:14px;z-index:20;font-family:'Raleway',sans-serif;font-size:8px;letter-spacing:.1em;color:rgba(255,255,255,.18);}
   </style>
 </head>
 <body>
 
 <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="ca-red" color-interpolation-filters="sRGB">
-      <feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/>
-    </filter>
-    <filter id="ca-blue" color-interpolation-filters="sRGB">
-      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
-    </filter>
+    <filter id="ca-red" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/></filter>
+    <filter id="ca-blue" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/></filter>
   </defs>
 </svg>
 
@@ -363,9 +194,7 @@
   <div class="vinyl-zone">
     <div class="track-info">
       <span id="track-label">Aucune piste</span>
-      <button class="chevron-btn" id="chevron-btn">
-        <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
-      </button>
+      <button class="chevron-btn" id="chevron-btn"><svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></button>
     </div>
     <div class="vinyl" id="vinyl">
       <div class="disc-wrap" id="disc-wrap">
@@ -408,376 +237,146 @@
     <div class="edge-blur"></div>
   </div>
 
-  <div class="page-scroll">
-    <div class="page-inner">
-      <h1 class="page-title">Univers</h1>
-      <p class="page-subtitle">The Unwritten Journey — Géographie & Lore</p>
+  <div class="page-inner">
+    <h1 class="page-title">Univers</h1>
+    <p class="page-subtitle">The Unwritten Journey — Géographie & Lore</p>
+    <p class="map-hint-text">Molette pour zoomer · Drag pour naviguer · Cliquer un point pour explorer</p>
 
-      <!-- ══ CARTE INTERACTIVE ══ -->
-      <div class="map-section">
-        <p class="map-label">Carte du monde — cliquer sur un point pour naviguer</p>
-        <div class="map-wrap" id="map-wrap">
+    <div class="map-wrap" id="map-wrap">
 
-          <!-- Couche interne zoomable/pannable -->
-          <div class="map-inner" id="map-inner">
+      <!-- ══ PLAN UNIQUE : SVG + PINS ensemble dans map-inner ══ -->
+      <div class="map-inner" id="map-inner">
 
-            <!-- SVG de fond — REMPLACER PAR VOTRE CARTE -->
-            <svg viewBox="0 0 1200 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-              <!-- Fond océan -->
-              <rect width="1200" height="500" fill="#050914"/>
-              <!-- Grille subtile -->
-              <defs>
-                <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-                  <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(100,130,180,.06)" stroke-width=".5"/>
-                </pattern>
-              </defs>
-              <rect width="1200" height="500" fill="url(#grid)"/>
+        <!--
+          CARTE SVG PLACEHOLDER
+          → Remplacer par : <img src="votre-carte.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          Les pins resteront alignés car ils sont dans le même plan.
+        -->
+        <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <!-- Océan -->
+          <rect width="1200" height="600" fill="#060a18"/>
+          <!-- Grille subtile -->
+          <defs>
+            <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+              <path d="M60 0L0 0 0 60" fill="none" stroke="rgba(100,130,200,.05)" stroke-width=".5"/>
+            </pattern>
+            <radialGradient id="glow1" cx="50%" cy="50%"><stop offset="0%" stop-color="rgba(100,160,80,.15)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+            <radialGradient id="glow2" cx="50%" cy="50%"><stop offset="0%" stop-color="rgba(180,140,40,.12)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+            <radialGradient id="glow3" cx="50%" cy="50%"><stop offset="0%" stop-color="rgba(80,100,200,.12)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+          </defs>
+          <rect width="1200" height="600" fill="url(#grid)"/>
 
-              <!-- CONTINENT 1 — Arc 1 (île/continent compact) -->
-              <g>
-                <ellipse cx="240" cy="230" rx="130" ry="95" fill="#0e1a10" stroke="rgba(120,160,100,.25)" stroke-width="1"/>
-                <ellipse cx="240" cy="230" rx="118" ry="83" fill="#0c1810"/>
-                <!-- Chaîne de montagnes centrale -->
-                <path d="M180,200 L200,170 L220,195 L245,160 L270,185 L290,165 L310,190" fill="none" stroke="rgba(160,180,140,.35)" stroke-width="1.5" stroke-linejoin="round"/>
-                <!-- Duchés symboliques -->
-                <rect x="155" y="220" width="22" height="16" rx="2" fill="rgba(140,160,120,.12)" stroke="rgba(140,160,120,.2)" stroke-width=".5"/>
-                <rect x="248" y="240" width="22" height="16" rx="2" fill="rgba(140,160,120,.12)" stroke="rgba(140,160,120,.2)" stroke-width=".5"/>
-                <rect x="290" y="215" width="22" height="16" rx="2" fill="rgba(140,160,120,.12)" stroke="rgba(140,160,120,.2)" stroke-width=".5"/>
-                <!-- Capitale -->
-                <circle cx="240" cy="290" r="5" fill="rgba(200,180,100,.6)" stroke="rgba(220,200,120,.5)" stroke-width="1"/>
-                <!-- Label interne -->
-                <text x="240" y="340" text-anchor="middle" font-family="serif" font-size="10" fill="rgba(200,220,180,.35)" letter-spacing="2">CONTINENT I</text>
-              </g>
+          <!-- Continent I — île compacte, gauche -->
+          <ellipse cx="240" cy="310" rx="130" ry="110" fill="url(#glow1)"/>
+          <path d="M130,280 C140,210 180,190 240,185 C300,180 340,200 355,250 C370,300 360,360 330,390 C300,420 250,430 210,415 C170,400 140,380 128,340 C118,305 125,290 130,280Z" fill="#0e1c0e" stroke="rgba(120,170,100,.3)" stroke-width="1.2"/>
+          <!-- Montagnes -->
+          <path d="M185,270 L202,245 L220,268 L244,235 L270,262 L292,242 L312,268" fill="none" stroke="rgba(160,185,140,.45)" stroke-width="1.8" stroke-linejoin="round"/>
+          <!-- Duchés -->
+          <rect x="158" y="300" width="22" height="15" rx="2" fill="rgba(140,165,120,.1)" stroke="rgba(140,165,120,.25)" stroke-width=".8"/>
+          <rect x="252" y="322" width="22" height="15" rx="2" fill="rgba(140,165,120,.1)" stroke="rgba(140,165,120,.25)" stroke-width=".8"/>
+          <rect x="295" y="295" width="22" height="15" rx="2" fill="rgba(140,165,120,.1)" stroke="rgba(140,165,120,.25)" stroke-width=".8"/>
+          <!-- Capitale (étoile) -->
+          <circle cx="240" cy="375" r="5" fill="rgba(220,200,100,.7)" stroke="rgba(240,220,120,.6)" stroke-width="1.2"/>
+          <text x="240" y="445" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(180,210,160,.3)" letter-spacing="2">CONTINENT I</text>
 
-              <!-- CONTINENT 2 — Arc 2 (grand, désertique) -->
-              <g>
-                <path d="M520,100 C560,85 660,90 720,110 C780,130 810,170 820,230 C830,290 810,350 760,370 C710,390 650,385 600,360 C550,335 510,290 500,240 C490,190 490,140 520,100Z"
-                  fill="#1a1206" stroke="rgba(180,140,60,.25)" stroke-width="1"/>
-                <!-- Textures désert -->
-                <line x1="540" y1="200" x2="780" y2="200" stroke="rgba(180,140,60,.08)" stroke-width="20"/>
-                <line x1="530" y1="260" x2="800" y2="260" stroke="rgba(180,140,60,.06)" stroke-width="15"/>
-                <!-- Ville du tournoi -->
-                <circle cx="660" cy="240" r="7" fill="rgba(200,160,60,.7)" stroke="rgba(220,180,80,.6)" stroke-width="1.5"/>
-                <circle cx="660" cy="240" r="14" fill="none" stroke="rgba(200,160,60,.2)" stroke-width="1"/>
-                <text x="660" y="290" text-anchor="middle" font-family="serif" font-size="10" fill="rgba(220,180,100,.35)" letter-spacing="2">CONTINENT II</text>
-              </g>
+          <!-- Continent II — désert, centre -->
+          <ellipse cx="620" cy="310" rx="170" ry="150" fill="url(#glow2)"/>
+          <path d="M465,180 C510,155 600,155 670,175 C740,195 778,240 785,300 C792,360 775,420 730,450 C685,480 620,485 565,462 C510,438 468,395 455,340 C443,285 450,225 465,180Z" fill="#1c1408" stroke="rgba(190,155,55,.28)" stroke-width="1.2"/>
+          <!-- Ondulations désert -->
+          <path d="M480,280 Q560,265 640,280 Q720,295 780,280" fill="none" stroke="rgba(190,155,55,.12)" stroke-width="14"/>
+          <path d="M468,330 Q550,315 640,330 Q730,345 785,330" fill="none" stroke="rgba(190,155,55,.09)" stroke-width="10"/>
+          <path d="M470,380 Q555,365 640,380 Q725,395 780,380" fill="none" stroke="rgba(190,155,55,.07)" stroke-width="8"/>
+          <!-- Ville centrale -->
+          <circle cx="625" cy="305" r="8" fill="rgba(210,170,55,.75)" stroke="rgba(240,200,80,.65)" stroke-width="1.5"/>
+          <circle cx="625" cy="305" r="18" fill="none" stroke="rgba(210,170,55,.18)" stroke-width="1"/>
+          <text x="625" y="458" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(220,185,90,.3)" letter-spacing="2">CONTINENT II</text>
 
-              <!-- CONTINENT 3 — Arc 3 (immense, nord) -->
-              <g>
-                <path d="M850,60 C920,40 1050,50 1120,80 C1170,100 1190,150 1185,210 C1180,270 1150,330 1100,360 C1050,390 980,395 920,375 C860,355 820,310 810,260 C800,210 810,150 850,60Z"
-                  fill="#0c0e1a" stroke="rgba(100,120,180,.25)" stroke-width="1"/>
-                <!-- Albarossa (nord) -->
-                <rect x="900" y="80" width="180" height="100" rx="4" fill="rgba(80,100,160,.12)" stroke="rgba(80,100,160,.2)" stroke-width=".8"/>
-                <text x="990" y="120" text-anchor="middle" font-family="serif" font-size="8" fill="rgba(140,160,220,.4)" letter-spacing="1">ALBAROSSA</text>
-                <!-- Forêts de l'ouest -->
-                <ellipse cx="860" cy="290" rx="35" ry="55" fill="rgba(40,80,40,.2)" stroke="rgba(60,100,60,.2)" stroke-width=".7"/>
-                <!-- Montagne des dragons -->
-                <path d="M990,300 L1010,265 L1030,295 L1050,260 L1070,290" fill="none" stroke="rgba(180,80,40,.4)" stroke-width="2" stroke-linejoin="round"/>
-                <text x="990" y="410" text-anchor="middle" font-family="serif" font-size="10" fill="rgba(160,180,220,.3)" letter-spacing="2">CONTINENT III</text>
-              </g>
+          <!-- Continent III — immense, droite -->
+          <ellipse cx="980" cy="290" rx="190" ry="200" fill="url(#glow3)"/>
+          <path d="M820,120 C875,90 980,88 1060,110 C1130,130 1165,185 1168,255 C1171,325 1148,400 1100,440 C1050,480 975,490 905,465 C835,440 796,385 785,320 C774,255 790,180 820,120Z" fill="#0c0e1e" stroke="rgba(100,120,195,.28)" stroke-width="1.2"/>
+          <!-- Albarossa (nord) -->
+          <rect x="870" y="120" width="220" height="115" rx="4" fill="rgba(80,100,170,.1)" stroke="rgba(80,100,170,.22)" stroke-width=".8"/>
+          <text x="980" y="175" text-anchor="middle" font-family="serif" font-size="9" fill="rgba(140,165,230,.38)" letter-spacing="1.5">ALBAROSSA</text>
+          <!-- Forêt -->
+          <ellipse cx="830" cy="360" rx="38" ry="62" fill="rgba(30,70,30,.2)" stroke="rgba(50,90,50,.2)" stroke-width=".8"/>
+          <!-- Montagnes dragons -->
+          <path d="M990,340 L1008,308 L1025,338 L1046,300 L1065,335" fill="none" stroke="rgba(190,75,35,.5)" stroke-width="2.2" stroke-linejoin="round"/>
+          <text x="975" y="485" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(155,170,230,.28)" letter-spacing="2">CONTINENT III</text>
 
-              <!-- Lignes de route maritimes -->
-              <path d="M370,260 C440,240 480,220 500,230" fill="none" stroke="rgba(100,140,180,.2)" stroke-width="1" stroke-dasharray="5 4"/>
-              <path d="M820,240 C840,240 848,238 850,240" fill="none" stroke="rgba(100,140,180,.15)" stroke-width="1" stroke-dasharray="4 3"/>
+          <!-- Routes maritimes -->
+          <path d="M385,330 C460,305 490,295 465,300" fill="none" stroke="rgba(120,160,200,.18)" stroke-width="1.2" stroke-dasharray="6 5"/>
+          <path d="M795,305 C815,305 822,304 825,305" fill="none" stroke="rgba(120,160,200,.14)" stroke-width="1.2" stroke-dasharray="5 4"/>
 
-              <!-- Boussole discrète -->
-              <g transform="translate(60,60)">
-                <circle r="18" fill="none" stroke="rgba(255,255,255,.08)" stroke-width=".8"/>
-                <line x1="0" y1="-14" x2="0" y2="14" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
-                <line x1="-14" y1="0" x2="14" y2="0" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
-                <polygon points="0,-12 3,0 0,-4 -3,0" fill="rgba(200,120,48,.7)"/>
-                <text x="0" y="-20" text-anchor="middle" font-family="serif" font-size="7" fill="rgba(255,255,255,.25)">N</text>
-              </g>
-            </svg>
+          <!-- Boussole -->
+          <g transform="translate(65,65)">
+            <circle r="22" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+            <line x1="0" y1="-18" x2="0" y2="18" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+            <line x1="-18" y1="0" x2="18" y2="0" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+            <polygon points="0,-15 3.5,0 0,-5 -3.5,0" fill="rgba(200,120,48,.8)"/>
+            <text x="0" y="-25" text-anchor="middle" font-family="serif" font-size="8" fill="rgba(255,255,255,.22)">N</text>
+          </g>
+        </svg>
 
-            <!-- PINS — positionnés en % relatif à la carte -->
-            <!-- Le JS les repositionne au zoom/pan -->
-            <div class="map-pin" id="pin-0" data-px="0.20" data-py="0.58" data-target="cont-1">
-              <div class="pin-body">
-                <div class="pin-label">Arc I</div>
-                <div class="pin-line"></div>
-                <div class="pin-dot"></div>
-              </div>
-            </div>
-            <div class="map-pin" id="pin-1" data-px="0.55" data-py="0.50" data-target="cont-2">
-              <div class="pin-body">
-                <div class="pin-label">Arc II — Désert</div>
-                <div class="pin-line"></div>
-                <div class="pin-dot"></div>
-              </div>
-            </div>
-            <div class="map-pin" id="pin-2" data-px="0.83" data-py="0.55" data-target="cont-3">
-              <div class="pin-body">
-                <div class="pin-label">Arc III — Albarossa</div>
-                <div class="pin-line"></div>
-                <div class="pin-dot"></div>
-              </div>
-            </div>
-          </div><!-- /map-inner -->
+        <!--
+          PINS — positionnés en % avec left/top
+          Ils sont dans map-inner donc ils zooment et panent AVEC la carte.
+          Aucun JS ne les repositionne : le CSS fait tout.
 
-          <!-- Contrôles zoom -->
-          <div class="map-controls">
-            <button class="map-ctrl-btn" id="zoom-in">+</button>
-            <button class="map-ctrl-btn" id="zoom-out">−</button>
-            <button class="map-ctrl-btn" id="zoom-reset" title="Reset">⊙</button>
+          left  = % horizontal de la carte (0% = bord gauche, 100% = bord droit)
+          top   = % vertical de la carte (0% = haut, 100% = bas)
+        -->
+        <div class="map-pin" style="left:20%;top:62.5%;" onclick="goTo('continent-1.html')">
+          <div class="pin-body">
+            <div class="pin-label">Continent I — Duchés</div>
+            <div class="pin-line"></div>
+            <div class="pin-dot"></div>
           </div>
-          <div class="map-hint">Molette · Drag · Clic sur les points</div>
         </div>
+
+        <div class="map-pin" style="left:52%;top:51%;" onclick="goTo('continent-2.html')">
+          <div class="pin-body">
+            <div class="pin-label">Continent II — Désert</div>
+            <div class="pin-line"></div>
+            <div class="pin-dot"></div>
+          </div>
+        </div>
+
+        <div class="map-pin" style="left:82%;top:48.5%;" onclick="goTo('continent-3.html')">
+          <div class="pin-body">
+            <div class="pin-label">Continent III — Albarossa</div>
+            <div class="pin-line"></div>
+            <div class="pin-dot"></div>
+          </div>
+        </div>
+
+      </div><!-- /map-inner -->
+
+      <div class="map-controls">
+        <button class="map-ctrl-btn" id="zoom-in">+</button>
+        <button class="map-ctrl-btn" id="zoom-out">−</button>
+        <button class="map-ctrl-btn" id="zoom-reset" title="Réinitialiser">⊙</button>
       </div>
-
-      <!-- ══ SECTIONS CONTINENTS ══ -->
-      <div class="continents-grid" id="continents-grid">
-
-        <!-- CONTINENT I -->
-        <div class="continent-block" id="cont-1">
-          <button class="continent-header open" onclick="toggleContinent(this)">
-            <div class="cont-title-wrap">
-              <span class="cont-num">I</span>
-              <span class="cont-name">Le Continent des Duchés</span>
-              <span class="cont-arc">Arc 1</span>
-            </div>
-            <svg class="cont-chevron" viewBox="0 0 14 8"><path d="M1 1l6 6 6-6"/></svg>
-          </button>
-          <div class="continent-wrap open">
-            <div class="continent-body">
-              <div class="continent-inner">
-                <div class="cont-tags">
-                  <span class="cont-tag">Arc 1</span>
-                  <span class="cont-tag">Filles d'Hadès</span>
-                  <span class="cont-tag">Dragon</span>
-                  <span class="cont-tag">Guilde</span>
-                </div>
-                <div class="continent-layout">
-                  <div>
-                    <p class="cont-section-label">Géographie</p>
-                    <div class="cont-text">
-                      <p>Petit continent traversé par une chaîne de montagnes imposante avec un seul accès à la montagne centrale — là où se cache le dragon. Les frontières entre duchés sont fermées en raison de la recrudescence de monstres et de la "colère" du dragon qui perturbe l'équilibre magique de la région.</p>
-                      <p>Le voyage dure un an complet, avec un glissement saisonnier : printemps (rencontre) → été (duchés) → automne (attaque et survie) → hiver (épreuve, dragon, départ).</p>
-                    </div>
-                    <p class="cont-section-label">Contexte politique</p>
-                    <div class="cont-text">
-                      <p>Multiples duchés autonomes aux frontières fermées. Chaque duché a sa propre vie indépendante — crises de succession, pèlerinages, tensions locales. Le monde vit sans les personnages. Pour traverser les frontières, le groupe doit ruser : gardes du corps d'une noble, accompagnement de marchands.</p>
-                    </div>
-                    <p class="cont-section-label">Lieux notables</p>
-                    <div class="places-list">
-                      <div class="place-item">
-                        <div class="place-dot"></div>
-                        <div class="place-content">
-                          <div class="place-name">La Montagne Centrale & le Dragon</div>
-                          <div class="place-desc">Seul accès à l'intérieur du continent. Le dragon pleure — chaque personnage échoue à le tuer pour des raisons différentes. Hadès apparaît ici.</div>
-                        </div>
-                      </div>
-                      <div class="place-item">
-                        <div class="place-dot"></div>
-                        <div class="place-content">
-                          <div class="place-name">La Capitale (côtière)</div>
-                          <div class="place-desc">Destination finale. Premier repas chaud après la survie. Épreuve de la Déesse de la Chasse. Port d'où Hyuun part seul.</div>
-                        </div>
-                      </div>
-                      <div class="place-item">
-                        <div class="place-dot"></div>
-                        <div class="place-content">
-                          <div class="place-name">Le Duché 3 (brûlé)</div>
-                          <div class="place-desc">Le plus proche de la région sauvage. Rasé par les monstres. Retournement du Tome 1 — le groupe survit dehors pendant l'incendie.</div>
-                        </div>
-                      </div>
-                      <div class="place-item">
-                        <div class="place-dot"></div>
-                        <div class="place-content">
-                          <div class="place-name">La Forêt & les Ruines de Survie</div>
-                          <div class="place-desc">Le camp de monstres traversé de nuit sans feu, les ruines sous la montagne, l'ascension sous la pluie. La partie la plus longue et la plus importante de l'arc.</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="cont-minimap">
-                      <svg viewBox="0 0 280 210" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="280" height="210" fill="#060c08"/>
-                        <ellipse cx="140" cy="105" rx="110" ry="82" fill="#0c1a0e" stroke="rgba(120,160,100,.3)" stroke-width="1"/>
-                        <path d="M95,82 L110,58 L128,76 L148,52 L168,72 L185,58 L198,76" fill="none" stroke="rgba(160,180,140,.5)" stroke-width="2" stroke-linejoin="round"/>
-                        <rect x="72" y="105" width="18" height="12" rx="2" fill="rgba(140,160,120,.15)" stroke="rgba(140,160,120,.3)" stroke-width=".8"/>
-                        <rect x="140" y="118" width="18" height="12" rx="2" fill="rgba(140,160,120,.15)" stroke="rgba(140,160,120,.3)" stroke-width=".8"/>
-                        <rect x="175" y="100" width="18" height="12" rx="2" fill="rgba(140,160,120,.15)" stroke="rgba(140,160,120,.3)" stroke-width=".8"/>
-                        <circle cx="140" cy="158" r="5" fill="rgba(200,180,100,.7)" stroke="rgba(220,200,120,.6)" stroke-width="1"/>
-                        <text x="140" y="195" text-anchor="middle" font-family="serif" font-size="8" fill="rgba(180,200,160,.3)" letter-spacing="2">ARC I</text>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- CONTINENT II -->
-        <div class="continent-block" id="cont-2">
-          <button class="continent-header" onclick="toggleContinent(this)">
-            <div class="cont-title-wrap">
-              <span class="cont-num">II</span>
-              <span class="cont-name">Le Continent du Désert</span>
-              <span class="cont-arc">Arc 2</span>
-            </div>
-            <svg class="cont-chevron" viewBox="0 0 14 8"><path d="M1 1l6 6 6-6"/></svg>
-          </button>
-          <div class="continent-wrap">
-            <div class="continent-body">
-              <div class="continent-inner">
-                <div class="cont-tags">
-                  <span class="cont-tag">Arc 2</span>
-                  <span class="cont-tag">Quatuor</span>
-                  <span class="cont-tag">Tournoi de Dionysos</span>
-                  <span class="cont-tag">Guilde</span>
-                </div>
-                <div class="continent-layout">
-                  <div>
-                    <p class="cont-section-label">Géographie</p>
-                    <div class="cont-text">
-                      <p>Grand continent dominé par un désert immense et hostile. La ville carrefour où se tient le Tournoi de Dionysos en est le centre névralgique — l'information y est une monnaie. Les cactus fanent, le soleil brûle, les silhouettes disparaissent à l'horizon.</p>
-                    </div>
-                    <p class="cont-section-label">Contexte</p>
-                    <div class="cont-text">
-                      <p>C'est ici que Minako sauve Hyuun dans le désert. Deux mois de voyage avant d'atteindre la ville. Six mois à la guilde, formations du quatuor, préparation du tournoi. L'information circule naturellement — rumeurs, espions, factions qui s'observent.</p>
-                    </div>
-                    <p class="cont-section-label">Lieux notables</p>
-                    <div class="places-list">
-                      <div class="place-item">
-                        <div class="place-dot"></div>
-                        <div class="place-content">
-                          <div class="place-name">La Ville-Carrefour</div>
-                          <div class="place-desc">Centre commercial et politique. Siège de la guilde locale. Les factions s'y retrouvent discrètement. Le Tournoi de Dionysos s'y tient.</div>
-                        </div>
-                      </div>
-                      <div class="place-item">
-                        <div class="place-dot"></div>
-                        <div class="place-content">
-                          <div class="place-name">Le Désert de Sel</div>
-                          <div class="place-desc">Où Hyuun erre après le départ — suicide lent. Où Minako le trouve. Deux mois de marche, fondation du duo Ouroboros.</div>
-                        </div>
-                      </div>
-                      <div class="place-item">
-                        <div class="place-dot"></div>
-                        <div class="place-content">
-                          <div class="place-name">L'Arène du Tournoi de Dionysos</div>
-                          <div class="place-desc">Grande table de victuailles et de vin, tapis et encens coupant la chaleur. Épreuves multiples : chasse, labyrinthes mouvants, traques urbaines, défense d'objectifs.</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="cont-minimap">
-                      <svg viewBox="0 0 280 210" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="280" height="210" fill="#0a0804"/>
-                        <path d="M30,30 C60,15 160,20 210,40 C250,56 265,95 268,140 C271,185 255,200 215,202 C175,204 130,195 90,172 C50,149 20,110 15,75 C10,40 15,38 30,30Z" fill="#1a1006" stroke="rgba(180,140,60,.3)" stroke-width="1"/>
-                        <line x1="20" y1="100" x2="270" y2="100" stroke="rgba(180,140,60,.06)" stroke-width="18"/>
-                        <line x1="15" y1="140" x2="268" y2="140" stroke="rgba(180,140,60,.05)" stroke-width="12"/>
-                        <circle cx="140" cy="105" r="8" fill="rgba(200,160,60,.8)" stroke="rgba(220,180,80,.7)" stroke-width="1.5"/>
-                        <circle cx="140" cy="105" r="16" fill="none" stroke="rgba(200,160,60,.2)" stroke-width="1"/>
-                        <text x="140" y="185" text-anchor="middle" font-family="serif" font-size="8" fill="rgba(220,180,100,.3)" letter-spacing="2">ARC II</text>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- CONTINENT III -->
-        <div class="continent-block" id="cont-3">
-          <button class="continent-header" onclick="toggleContinent(this)">
-            <div class="cont-title-wrap">
-              <span class="cont-num">III</span>
-              <span class="cont-name">Le Continent d'Albarossa</span>
-              <span class="cont-arc">Arc 3</span>
-            </div>
-            <svg class="cont-chevron" viewBox="0 0 14 8"><path d="M1 1l6 6 6-6"/></svg>
-          </button>
-          <div class="continent-wrap">
-            <div class="continent-body">
-              <div class="continent-inner">
-                <div class="cont-tags">
-                  <span class="cont-tag">Arc 3</span>
-                  <span class="cont-tag">Guerre</span>
-                  <span class="cont-tag">Albarossa</span>
-                  <span class="cont-tag">Dragons</span>
-                </div>
-                <div class="continent-layout">
-                  <div>
-                    <p class="cont-section-label">Géographie</p>
-                    <div class="cont-text">
-                      <p>Continent immense dominé au nord par l'Empire d'Albarossa en expansion. À l'ouest, les forêts abritent la faction des mercenaires de la chasse. Au centre, la montagne où résident Paresse (Nero) et Patience (Camilia) — deux dragons dont l'ancien conflit a créé une mer circulaire.</p>
-                    </div>
-                    <p class="cont-section-label">Contexte politique</p>
-                    <div class="cont-text">
-                      <p>Albarossa est une puissance expansionniste dirigée par une famille royale divisée en trois branches. La branche dominante, influencée par Nina (Hypocrisie), prône une idéologie de supériorité. La guerre crée une coalition fragile. Double front : bataille principale avec les filles et Minako + infiltration par Hyuun.</p>
-                    </div>
-                    <p class="cont-section-label">Lieux notables</p>
-                    <div class="places-list">
-                      <div class="place-item">
-                        <div class="place-dot"></div>
-                        <div class="place-content">
-                          <div class="place-name">La Capitale d'Albarossa</div>
-                          <div class="place-desc">Hyuun s'y infiltre pour sauver Nui. Confrontation idéologique avec les Prophètes et Nina. Zone de haute tension.</div>
-                        </div>
-                      </div>
-                      <div class="place-item">
-                        <div class="place-dot"></div>
-                        <div class="place-content">
-                          <div class="place-name">La Forêt des Mercenaires</div>
-                          <div class="place-desc">Les filles sont sauvées par la faction ici et intégrées dans la coalition. Zone de refuge et de préparation.</div>
-                        </div>
-                      </div>
-                      <div class="place-item">
-                        <div class="place-dot"></div>
-                        <div class="place-content">
-                          <div class="place-name">Montagne des Dragons — Paresse & Patience</div>
-                          <div class="place-desc">Nero et Camilia en joute verbale depuis deux cents ans. Patience donne à Hyuun la réponse sur Scylla. La mer circulaire autour est le résultat de leur ancien conflit.</div>
-                        </div>
-                      </div>
-                      <div class="place-item">
-                        <div class="place-dot"></div>
-                        <div class="place-content">
-                          <div class="place-name">Le Duché du Nord — Apparition de Scylla</div>
-                          <div class="place-desc">Quelques jours de répit avant que les sifflements commencent. Les arbres gelés, les plantes mortes. Hyuun reconnaît la berceuse. Scylla apparaît avec sa meute.</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="cont-minimap">
-                      <svg viewBox="0 0 280 210" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="280" height="210" fill="#06060e"/>
-                        <path d="M40,20 C90,8 190,12 240,35 C272,50 278,90 275,140 C272,185 255,202 210,204 C165,206 110,196 72,170 C34,144 18,105 15,70 C12,35 20,25 40,20Z" fill="#0c0e1c" stroke="rgba(100,120,180,.3)" stroke-width="1"/>
-                        <rect x="80" y="25" width="155" height="80" rx="3" fill="rgba(80,100,160,.1)" stroke="rgba(80,100,160,.2)" stroke-width=".8"/>
-                        <text x="157" y="62" text-anchor="middle" font-family="serif" font-size="7" fill="rgba(140,160,220,.4)" letter-spacing="1">ALBAROSSA</text>
-                        <ellipse cx="52" cy="148" rx="28" ry="42" fill="rgba(30,60,30,.2)" stroke="rgba(50,80,50,.2)" stroke-width=".7"/>
-                        <path d="M155,140 L168,115 L181,138 L194,108 L207,135" fill="none" stroke="rgba(180,80,40,.45)" stroke-width="2" stroke-linejoin="round"/>
-                        <text x="145" y="195" text-anchor="middle" font-family="serif" font-size="8" fill="rgba(160,170,220,.3)" letter-spacing="2">ARC III</text>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- /continents-grid -->
-    </div><!-- /page-inner -->
-  </div><!-- /page-scroll -->
-</div><!-- /page -->
+      <div class="map-bottom-hint">Molette · Drag · Clic sur les points</div>
+    </div>
+  </div>
+</div>
 
 <audio id="player" preload="metadata"></audio>
 
 <script>
+/* ══ NAVIGATION ══ */
+function goTo(url){
+  sessionStorage.setItem('aven-player', JSON.stringify({
+    idx: currentIdx, playing: isPlaying,
+    time: (currentIdx >= 0 && tracks[currentIdx].src) ? player.currentTime : 0
+  }));
+  window.location.href = url;
+}
+
 /* ══ COVERS ══ */
 function makeCover(c1,c2){
   return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(
-    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
-      <polygon points='0,0 100,0 0,100' fill='${c1}'/>
-      <polygon points='100,0 100,100 0,100' fill='${c2}'/>
-    </svg>`);
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='0,0 100,0 0,100' fill='${c1}'/><polygon points='100,0 100,100 0,100' fill='${c2}'/></svg>`);
 }
 const tracks=[
   {title:'Aube sur la Montagne',src:null,cover:makeCover('#c84030','#e8a020')},
@@ -785,7 +384,6 @@ const tracks=[
   {title:'Nuit à Albarossa',   src:null,cover:makeCover('#0e4a2e','#1e6888')},
 ];
 
-/* ══ VINYL ══ */
 const player=document.getElementById('player');
 const vinyl=document.getElementById('vinyl');
 const vinylSvg=document.getElementById('vinyl-svg');
@@ -800,48 +398,33 @@ const vinylPopup=document.getElementById('vinyl-popup');
 let currentIdx=-1,isPlaying=false,ddOpen=false;
 
 tracks.forEach((t,i)=>{
-  const el=document.createElement('div');
-  el.className='track-item';
-  el.innerHTML=`<div class="track-thumb"><img src="${t.cover}"></div>
-    <div class="track-meta"><div class="track-title">${t.title}</div></div>
-    <div class="playing-dot"></div>`;
-  el.addEventListener('click',()=>selectTrack(i));
-  trackList.appendChild(el);
+  const el=document.createElement('div');el.className='track-item';
+  el.innerHTML=`<div class="track-thumb"><img src="${t.cover}"></div><div class="track-meta"><div class="track-title">${t.title}</div></div><div class="playing-dot"></div>`;
+  el.addEventListener('click',()=>selectTrack(i));trackList.appendChild(el);
 });
-
 let popupTimer=setTimeout(()=>{if(currentIdx===-1)vinylPopup.classList.add('visible');},2500);
 function hidePopup(){vinylPopup.classList.remove('visible');clearTimeout(popupTimer);}
-
 function selectTrack(idx){
-  hidePopup();currentIdx=idx;
-  const t=tracks[idx];
+  hidePopup();currentIdx=idx;const t=tracks[idx];
   vinylSvg.style.display='none';coverImg.src=t.cover;coverImg.style.display='block';
   trackLabel.textContent=t.title;trackLabel.classList.add('on');
   if(t.src){player.src=t.src;player.play().then(()=>setState(true)).catch(()=>setState(true));}
-  else{setState(true);}
+  else setState(true);
   document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===idx));
   closeDropdown();
 }
-function setState(on){
-  isPlaying=on;vinyl.classList.toggle('spinning',on);
-  iPlay.style.display=on?'none':'block';iPause.style.display=on?'block':'none';
-}
+function setState(on){isPlaying=on;vinyl.classList.toggle('spinning',on);iPlay.style.display=on?'none':'block';iPause.style.display=on?'block':'none';}
 vinyl.addEventListener('click',()=>{
   if(currentIdx===-1){toggleDropdown();return;}
   if(isPlaying){if(tracks[currentIdx].src)player.pause();setState(false);}
   else{if(tracks[currentIdx].src)player.play().catch(()=>{});setState(true);}
 });
-player.addEventListener('ended',()=>{
-  if(tracks.length===1){player.currentTime=0;player.play().catch(()=>{});}
-  else{selectTrack((currentIdx+1)%tracks.length);}
-});
+player.addEventListener('ended',()=>{if(tracks.length===1){player.currentTime=0;player.play().catch(()=>{});}else selectTrack((currentIdx+1)%tracks.length);});
 function openDropdown(){ddOpen=true;dropdown.classList.add('open');chevronBtn.classList.add('open');hidePopup();}
 function closeDropdown(){ddOpen=false;dropdown.classList.remove('open');chevronBtn.classList.remove('open');}
 function toggleDropdown(){ddOpen?closeDropdown():openDropdown();}
 chevronBtn.addEventListener('click',e=>{e.stopPropagation();toggleDropdown();});
 document.addEventListener('click',e=>{if(ddOpen&&!dropdown.contains(e.target)&&!chevronBtn.contains(e.target))closeDropdown();});
-
-/* Restauration sessionStorage */
 try{
   const saved=JSON.parse(sessionStorage.getItem('aven-player')||'null');
   if(saved&&saved.idx>=0&&saved.idx<tracks.length){
@@ -850,158 +433,83 @@ try{
     trackLabel.textContent=t.title;trackLabel.classList.add('on');
     document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===saved.idx));
     if(t.src&&saved.playing){player.src=t.src;if(saved.time)player.currentTime=saved.time;player.play().then(()=>setState(true)).catch(()=>setState(saved.playing));}
-    else{setState(saved.playing||false);}
+    else setState(saved.playing||false);
   }
 }catch(e){}
 window.addEventListener('beforeunload',()=>{
-  if(currentIdx>=0)sessionStorage.setItem('aven-player',JSON.stringify({
-    idx:currentIdx,playing:isPlaying,time:tracks[currentIdx].src?player.currentTime:0
-  }));
+  if(currentIdx>=0)sessionStorage.setItem('aven-player',JSON.stringify({idx:currentIdx,playing:isPlaying,time:tracks[currentIdx].src?player.currentTime:0}));
 });
 
-/* ══ SECTIONS CONTINENTS ══ */
-function toggleContinent(header){
-  const wrap=header.nextElementSibling;
-  const isOpen=wrap.classList.contains('open');
-  wrap.classList.toggle('open',!isOpen);
-  header.classList.toggle('open',!isOpen);
-}
-
-/* ══ CARTE INTERACTIVE — zoom + pan + pins ══ */
-const mapWrap  = document.getElementById('map-wrap');
-const mapInner = document.getElementById('map-inner');
-const pins     = document.querySelectorAll('.map-pin');
-
-let scale=1, panX=0, panY=0;
-let isDragging=false, dragStartX=0, dragStartY=0, panStartX=0, panStartY=0;
-const MIN_SCALE=0.7, MAX_SCALE=4;
+/* ══ CARTE — ZOOM + PAN ══
+   Les pins sont dans map-inner donc ils suivent automatiquement.
+   Aucun repositionnement JS des pins.
+══ */
+const mapWrap=document.getElementById('map-wrap');
+const mapInner=document.getElementById('map-inner');
+const MIN_SCALE=0.85, MAX_SCALE=5;
+let scale=1,panX=0,panY=0;
+let isDragging=false,startX=0,startY=0,startPanX=0,startPanY=0;
+let didDrag=false; // distingue drag vs clic
 
 function applyTransform(smooth=false){
-  mapInner.style.transition = smooth ? 'transform .35s cubic-bezier(.22,1,.36,1)' : 'none';
-  mapInner.style.transform  = `translate(${panX}px,${panY}px) scale(${scale})`;
-  updatePins();
+  mapInner.style.transition=smooth?'transform .35s cubic-bezier(.22,1,.36,1)':'none';
+  mapInner.style.transform=`translate(${panX}px,${panY}px) scale(${scale})`;
 }
 
-function updatePins(){
-  const W=mapWrap.offsetWidth, H=mapWrap.offsetHeight;
-  pins.forEach(pin=>{
-    const px=parseFloat(pin.dataset.px);
-    const py=parseFloat(pin.dataset.py);
-    /* Position du pin dans l'espace de la carte originale */
-    const rx = px * W * scale + panX;
-    const ry = py * H * scale + panY;
-    pin.style.left = rx + 'px';
-    pin.style.top  = ry + 'px';
-  });
-}
-
-/* Clamp pan pour ne pas trop sortir */
 function clampPan(){
-  const W=mapWrap.offsetWidth, H=mapWrap.offsetHeight;
-  const scaledW=W*scale, scaledH=H*scale;
-  const maxX=W*0.3, minX=W-scaledW-W*0.3;
-  const maxY=H*0.3, minY=H-scaledH-H*0.3;
-  panX=Math.min(maxX,Math.max(minX,panX));
-  panY=Math.min(maxY,Math.max(minY,panY));
+  const W=mapWrap.offsetWidth,H=mapWrap.offsetHeight;
+  const maxX=W*.25, minX=W-W*scale-W*.25;
+  const maxY=H*.25, minY=H-H*scale-H*.25;
+  panX=Math.min(maxX,Math.max(panX,minX));
+  panY=Math.min(maxY,Math.max(panY,minY));
 }
 
-/* Zoom centré sur un point */
 function zoomAt(cx,cy,factor){
-  const newScale=Math.min(MAX_SCALE,Math.max(MIN_SCALE,scale*factor));
-  const ratio=newScale/scale;
-  panX=cx-(cx-panX)*ratio;
-  panY=cy-(cy-panY)*ratio;
-  scale=newScale;
-  clampPan();
-  applyTransform(true);
+  const ns=Math.min(MAX_SCALE,Math.max(MIN_SCALE,scale*factor));
+  const r=ns/scale;
+  panX=cx-(cx-panX)*r;
+  panY=cy-(cy-panY)*r;
+  scale=ns;clampPan();applyTransform(true);
 }
 
-/* Molette */
+/* Wheel */
 mapWrap.addEventListener('wheel',e=>{
   e.preventDefault();
   const rect=mapWrap.getBoundingClientRect();
-  const cx=e.clientX-rect.left, cy=e.clientY-rect.top;
-  const factor=e.deltaY<0?1.15:1/1.15;
-  zoomAt(cx,cy,factor);
+  zoomAt(e.clientX-rect.left,e.clientY-rect.top,e.deltaY<0?1.15:1/1.15);
 },{passive:false});
 
-/* Drag */
+/* Mouse drag */
 mapWrap.addEventListener('mousedown',e=>{
-  isDragging=true;dragStartX=e.clientX;dragStartY=e.clientY;panStartX=panX;panStartY=panY;
+  isDragging=true;didDrag=false;
+  startX=e.clientX;startY=e.clientY;startPanX=panX;startPanY=panY;
   mapWrap.style.cursor='grabbing';
 });
 window.addEventListener('mousemove',e=>{
-  if(!isDragging) return;
-  panX=panStartX+(e.clientX-dragStartX);
-  panY=panStartY+(e.clientY-dragStartY);
-  clampPan();applyTransform();
+  if(!isDragging)return;
+  const dx=e.clientX-startX,dy=e.clientY-startY;
+  if(Math.abs(dx)>3||Math.abs(dy)>3)didDrag=true;
+  panX=startPanX+dx;panY=startPanY+dy;clampPan();applyTransform();
 });
 window.addEventListener('mouseup',()=>{isDragging=false;mapWrap.style.cursor='grab';});
 
 /* Touch */
-let lastTouchDist=0;
+let lastDist=0;
 mapWrap.addEventListener('touchstart',e=>{
-  if(e.touches.length===1){
-    isDragging=true;
-    dragStartX=e.touches[0].clientX;dragStartY=e.touches[0].clientY;
-    panStartX=panX;panStartY=panY;
-  }else if(e.touches.length===2){
-    isDragging=false;
-    lastTouchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-  }
+  if(e.touches.length===1){isDragging=true;didDrag=false;startX=e.touches[0].clientX;startY=e.touches[0].clientY;startPanX=panX;startPanY=panY;}
+  else if(e.touches.length===2){isDragging=false;lastDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}
 },{passive:true});
 mapWrap.addEventListener('touchmove',e=>{
   e.preventDefault();
-  if(e.touches.length===1&&isDragging){
-    panX=panStartX+(e.touches[0].clientX-dragStartX);
-    panY=panStartY+(e.touches[0].clientY-dragStartY);
-    clampPan();applyTransform();
-  }else if(e.touches.length===2){
-    const dist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-    const rect=mapWrap.getBoundingClientRect();
-    const cx=(e.touches[0].clientX+e.touches[1].clientX)/2-rect.left;
-    const cy=(e.touches[0].clientY+e.touches[1].clientY)/2-rect.top;
-    zoomAt(cx,cy,dist/lastTouchDist);
-    lastTouchDist=dist;
-  }
+  if(e.touches.length===1&&isDragging){const dx=e.touches[0].clientX-startX,dy=e.touches[0].clientY-startY;if(Math.abs(dx)>3||Math.abs(dy)>3)didDrag=true;panX=startPanX+dx;panY=startPanY+dy;clampPan();applyTransform();}
+  else if(e.touches.length===2){const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);const rect=mapWrap.getBoundingClientRect();const cx=(e.touches[0].clientX+e.touches[1].clientX)/2-rect.left,cy=(e.touches[0].clientY+e.touches[1].clientY)/2-rect.top;zoomAt(cx,cy,d/lastDist);lastDist=d;}
 },{passive:false});
 mapWrap.addEventListener('touchend',()=>{isDragging=false;});
 
 /* Boutons */
-const W=()=>mapWrap.offsetWidth, H=()=>mapWrap.offsetHeight;
-document.getElementById('zoom-in') .addEventListener('click',()=>zoomAt(W()/2,H()/2,1.3));
-document.getElementById('zoom-out').addEventListener('click',()=>zoomAt(W()/2,H()/2,1/1.3));
+document.getElementById('zoom-in').addEventListener('click',()=>zoomAt(mapWrap.offsetWidth/2,mapWrap.offsetHeight/2,1.3));
+document.getElementById('zoom-out').addEventListener('click',()=>zoomAt(mapWrap.offsetWidth/2,mapWrap.offsetHeight/2,1/1.3));
 document.getElementById('zoom-reset').addEventListener('click',()=>{scale=1;panX=0;panY=0;applyTransform(true);});
-
-/* Clic sur les pins → scroll vers la section + ouvrir */
-pins.forEach(pin=>{
-  pin.addEventListener('click',e=>{
-    e.stopPropagation();
-    const targetId=pin.dataset.target;
-    const target=document.getElementById(targetId);
-    if(!target) return;
-
-    /* Activer visuellement */
-    pins.forEach(p=>p.classList.remove('active'));
-    pin.classList.add('active');
-
-    /* Ouvrir la section si fermée */
-    const header=target.querySelector('.continent-header');
-    const wrap=target.querySelector('.continent-wrap');
-    if(header&&wrap&&!wrap.classList.contains('open')){
-      wrap.classList.add('open');header.classList.add('open');
-    }
-
-    /* Scroll vers la section */
-    setTimeout(()=>{
-      target.scrollIntoView({behavior:'smooth',block:'start'});
-    },100);
-  });
-});
-
-/* Init positions des pins */
-updatePins();
-window.addEventListener('resize',()=>updatePins());
 </script>
 </body>
 </html>

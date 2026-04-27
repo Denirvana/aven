@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Le Continent des Duchés — Aven Univers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@200;300;400;500&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--nav-h:56px;}
+    html,body{width:100%;height:100%;overflow:hidden;background:#06060f;}
+    .svg-defs{position:absolute;width:0;height:0;overflow:hidden}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;justify-content:center;gap:3rem;background:rgba(6,6,15,.4);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border-bottom:.5px solid rgba(255,255,255,.06);}
+    nav a{font-family:'Raleway',sans-serif;font-weight:300;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.68);text-decoration:none;transition:color .3s;position:relative;}
+    nav a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:.5px;background:rgba(200,120,48,.8);transform:scaleX(0);transform-origin:center;transition:transform .35s ease;}
+    nav a:hover{color:#fff;}nav a:hover::after{transform:scaleX(1);}
+    .vinyl-zone{position:fixed;right:18px;top:0;height:var(--nav-h);display:flex;align-items:center;gap:9px;z-index:201;}
+    .track-info{display:flex;align-items:center;gap:6px;}
+    #track-label{font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);max-width:130px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;transition:color .4s;}
+    #track-label.on{color:rgba(200,120,48,.8);}
+    .chevron-btn{background:none;border:none;cursor:pointer;padding:2px 4px;display:flex;align-items:center;opacity:.4;transition:opacity .2s;color:white;}
+    .chevron-btn:hover{opacity:.9;}
+    .chevron-btn svg{width:10px;height:10px;fill:currentColor;transition:transform .25s;}
+    .chevron-btn.open svg{transform:rotate(180deg);}
+    .vinyl{position:relative;width:40px;height:40px;cursor:pointer;flex-shrink:0;}
+    .disc-wrap{width:40px;height:40px;border-radius:50%;overflow:hidden;transform-origin:center;animation:spin 4s linear infinite;animation-play-state:paused;transition:box-shadow .5s;}
+    .vinyl.spinning .disc-wrap{animation-play-state:running;box-shadow:0 0 10px rgba(200,120,48,.5);}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .disc-wrap img,.disc-wrap svg.vinyl-svg{width:40px;height:40px;display:block;}
+    .vinyl-icon{position:absolute;inset:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);opacity:0;transition:opacity .2s;}
+    .vinyl:hover .vinyl-icon{opacity:1;}
+    .vinyl-icon svg{width:13px;height:13px;fill:rgba(255,255,255,.92);}
+    #vinyl-popup{position:fixed;top:calc(var(--nav-h)+10px);right:14px;z-index:300;background:rgba(10,6,2,.9);border:.5px solid rgba(200,120,48,.35);border-radius:20px;padding:7px 14px;display:flex;align-items:center;gap:7px;white-space:nowrap;pointer-events:none;opacity:0;transform:translateY(-6px);transition:opacity .5s ease,transform .5s ease;}
+    #vinyl-popup.visible{opacity:1;transform:translateY(0);}
+    #vinyl-popup::before{content:'';position:absolute;bottom:100%;right:20px;border:5px solid transparent;border-bottom-color:rgba(200,120,48,.35);}
+    #vinyl-popup::after{content:'';position:absolute;bottom:calc(100% - 1px);right:21px;border:4px solid transparent;border-bottom-color:rgba(10,6,2,.9);}
+    .popup-dot{width:6px;height:6px;border-radius:50%;background:rgba(200,120,48,.85);flex-shrink:0;animation:dotPulse 1.6s ease-in-out infinite;}
+    @keyframes dotPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+    .popup-text{font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,120,48,.85);}
+    .dropdown{position:fixed;top:calc(var(--nav-h)+6px);right:16px;width:220px;z-index:400;background:rgba(8,8,20,.88);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border:.5px solid rgba(255,255,255,.08);border-radius:8px;overflow:hidden;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .22s ease,transform .22s ease;}
+    .dropdown.open{opacity:1;transform:translateY(0);pointer-events:all;}
+    .dropdown-header{padding:10px 14px 8px;font-family:'Raleway',sans-serif;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);border-bottom:.5px solid rgba(255,255,255,.06);}
+    .track-item{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;transition:background .15s;}
+    .track-item:hover{background:rgba(255,255,255,.05);}
+    .track-item.active{background:rgba(200,120,48,.08);}
+    .track-thumb{width:26px;height:26px;border-radius:4px;overflow:hidden;flex-shrink:0;}
+    .track-thumb img{width:26px;height:26px;display:block;}
+    .track-meta{flex:1;min-width:0;}
+    .track-title{font-family:'Raleway',sans-serif;font-size:10px;color:rgba(255,255,255,.75);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+    .track-item.active .track-title{color:rgba(200,120,48,.95);}
+    .playing-dot{width:5px;height:5px;border-radius:50%;background:rgba(200,120,48,.9);flex-shrink:0;opacity:0;animation:blink 1.4s ease-in-out infinite;}
+    .track-item.active .playing-dot{opacity:1;}
+    @keyframes blink{0%,100%{opacity:.5}50%{opacity:1}}
+    /* Page */
+    .page{position:fixed;inset:0;top:var(--nav-h);overflow:hidden;}
+    .page-bg{position:absolute;inset:0;pointer-events:none;}
+    .bg-grad{position:absolute;inset:0;background:linear-gradient(160deg,#040e06 0%,#060e08 20%,#08140a 40%,#060c08 70%,#040808 100%);}
+    .bg-layer{position:absolute;inset:0;opacity:.6;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,transparent 35%,rgba(0,0,0,.6) 60%,black 82%);mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,transparent 35%,rgba(0,0,0,.6) 60%,black 82%);}
+    .bg-r{filter:url(#ca-red);}
+    .bg-b{filter:url(#ca-blue);}
+    .bg-r .bg-grad,.bg-b .bg-grad{position:absolute;inset:0;background:linear-gradient(160deg,#040e06 0%,#060e08 20%,#08140a 40%,#060c08 70%,#040808 100%);}
+    .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 75% at 50% 50%,transparent 28%,rgba(2,2,10,.55) 65%,rgba(2,2,10,.92) 100%);}
+    .edge-blur{position:absolute;inset:0;pointer-events:none;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-mask-image:radial-gradient(ellipse 78% 72% at 50% 50%,transparent 32%,rgba(0,0,0,.5) 55%,black 78%);mask-image:radial-gradient(ellipse 78% 72% at 50% 50%,transparent 32%,rgba(0,0,0,.5) 55%,black 78%);}
+    .page-scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;}
+    .page-scroll::-webkit-scrollbar{width:3px;}
+    .page-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px;}
+    .page-inner{padding:44px 64px 80px;max-width:1000px;}
+    /* Breadcrumb */
+    .breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:32px;}
+    .bc-link{font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.28);text-decoration:none;transition:color .2s;}
+    .bc-link:hover{color:rgba(255,255,255,.6);}
+    .bc-sep{color:rgba(255,255,255,.15);font-size:10px;}
+    .bc-current{font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,120,48,.7);}
+    /* Header */
+    .cont-num-label{font-family:'Raleway',sans-serif;font-size:10px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:rgba(200,120,48,.6);margin-bottom:8px;}
+    .cont-title{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(30px,4vw,52px);letter-spacing:.16em;color:#fff;line-height:1.1;margin-bottom:10px;text-shadow:0 0 80px rgba(100,180,80,.2);}
+    .cont-arc-tag{display:inline-block;font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);border:.5px solid rgba(255,255,255,.1);padding:4px 12px;border-radius:999px;margin-bottom:36px;}
+    /* Sections */
+    .section{margin-bottom:36px;}
+    .section-title{font-family:'Cinzel',serif;font-weight:400;font-size:14px;letter-spacing:.12em;color:rgba(255,255,255,.6);margin-bottom:12px;padding-bottom:8px;border-bottom:.5px solid rgba(255,255,255,.06);}
+    .section-text{font-family:'DM Sans',sans-serif;font-size:13.5px;color:rgba(255,255,255,.55);line-height:1.82;}
+    .section-text p{margin-bottom:12px;}
+    .section-text p:last-child{margin:0;}
+    /* Lieux */
+    .places{display:flex;flex-direction:column;gap:10px;}
+    .place{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:rgba(255,255,255,.025);border:.5px solid rgba(255,255,255,.055);border-radius:6px;}
+    .place-dot{width:5px;height:5px;border-radius:50%;background:rgba(200,120,48,.7);flex-shrink:0;margin-top:6px;}
+    .place-name{font-family:'Raleway',sans-serif;font-size:11.5px;font-weight:500;color:rgba(255,255,255,.8);margin-bottom:4px;}
+    .place-desc{font-family:'DM Sans',sans-serif;font-size:12.5px;color:rgba(255,255,255,.42);line-height:1.65;}
+    /* Tags */
+    .tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:30px;}
+    .tag{font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:999px;background:rgba(255,255,255,.04);border:.5px solid rgba(255,255,255,.1);color:rgba(255,255,255,.38);}
+    /* Back btn */
+    .back-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);text-decoration:none;border:.5px solid rgba(255,255,255,.1);padding:7px 16px;border-radius:999px;transition:color .2s,border-color .2s;margin-bottom:48px;}
+    .back-btn:hover{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.25);}
+    .back-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;}
+  </style>
+</head>
+<body>
+<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="ca-red" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/></filter>
+    <filter id="ca-blue" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/></filter>
+  </defs>
+</svg>
+
+<div id="vinyl-popup"><div class="popup-dot"></div><span class="popup-text">Lancer une piste</span></div>
+
+<nav>
+  <a href="index.html">Accueil</a>
+  <a href="personnages.html">Personnages</a>
+  <a href="univers.html">Univers</a>
+  <a href="projet.html">Projet</a>
+  <a href="contact.html">Contact</a>
+  <div class="vinyl-zone">
+    <div class="track-info">
+      <span id="track-label">Aucune piste</span>
+      <button class="chevron-btn" id="chevron-btn"><svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="vinyl" id="vinyl">
+      <div class="disc-wrap" id="disc-wrap">
+        <svg id="vinyl-svg" class="vinyl-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="50" fill="#111"/><circle cx="50" cy="50" r="47" fill="none" stroke="#1e1e1e" stroke-width=".9"/>
+          <circle cx="50" cy="50" r="43" fill="none" stroke="#1e1e1e" stroke-width=".9"/><circle cx="50" cy="50" r="38" fill="none" stroke="#1a1a1a" stroke-width=".7"/>
+          <circle cx="50" cy="50" r="33" fill="none" stroke="#1e1e1e" stroke-width=".7"/><circle cx="50" cy="50" r="28" fill="none" stroke="#1a1a1a" stroke-width=".6"/>
+          <circle cx="50" cy="50" r="23" fill="none" stroke="#1e1e1e" stroke-width=".6"/>
+          <ellipse cx="38" cy="30" rx="8" ry="3.5" fill="white" opacity=".04" transform="rotate(-25 38 30)"/>
+          <circle cx="50" cy="50" r="19" fill="#180a02"/><circle cx="50" cy="50" r="18.5" fill="none" stroke="rgba(200,120,48,.45)" stroke-width=".7"/>
+          <text x="50" y="48" text-anchor="middle" font-family="'Cinzel',serif" font-size="5.5" fill="rgba(200,120,48,.85)" letter-spacing=".5">AVEN</text>
+          <text x="50" y="55.5" text-anchor="middle" font-family="sans-serif" font-size="2.6" fill="rgba(200,120,48,.4)" letter-spacing=".8">JOURNEY</text>
+          <circle cx="50" cy="50" r="3" fill="#0a0a0a"/>
+        </svg>
+        <img id="cover-img" src="" alt="" style="display:none;border-radius:50%;object-fit:cover;"/>
+      </div>
+      <div class="vinyl-icon">
+        <svg id="i-play" viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
+        <svg id="i-pause" viewBox="0 0 24 24" style="display:none"><rect x="5" y="4" width="4" height="16"/><rect x="15" y="4" width="4" height="16"/></svg>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="dropdown" id="dropdown">
+  <div class="dropdown-header">Pistes</div>
+  <div id="track-list"></div>
+</div>
+
+<div class="page">
+  <div class="page-bg">
+    <div class="bg-grad"></div>
+    <div class="bg-layer bg-r"><div class="bg-grad"></div></div>
+    <div class="bg-layer bg-b"><div class="bg-grad"></div></div>
+    <div class="vignette"></div>
+    <div class="edge-blur"></div>
+  </div>
+  <div class="page-scroll">
+    <div class="page-inner">
+      <a class="back-btn" href="univers.html">
+        <svg viewBox="0 0 16 16"><path d="M10 3L5 8l5 5"/></svg>
+        Retour à la carte
+      </a>
+      <div class="breadcrumb">
+        <a class="bc-link" href="univers.html">Univers</a>
+        <span class="bc-sep">›</span>
+        <span class="bc-current">Le Continent des Duchés</span>
+      </div>
+      <p class="cont-num-label">Continent I</p>
+      <h1 class="cont-title">Le Continent des Duchés</h1>
+      <div class="cont-arc-tag">Arc 1 — Filles d'Hadès</div>
+      <div class="tags"><span class="tag">Arc 1</span><span class="tag">Filles d'Hadès</span><span class="tag">Dragon</span><span class="tag">Guilde</span><span class="tag">Survie</span></div>
+      <div class="section">
+        <h2 class="section-title">Géographie</h2>
+        <div class="section-text"><p>Petit continent traversé par une chaîne de montagnes imposante avec un seul accès à la montagne centrale — là où se cache le dragon. La recrudescence des monstres et la "colère" du dragon perturbent l'équilibre magique de la région, forçant les duchés à fermer leurs frontières.</p>
+        <p>Le voyage dure un an complet, avec un glissement saisonnier : printemps (rencontre) → été (duchés) → automne (attaque et survie) → hiver (épreuve de la Déesse de la Chasse, dragon, départ).</p></div>
+      </div>      <div class="section">
+        <h2 class="section-title">Contexte politique</h2>
+        <div class="section-text"><p>Multiples duchés autonomes aux frontières fermées. Chaque duché a sa propre vie indépendante — crises de succession, pèlerinages, tensions locales. Le monde vit sans les personnages. Pour traverser les frontières, le groupe doit ruser : se faire passer pour des gardes du corps d'une noble, ou accompagner des marchands.</p>
+        <p>Des rumeurs circulent d'un duché à l'autre — une nation à l'est qui mobilise, une vieille femme qui rêve d'une louve, le Panthéon mentionné comme légende lointaine.</p></div>
+      </div>      <div class="section">
+        <h2 class="section-title">Lieux notables</h2>
+        <div class="places">      <div class="place">
+        <div class="place-dot"></div>
+        <div><div class="place-name">La Montagne Centrale & le Dragon</div><div class="place-desc">Seul accès au cœur du continent. Le dragon pleure — chaque personnage échoue à le tuer pour des raisons différentes. C'est ici qu'Hadès apparaît. La déesse choisit les filles non pour leur score mais pour ce qu'elle voit dans le tableau qu'ils forment ensemble.</div></div>
+      </div>      <div class="place">
+        <div class="place-dot"></div>
+        <div><div class="place-name">La Capitale (côtière)</div><div class="place-desc">Destination finale de l'arc. Premier repas chaud après la survie. Port d'où Hyuun part seul, Beka court jusqu'au quai, Wendy s'effondre.</div></div>
+      </div>      <div class="place">
+        <div class="place-dot"></div>
+        <div><div class="place-name">Le Duché 3 (brûlé)</div><div class="place-desc">Le plus proche de la région sauvage. Rasé par les monstres lors de l'incendie de la nuit. Retournement du Tome 1 — le groupe survit dehors, des visages que le lecteur connaissait disparaissent.</div></div>
+      </div>      <div class="place">
+        <div class="place-dot"></div>
+        <div><div class="place-name">La Forêt & Camp de Monstres</div><div class="place-desc">Traversée de nuit, sans feu, en silence pendant plusieurs jours. Les ruines sous la montagne, l'ascension sous la pluie. La partie la plus longue et la plus importante de l'arc — là où Hyuun apprend à ressentir.</div></div>
+      </div>        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<audio id="player" preload="metadata"></audio>
+<script>
+function makeCover(c1,c2){return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='0,0 100,0 0,100' fill='${c1}'/><polygon points='100,0 100,100 0,100' fill='${c2}'/></svg>`);}
+const tracks=[{title:'Aube sur la Montagne',src:null,cover:makeCover('#c84030','#e8a020')},{title:'Le Désert de Sel',src:null,cover:makeCover('#1a3a8c','#7a20c8')},{title:'Nuit à Albarossa',src:null,cover:makeCover('#0e4a2e','#1e6888')}];
+const player=document.getElementById('player'),vinyl=document.getElementById('vinyl'),vinylSvg=document.getElementById('vinyl-svg'),coverImg=document.getElementById('cover-img'),trackLabel=document.getElementById('track-label'),trackList=document.getElementById('track-list'),dropdown=document.getElementById('dropdown'),chevronBtn=document.getElementById('chevron-btn'),iPlay=document.getElementById('i-play'),iPause=document.getElementById('i-pause'),vinylPopup=document.getElementById('vinyl-popup');
+let currentIdx=-1,isPlaying=false,ddOpen=false;
+tracks.forEach((t,i)=>{const el=document.createElement('div');el.className='track-item';el.innerHTML=`<div class="track-thumb"><img src="${t.cover}"></div><div class="track-meta"><div class="track-title">${t.title}</div></div><div class="playing-dot"></div>`;el.addEventListener('click',()=>selectTrack(i));trackList.appendChild(el);});
+let popupTimer=setTimeout(()=>{if(currentIdx===-1)vinylPopup.classList.add('visible');},2500);
+function hidePopup(){vinylPopup.classList.remove('visible');clearTimeout(popupTimer);}
+function selectTrack(idx){hidePopup();currentIdx=idx;const t=tracks[idx];vinylSvg.style.display='none';coverImg.src=t.cover;coverImg.style.display='block';trackLabel.textContent=t.title;trackLabel.classList.add('on');if(t.src){player.src=t.src;player.play().then(()=>setState(true)).catch(()=>setState(true));}else setState(true);document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===idx));closeDropdown();}
+function setState(on){isPlaying=on;vinyl.classList.toggle('spinning',on);iPlay.style.display=on?'none':'block';iPause.style.display=on?'block':'none';}
+vinyl.addEventListener('click',()=>{if(currentIdx===-1){toggleDropdown();return;}if(isPlaying){if(tracks[currentIdx].src)player.pause();setState(false);}else{if(tracks[currentIdx].src)player.play().catch(()=>{});setState(true);}});
+player.addEventListener('ended',()=>{if(tracks.length===1){player.currentTime=0;player.play().catch(()=>{});}else selectTrack((currentIdx+1)%tracks.length);});
+function openDropdown(){ddOpen=true;dropdown.classList.add('open');chevronBtn.classList.add('open');hidePopup();}
+function closeDropdown(){ddOpen=false;dropdown.classList.remove('open');chevronBtn.classList.remove('open');}
+function toggleDropdown(){ddOpen?closeDropdown():openDropdown();}
+chevronBtn.addEventListener('click',e=>{e.stopPropagation();toggleDropdown();});
+document.addEventListener('click',e=>{if(ddOpen&&!dropdown.contains(e.target)&&!chevronBtn.contains(e.target))closeDropdown();});
+try{const saved=JSON.parse(sessionStorage.getItem('aven-player')||'null');if(saved&&saved.idx>=0&&saved.idx<tracks.length){const t=tracks[saved.idx];currentIdx=saved.idx;vinylSvg.style.display='none';coverImg.src=t.cover;coverImg.style.display='block';trackLabel.textContent=t.title;trackLabel.classList.add('on');document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===saved.idx));if(t.src&&saved.playing){player.src=t.src;if(saved.time)player.currentTime=saved.time;player.play().then(()=>setState(true)).catch(()=>setState(saved.playing));}else setState(saved.playing||false);}}catch(e){}
+window.addEventListener('beforeunload',()=>{if(currentIdx>=0)sessionStorage.setItem('aven-player',JSON.stringify({idx:currentIdx,playing:isPlaying,time:tracks[currentIdx].src?player.currentTime:0}));});
+</script>
+</body>
+</html>
