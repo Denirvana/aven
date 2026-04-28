@@ -399,6 +399,14 @@
     }
     .info-value.unknown{color:rgba(255,255,255,.25);font-style:italic;}
 
+    /* Titre de sous-section dans le tableau info */
+    .info-section-title{
+      font-family:'Cinzel',serif;font-weight:400;font-size:12px;letter-spacing:.1em;
+      color:rgba(255,255,255,.5);margin-top:14px;margin-bottom:6px;
+      padding-bottom:5px;border-bottom:.5px solid rgba(255,255,255,.06);
+    }
+    .info-section-title:first-child{margin-top:0;}
+
     /* Bullets magie */
     .magic-list{display:flex;flex-direction:column;gap:14px;margin-top:4px;}
     .magic-item{display:flex;gap:12px;}
@@ -416,6 +424,66 @@
       color:rgba(255,255,255,.52);line-height:1.7;
     }
 
+    /* ── Pupille Divine (marquage) ── */
+    .divine-eye-block{
+      border:.5px solid rgba(200,120,48,.2);border-radius:7px;
+      background:rgba(200,120,48,.04);overflow:hidden;margin-bottom:14px;
+    }
+    .divine-eye-header{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:10px 14px;border-bottom:.5px solid rgba(200,120,48,.12);
+    }
+    .divine-eye-title{
+      font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;
+      letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.8);
+    }
+    .divine-eye-deity{
+      font-family:'Cinzel',serif;font-size:13px;letter-spacing:.1em;
+      color:rgba(200,120,48,.85);
+    }
+    .divine-eye-body{
+      display:flex;gap:14px;align-items:flex-start;padding:12px 14px;
+    }
+    .divine-eye-img{
+      width:72px;height:72px;border-radius:6px;flex-shrink:0;overflow:hidden;
+      border:.5px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.04);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .divine-eye-img img{width:100%;height:100%;object-fit:cover;}
+    .divine-eye-img-placeholder{
+      font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.06em;
+      color:rgba(255,255,255,.2);text-align:center;padding:6px;line-height:1.4;
+    }
+    .divine-eye-desc{
+      font-family:'DM Sans',sans-serif;font-size:12.5px;
+      color:rgba(255,255,255,.5);line-height:1.72;flex:1;
+    }
+
+    /* ── Description avec image ── */
+    .desc-with-image{
+      display:flex;gap:18px;align-items:flex-start;margin-top:4px;
+    }
+    .desc-char-img{
+      width:100px;flex-shrink:0;border-radius:6px;overflow:hidden;
+      border:.5px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.03);
+      aspect-ratio:2/3;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .desc-char-img img{width:100%;height:100%;object-fit:cover;}
+    .desc-char-img-ph{
+      font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.06em;
+      color:rgba(255,255,255,.18);text-align:center;padding:8px;line-height:1.5;
+    }
+    .desc-text{
+      flex:1;
+      font-family:'DM Sans',sans-serif;font-size:13px;
+      color:rgba(255,255,255,.58);line-height:1.8;
+    }
+    .desc-text p{margin-bottom:12px;}
+    .desc-text p:last-child{margin:0;}
+
     /* Texte générique */
     .cs-text{
       font-family:'DM Sans',sans-serif;font-size:13px;
@@ -423,6 +491,84 @@
     }
     .cs-text p{margin-bottom:12px;}
     .cs-text p:last-child{margin:0;}
+
+    /* ── Timeline développement ── */
+    .timeline-wrap{margin-top:4px;}
+    .timeline-track{
+      position:relative;display:flex;align-items:flex-start;
+      padding:0 4px 28px;overflow-x:auto;
+      scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;
+    }
+    .timeline-track::-webkit-scrollbar{height:3px;}
+    .timeline-track::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px;}
+    /* Ligne horizontale */
+    .timeline-track::before{
+      content:'';position:absolute;top:16px;left:0;right:0;height:.5px;
+      background:linear-gradient(to right,transparent,rgba(255,255,255,.12) 5%,rgba(255,255,255,.12) 95%,transparent);
+    }
+    .tl-point{
+      display:flex;flex-direction:column;align-items:center;gap:8px;
+      flex-shrink:0;padding:0 18px;cursor:pointer;
+      transition:opacity .2s;
+    }
+    .tl-point:hover{opacity:.8;}
+    .tl-dot{
+      width:13px;height:13px;border-radius:50%;margin-top:10px;
+      border:2px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);
+      transition:border-color .25s,background .25s,box-shadow .25s;flex-shrink:0;
+    }
+    .tl-point.active .tl-dot{
+      border-color:rgba(200,120,48,.9);background:rgba(200,120,48,.3);
+      box-shadow:0 0 8px rgba(200,120,48,.4);
+    }
+    .tl-label{
+      font-family:'Raleway',sans-serif;font-size:9px;font-weight:400;
+      letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);
+      text-align:center;white-space:nowrap;transition:color .25s;
+    }
+    .tl-point.active .tl-label{color:rgba(200,120,48,.9);}
+
+    .timeline-content{
+      border:.5px solid rgba(255,255,255,.06);border-radius:7px;
+      background:rgba(255,255,255,.02);padding:16px;min-height:80px;
+    }
+    .tl-event-title{
+      font-family:'Cinzel',serif;font-weight:400;font-size:13px;letter-spacing:.1em;
+      color:rgba(255,255,255,.8);margin-bottom:8px;
+    }
+    .tl-event-body{
+      font-family:'DM Sans',sans-serif;font-size:12.5px;
+      color:rgba(255,255,255,.5);line-height:1.75;margin-bottom:12px;
+    }
+    .tl-dev-label{
+      font-family:'Raleway',sans-serif;font-size:9px;font-weight:500;
+      letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(200,120,48,.6);margin-bottom:8px;
+    }
+    .tl-dev-body{
+      font-family:'DM Sans',sans-serif;font-size:12.5px;
+      color:rgba(255,255,255,.52);line-height:1.75;margin-bottom:14px;
+    }
+    .tl-linked{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+    .tl-linked-label{
+      font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.12em;
+      text-transform:uppercase;color:rgba(255,255,255,.22);margin-right:4px;
+    }
+    .tl-linked-char{
+      display:flex;align-items:center;gap:6px;cursor:pointer;
+      padding:4px 8px 4px 4px;border-radius:20px;
+      border:.5px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);
+      transition:border-color .2s,background .2s;text-decoration:none;
+    }
+    .tl-linked-char:hover{border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.06);}
+    .tl-linked-avatar{
+      width:24px;height:24px;border-radius:50%;overflow:hidden;flex-shrink:0;
+    }
+    .tl-linked-avatar img,.tl-linked-avatar svg{width:24px;height:24px;display:block;}
+    .tl-linked-name{
+      font-family:'Raleway',sans-serif;font-size:10px;font-weight:400;
+      color:rgba(255,255,255,.65);
+    }
 
     /* Bloc relation */
     .relation-block{
@@ -472,7 +618,85 @@
     .section-img svg,.section-img img{width:100%;display:block;}
 
     @keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
-  </style>
+  
+
+    /* nav-links wrapper (créé par JS hamburger) */
+    .nav-links { display:flex; align-items:center; gap:3rem; }
+    .nav-hamburger { display:none; }
+    /* ══ RESPONSIVE ══════════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      nav { gap: 1.8rem; }
+    }
+    @media (max-width: 680px) {
+      /* Hamburger menu */
+      .nav-links { display:none; flex-direction:column; position:fixed; top:var(--nav-h); left:0; right:0; z-index:199; background:rgba(6,6,15,.97); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:.5px solid rgba(255,255,255,.06); padding:16px 0; gap:0; }
+      .nav-links.open { display:flex; }
+      .nav-links a { padding:13px 28px; font-size:12px; letter-spacing:.2em; border-bottom:.5px solid rgba(255,255,255,.04); color:rgba(255,255,255,.7); }
+      .nav-links a:last-child { border:none; }
+      .nav-hamburger { display:flex; flex-direction:column; gap:5px; cursor:pointer; padding:8px; margin-left:auto; z-index:202; position:fixed; left:16px; top:50%; transform:translateY(-50%); margin-top:0; margin-left:0; }
+      .nav-hamburger.fixed { top:calc(var(--nav-h)/2); }
+      .ham-line { width:22px; height:1.5px; background:rgba(255,255,255,.65); border-radius:2px; transition:transform .3s, opacity .3s; }
+      .nav-hamburger.open .ham-line:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+      .nav-hamburger.open .ham-line:nth-child(2) { opacity:0; }
+      .nav-hamburger.open .ham-line:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+      /* Reduce vinyl zone */
+      .vinyl-zone { right:12px; }
+      #track-label { max-width:80px; display:none; }
+    }
+    /* ── index.html ── */
+    @media (max-width:680px) {
+      .logo-text { font-size:clamp(48px,16vw,80px) !important; letter-spacing:.18em !important; }
+      .subtitle { letter-spacing:.28em !important; }
+      .cards-grid { grid-template-columns:1fr !important; grid-template-rows:auto !important; gap:12px !important; }
+      .card-univers { grid-column:1 !important; }
+      .discover { padding:calc(var(--nav-h) + 20px) 20px 28px !important; gap:12px !important; }
+    }
+    /* ── personnages ── */
+    @media (max-width:680px) {
+      .chars-grid { grid-template-columns:repeat(2,1fr) !important; gap:10px !important; }
+      .page-inner { padding:28px 20px 60px !important; }
+      .filter-bar { gap:5px !important; }
+      #char-panel { width:100vw !important; border-left:none !important; border-top:.5px solid rgba(255,255,255,.07); }
+      .panel-header { padding:20px 20px 14px !important; }
+      .cs-section-header { padding:13px 20px !important; }
+      .cs-section-inner { padding:0 20px 18px !important; }
+    }
+    @media (max-width:400px) {
+      .chars-grid { grid-template-columns:1fr !important; }
+    }
+    /* ── magie ── */
+    @media (max-width:900px) {
+      .magic-grid { grid-template-columns:repeat(2,1fr) !important; }
+      .page-inner { padding:24px 24px 20px !important; }
+    }
+    @media (max-width:560px) {
+      .magic-grid { grid-template-columns:1fr !important; overflow-y:auto; }
+      .magic-card { min-height:160px; }
+    }
+    /* ── univers ── */
+    @media (max-width:680px) {
+      .conts-grid { grid-template-columns:repeat(2,1fr) !important; gap:10px !important; }
+      .page-inner { padding:28px 20px 40px !important; }
+      .map-hint-text { display:none; }
+    }
+    @media (max-width:420px) {
+      .conts-grid { grid-template-columns:1fr !important; }
+    }
+    /* ── continent pages ── */
+    @media (max-width:680px) {
+      .continent-layout { grid-template-columns:1fr !important; }
+      .page-inner { padding:28px 24px 60px !important; }
+      .cont-minimap { display:none; }
+      .bc-link { font-size:8px; letter-spacing:.1em; }
+      .back-btn { padding:6px 12px !important; font-size:8px !important; }
+    }
+    /* ── modal ── */
+    @media (max-width:680px) {
+      #magic-modal { width:100vw !important; max-height:95vh !important; top:auto !important; bottom:0 !important; left:0 !important; transform:none !important; border-radius:10px 10px 0 0 !important; }
+      #magic-modal.open { transform:none !important; }
+    }
+
+    </style>
 </head>
 <body>
 
@@ -593,6 +817,125 @@ const tracks=[
   {title:'Nuit à Albarossa',   src:null,cover:makeCover('#0e4a2e','#1e6888')},
 ];
 
+/* ════════════════════════════════════════════════════════════════════════════
+   ██  GUIDE — PERSONNAGES  ██
+   ════════════════════════════════════════════════════════════════════════════
+
+   ── 1. AJOUTER UN PERSONNAGE ─────────────────────────────────────────────
+   Copier ce template dans `characters` ou `extraChars`, remplir les champs,
+   puis ajouter son id dans le bon groupe (section 3 ci-dessous).
+
+   {
+     id: 'mon-perso',          // Identifiant unique, minuscules, sans espace
+     name: 'Nom Affiché',
+     title: 'Le Rôle',
+
+     // Avatar circulaire dans le header du panneau.
+     // Option A (placeholder SVG) : makeAvatar('#couleur1','#couleur2','AB')
+     // Option B (vraie image)     : avatar: '<img src="img/perso.jpg"/>'
+     get avatar(){ return makeAvatar('#080818','#1a1040','Ab'); },
+
+     // Tags affichés sur la card et dans le panneau.
+     // Styles disponibles : 'amber' | 'coral' | 'gray' | 'pink' | 'blue'
+     tags: [
+       {label:'Mon Tag',   style:'amber'},
+       {label:'Autre Tag', style:'blue'},
+     ],
+
+     // Fond de la card (en attendant une vraie image).
+     // Pour une vraie image : cardBg: "url('img/perso.jpg') center/cover"
+     cardBg: `linear-gradient(to bottom, #050510 0%, #0c0820 60%, #06040e 100%)`,
+
+     // Décor SVG optionnel sur la card (peut être '' pour rien).
+     cardSvg: '',
+
+     // Sections du panneau latéral.
+     // Chaque section est un onglet dépliable.
+     sections: [
+       {
+         id:'info', title:'Informations', open:true,   // open:true = ouvert par défaut
+         render:()=>`
+         <div class="info-grid">
+           ${field('Full name',  'Nom Affiché')}
+           ${field('Age',        '— ans')}
+           ${field('Gender',     '—')}
+           ${field('Race',       '—')}
+           ${field('Birth place','—', true)}   // true = champ grisé "non renseigné"
+           ${field('Birthday',   '—', true)}
+           ${field('Sexuality',  '—', true)}
+           ${field('Role',       '—')}
+           ${field('Likes',      '—', true)}
+           ${field('Dislikes',   '—', true)}
+           ${fieldFull('Hobbies','—', true)}   // fieldFull = occupe les 2 colonnes
+         </div>`
+       },
+
+       // ── Section texte libre ──────────────────────────────────────────
+       {
+         id:'background', title:'Background story', open:false,
+         render:()=>`
+         <div class="cs-text">
+           <p>Premier paragraphe.</p>
+           <p>Deuxième paragraphe.</p>
+         </div>`
+       },
+
+       // ── Section avec bullets (magic-list) ───────────────────────────
+       {
+         id:'magic', title:'Magic', open:false,
+         render:()=>`
+         <div class="magic-list">
+           <div class="magic-item">
+             <div class="magic-dot"></div>
+             <div class="magic-content">
+               <div class="magic-title">Titre du pouvoir</div>
+               <div class="magic-desc">Description du pouvoir.</div>
+             </div>
+           </div>
+         </div>`
+       },
+
+       // ── Section relations ────────────────────────────────────────────
+       // relationBlockHtml(id_cible, 'Rôle · Descriptif', `<p>Texte.</p>`)
+       // L'id_cible doit correspondre à un id de personnage existant.
+       {
+         id:'relations', title:'Relations', open:false,
+         render:()=>
+           relationBlockHtml('hyuun','Rôle de la relation',`
+             <p>Description de la relation.</p>
+           `)
+       },
+     ]
+   }
+
+   ── 2. STYLES DE TAGS ────────────────────────────────────────────────────
+   'amber' → orange/doré      → rôles narratifs, armes
+   'coral' → rouge/corail     → antagonistes, combattants, factions ennemies
+   'gray'  → gris neutre      → rôles secondaires, arcs, lieux
+   'pink'  → rose/mauve       → liens affectifs, secrets, révélations
+   'blue'  → bleu             → factions alliées (ex: Filles d'Hadès)
+
+   ── 3. GROUPES & CATÉGORIES ──────────────────────────────────────────────
+   Les groupes définissent l'ordre d'affichage et les sections visuelles.
+   Ajouter l'id du personnage dans le tableau `ids` du bon groupe.
+   Pour créer un nouveau groupe, ajouter un objet dans `groups` :
+
+   { id:'mon-groupe', label:'Nom du Groupe', ids:['id1','id2','id3'] }
+
+   Le filtre en haut de page est généré automatiquement à partir des tags.
+   Pas besoin de le modifier manuellement.
+
+   ── 4. AVATAR AVEC VRAIE IMAGE ───────────────────────────────────────────
+   Dans la définition du personnage, remplacer `get avatar()` par :
+   avatar: '<img src="img/perso-avatar.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>',
+
+   ── 5. CARD AVEC VRAIE IMAGE ─────────────────────────────────────────────
+   Dans la définition du personnage, remplacer cardBg par :
+   cardBg: "url('img/perso-card.jpg') center/cover",
+   Et mettre cardSvg: '' (vide).
+
+   ════════════════════════════════════════════════════════════════════════════ */
+
 /* ══ DONNÉES PERSONNAGES ══ */
 const characters=[
   {
@@ -616,88 +959,149 @@ const characters=[
       <circle cx="150" cy="170" r="40" fill="none" stroke="rgba(200,60,20,.2)" stroke-width="1"/>
     </svg>`,
     sections:[
+      /* ── Informations ────────────────────────────────────────────────────
+         Deux tableaux séparés : état civil + données personnelles.
+         Ajouter des champs : field('Label','Valeur') ou field('Label','—',true)
+         Pour un champ pleine largeur : fieldFull('Label','Valeur')
+      ── */
       {
         id:'info', title:'Informations', open:true,
-        render:()=>`
-        <div class="info-grid">
-          ${field('Full name','Hyuun')}
-          ${field('Age','18 (arc 1) · 21 (arc 2) · 23–24 (Panthéon)')}
-          ${field('Gender','Homme')}
-          ${field('Race','Humain, marqué par Scylla (Gourmandise)')}
-          ${field('Birth place','—',true)}
-          ${field('Birthday','—',true)}
-          ${field('Sexuality','—',true)}
-          ${field('Role','Protagoniste · Chasseur · Infiltrateur · Combat corps-à-corps')}
-          ${field('Favorite animal','Loup (implicite)')}
-          ${field('Favorite food','—',true)}
-          ${field('Favorite drink','—',true)}
-          ${field('Favorite color','—',true)}
-          ${field('Likes','—',true)}
-          ${field('Dislikes','—',true)}
-          ${fieldFull('Hobbies','—',true)}
-        </div>`
+        render:()=>
+          infoSection('Informations',
+            field('Full name','Hyuun') +
+            field('Age','18 (arc 1) · 21 (arc 2) · 23–24 (Panthéon)') +
+            field('Gender','Homme') +
+            field('Race','Humain') +
+            field('Birth place','—',true) +
+            field('Birthday','—',true) +
+            field('Marqué ?','Oui, Scylla') +
+            field('Role','Protagoniste · Chasseur · Infiltrateur · Combat corps-à-corps')
+          ) +
+          infoSection('Mieux le Connaître',
+            field('Sexuality','—',true) +
+            field('Favorite animal','Loup (implicite)') +
+            field('Favorite food','—',true) +
+            field('Favorite drink','—',true) +
+            field('Favorite color','—',true) +
+            fieldFull('Hobbies','—',true) +
+            field('Likes','—',true) +
+            field('Dislikes','—',true)
+          )
       },
+
+      /* ── Magie ───────────────────────────────────────────────────────────
+         divineEye(deity, imgSrc, desc) → bloc Pupille Divine
+         imgSrc : chemin vers l'image ('img/hyuun-pupille.png') ou '' pour placeholder
+      ── */
       {
         id:'magic', title:'Magic', open:false,
-        render:()=>`
-        <div class="magic-list">
+        render:()=>
+          divineEye(
+            'Scylla',
+            '',  /* ← remplacer par 'img/hyuun-pupille.png' quand disponible */
+            'Marqueur de Scylla (Gourmandise, Roue Bestiale). Pouvoir léger : X dans l\'œil. Pouvoir moyen : tout l\'œil. Pouvoir intense : lignes rouges débordent sur le visage et le corps. Un marqué expérimenté peut utiliser son pouvoir sans activer ses yeux — acte de rébellion fondamental contre sa déesse.'
+          ) +
+          `<div class="magic-list">
           <div class="magic-item">
             <div class="magic-dot"></div>
             <div class="magic-content">
               <div class="magic-title">Double noyau — Second noyau parasite</div>
-              <div class="magic-desc">Son second noyau est totalement incandescent. Il envoie des enzymes qui imitent des signaux cérébraux, ordonnant au flux de brûler. D'abord il brûle le flux (feu), puis brûle réellement les tissus si l'utilisation se prolonge. La fumée qu'il expire en permanence est le symptôme de ce noyau qui ne s'arrête jamais, même au repos. Cette brûlure interne constante explique sa tolérance exceptionnelle à la douleur.</div>
-            </div>
-          </div>
-          <div class="magic-item">
-            <div class="magic-dot"></div>
-            <div class="magic-content">
-              <div class="magic-title">Yeux divins — X rouges sur fond noir</div>
-              <div class="magic-desc">Marqueur de Scylla (Gourmandise, Roue Bestiale). Pouvoir léger : X dans l'œil. Pouvoir moyen : tout l'œil. Pouvoir intense : lignes rouges débordent sur le visage et le corps. Un marqué expérimenté peut utiliser son pouvoir sans activer ses yeux — acte de rébellion fondamental contre sa déesse.</div>
+              <div class="magic-desc">Son second noyau est totalement incandescent. Il envoie des enzymes qui imitent des signaux cérébraux, ordonnant au flux de brûler. D'abord il brûle le flux (feu), puis brûle réellement les tissus si l'utilisation se prolonge. La fumée qu'il expire en permanence est le symptôme de ce noyau qui ne s'arrête jamais, même au repos.</div>
             </div>
           </div>
           <div class="magic-item">
             <div class="magic-dot"></div>
             <div class="magic-content">
               <div class="magic-title">Conflit mental de visualisation</div>
-              <div class="magic-desc">Pour utiliser ce feu, il doit visualiser la combustion interne — ce qui entre en conflit avec son instinct de survie. Devant Scylla, sa conviction se brise et sa magie s'effondre. Pas parce qu'elle la coupe (elle ne peut pas) : parce qu'il se désactive lui-même. Dans l'arc 5, quand sa visualisation passe de "le feu me brûle" à "je suis le feu", son contrôle explose.</div>
+              <div class="magic-desc">Pour utiliser ce feu, il doit visualiser la combustion interne — ce qui entre en conflit avec son instinct de survie. Devant Scylla, sa conviction se brise et sa magie s'effondre. Dans l'arc 5, quand sa visualisation passe de "le feu me brûle" à "je suis le feu", son contrôle explose.</div>
             </div>
           </div>
         </div>`
       },
+
       {
         id:'weapon', title:'Weapon / Tool', open:false,
         render:()=>`
         <div class="cs-text"><p>Lames courtes (épées). Style infiltration — faire saigner, fatiguer, poursuivre, être plus rapide que l'adversaire. Il privilégie le combat physique car sa magie est dangereuse pour lui-même.</p>
         <p>Arc 5 — Mont de l'Épée : jambières métalliques lestées ajoutées à son style sous le dieu de l'épée bestiale. Les coups de pied détruisent les obstacles et empêchent la fuite. La lame saigne et fatigue. C'est un style de prédateur apex qui ne laisse aucune échappatoire.</p>
-        <p><strong style="color:rgba(200,120,48,.8)">Objet symbolique :</strong> le bandage de Wendy. Noué à sa main dans un magasin pendant l'arc 1. Visible à chaque moment clé — combats, port, désert. Il ne l'enlèvera jamais. Il évolue visuellement : blanc et propre, puis froissé, sale, méconnaissable, mais toujours là.</p></div>`
+        <p><strong style="color:rgba(200,120,48,.8)">Objet symbolique :</strong> le bandage de Wendy. Noué à sa main dans un magasin pendant l'arc 1. Visible à chaque moment clé. Il ne l'enlèvera jamais.</p></div>`
       },
+
       {
         id:'background', title:'Background story', open:false,
         render:()=>`
-        <div class="section-img">
-          <svg viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
-            <rect width="600" height="120" fill="#0e0408"/>
-            <polygon points="0,120 100,50 200,80 300,30 400,65 500,20 600,45 600,120" fill="rgba(60,10,5,.8)"/>
-            <polygon points="0,120 80,70 180,95 280,55 380,80 480,40 600,60 600,120" fill="rgba(40,8,4,.9)"/>
-            <circle cx="300" cy="55" r="2" fill="rgba(200,80,30,.6)"/>
-            <text x="300" y="20" text-anchor="middle" font-family="serif" font-size="10" fill="rgba(200,80,30,.3)" letter-spacing="3">PLACEHOLDER — remplacer par votre illustration</text>
-          </svg>
-        </div>
         <div class="cs-text">
-          <p>Enlevé enfant, élevé comme une arme par Scylla (Gourmandise). Manipulé, traumatisé, amnésie partielle. La chasse est ancrée profondément — il ne sait pas faire autre chose au début. La faction Scylla a été démantelée mais pas détruite. "La louve errante cherche encore ses petits, surtout lui."</p>
-          <p>Son secret fondamental : sa mère biologique est Mira, déesse de la Générosité (Vertu Fondamentale, Main Blanche). Il a été enlevé enfant et ne le sait pas. Son identité est un champ de bataille cosmologique — l'enfant de la Générosité élevé par la Gourmandise. Sa compassion naturelle vient de Mira. Son instinct de prédateur vient de Scylla. Cette guerre se joue en lui sans qu'il le comprenne.</p>
-          <p>Sa rencontre avec les filles d'Hadès dans l'arc 1 est le premier vrai contact humain. Hadès le rejette. Il part seul. Minako le retrouve dans le désert. Le quatuor se forme dans l'arc 2. L'arc 3 le confronte à Scylla pour la première fois depuis son départ — ses premières larmes de la série.</p>
+          <p>Enlevé enfant, élevé comme une arme par Scylla (Gourmandise). Manipulé, traumatisé, amnésie partielle. La faction Scylla a été démantelée mais pas détruite.</p>
+          <p>Son secret fondamental : sa mère biologique est Mira, déesse de la Générosité. Il a été enlevé enfant et ne le sait pas. Son identité est un champ de bataille cosmologique — l'enfant de la Générosité élevé par la Gourmandise.</p>
         </div>`
       },
+
+      /* ── Description ─────────────────────────────────────────────────────
+         descWithImage(imgSrc, paragraphsHtml)
+         imgSrc : chemin vers l'image du perso, ou '' pour placeholder
+      ── */
       {
         id:'desc', title:'Description', open:false,
-        render:()=>`
-        <div class="cs-text">
-          <p>Silencieux, instinctif, moralement instable au début. Posture de prédateur. Pas de rêve ni de quête claire, juste un instinct : continuer. Son cynisme émerge progressivement, ses remarques deviennent lucides parfois moqueuses. Il ne sait pas dire au revoir — il fuit comme un animal blessé.</p>
-          <p>Quand il échoue, il pense en termes de loup et de meute : chasse échouée, chassé par un prédateur supérieur, rejeté de la meute. Devant Scylla, tous ses acquis disparaissent. Il lâche ses armes et lève les poings nus — réflexe régressif de l'enfant de la meute. Il utilise le langage de la meute contre elle ("N'oublie pas ta place"), signe qu'il n'a pas tout quitté de cette nature.</p>
-          <p><strong style="color:rgba(255,255,255,.7)">Arc global :</strong> passer de bête de survie à humain capable de lien. Arc 1 : apprendre à ressentir. Arc 2 : apprendre à fonctionner avec les autres. Arc 3 : apprendre à dire ("Je suis désolé"). Arc 5 : comprendre ce qu'est l'amour grâce au garçon sans magie. Arc 6 : revendiquer son identité devant le monde entier.</p>
-        </div>`
+        render:()=>
+          descWithImage(
+            '',  /* ← remplacer par 'img/hyuun.png' quand disponible */
+            `<p>Silencieux, instinctif, moralement instable au début. Posture de prédateur. Pas de rêve ni de quête claire, juste un instinct : continuer. Son cynisme émerge progressivement, ses remarques deviennent lucides parfois moqueuses. Il ne sait pas dire au revoir — il fuit comme un animal blessé.</p>
+            <p>Quand il échoue, il pense en termes de loup et de meute : chasse échouée, chassé par un prédateur supérieur, rejeté de la meute. Devant Scylla, tous ses acquis disparaissent. Il lâche ses armes et lève les poings nus.</p>
+            <p><strong style="color:rgba(255,255,255,.7)">Arc global :</strong> passer de bête de survie à humain capable de lien.</p>`
+          )
       },
+
+      /* ── Développement du personnage ─────────────────────────────────────
+         buildTimeline(events) — chaque event = un point sur la ligne.
+         {
+           label:  'Texte court sous le point',
+           title:  'Titre affiché dans le bloc (optionnel, sinon = label)',
+           event:  'Ce qui se passe (1–2 phrases)',
+           dev:    'Comment le personnage évolue à ce moment',
+           linked: ['id1','id2']  — ids de persos liés (optionnel)
+         }
+      ── */
+      {
+        id:'developpement', title:'Développement', open:false,
+        render:()=>buildTimeline([
+          {
+            label:'Arc 1',
+            title:'Arc 1 — Le Voyage des Filles d\'Hadès',
+            event:'Hyuun rejoint involontairement le groupe de Maelle et ses filles. Il guide le groupe dans la survie, découvre ce que c\'est d\'être humain parmi des humains.',
+            dev:'Il apprend à ressentir. Pour la première fois, des gens s\'intéressent à lui sans vouloir l\'armer ou l\'utiliser. Il ne sait pas encore quoi faire de ça.',
+            linked:['maelle','beka','wendy','nui'],
+          },
+          {
+            label:'Désert',
+            title:'Arc 2 — Le Désert & le Quatuor',
+            event:'Après le rejet d\'Hadès, Hyuun erre seul dans le désert. Minako le sauve. Ensemble ils forment le duo Ouroboros et recrutent Tetsuga puis Arsène.',
+            dev:'Il apprend à fonctionner avec les autres — non plus par instinct de survie, mais par choix. Le quatuor est le premier groupe qu\'il choisit vraiment.',
+            linked:['minako','tetsuga','arsene'],
+          },
+          {
+            label:'Arc 3',
+            title:'Arc 3 — Guerre d\'Albarossa',
+            event:'Double front : infiltration dans la capitale pour sauver Nui, confrontation idéologique avec les Prophètes. Scylla apparaît avec sa meute.',
+            dev:'Il prononce ses premières vraies excuses ("Je suis désolé"). Et face à Scylla, ses premières larmes. C\'est l\'arc où il apprend à dire ce qu\'il ressent.',
+            linked:['nui','minako'],
+          },
+          {
+            label:'Mont de l\'Épée',
+            title:'Arc 5 — Mont de l\'Épée',
+            event:'Deux à trois ans d\'entraînement sous le dieu de l\'épée bestiale. Il réconcilie sa nature de loup avec son identité humaine.',
+            dev:'Il comprend enfin ce qu\'est l\'amour, grâce au garçon sans magie. Il cesse de fuir sa nature pour l\'intégrer — son contrôle magique explose en même temps.',
+            linked:[],
+          },
+          {
+            label:'Panthéon',
+            title:'Arc 6 — Le Panthéon',
+            event:'Tournoi mondial. Hyuun combat sous la bannière de Scylla avant de changer d\'équipe en plein tournoi — acte de rébellion cosmique devant le monde entier.',
+            dev:'Il revendique son identité. Plus de fuite, plus de meute imposée. C\'est lui qui décide qui il est.',
+            linked:[],
+          },
+        ])
+      },
+
       {
         id:'relations', title:'Relations', open:false,
         render:()=>`
@@ -712,8 +1116,7 @@ const characters=[
             </a>
           </div>
           <div class="relation-body">
-            <p>Deux prédateurs qui couvrent l'angle mort de l'autre. Hyuun ne nourrit pas sa malédiction — il ne réagit pas à la séduction — et elle peut exister à côté de lui sans se sentir parasite. Elle le pousse vers le monde, vers les autres. Son amour s'exprime par le lâcher-prise : elle sourit quand il a le dos tourné. L'Ouroboros — un loup qui mord la queue d'un renard qui mord la queue du loup — est le premier engagement officiel de sa vie.</p>
-            <p>Ils peuvent s'embrasser, passer une nuit ensemble — mais ils ne se figent pas dans un couple. Par lucidité : si elle devient sa fontaine de bonheur, sa malédiction la dévorerait. Si elle est son seul lien, il ne grandit pas.</p>
+            <p>Deux prédateurs qui couvrent l'angle mort de l'autre. Hyuun ne nourrit pas sa malédiction — il ne réagit pas à la séduction — et elle peut exister à côté de lui sans se sentir parasite. L'Ouroboros — un loup qui mord la queue d'un renard qui mord la queue du loup — est le premier engagement officiel de sa vie.</p>
           </div>
         </div>
         <div class="relation-block">
@@ -727,8 +1130,7 @@ const characters=[
             </a>
           </div>
           <div class="relation-body">
-            <p>Leur lien commence avant les mots. Ils chassent ensemble dans le silence absolu — communication par signes, affinité instinctive entre deux prédateurs naturels. Nui connaît Hyuun d'une manière que même Minako ne connaît pas. Son amour s'exprime entièrement par l'action : elle se renforce, s'entraîne, pousse ses limites. Chaque progression est un acte d'amour déguisé en discipline.</p>
-            <p>Les deux amours (Minako et Nui) sont complémentaires : Minako le lance, Nui le rattrape. Minako ouvre la porte, Nui traverse avec lui. Quand elles comprennent ça, Hyuun est enfin libre — sa culpabilité de s'être senti déchiré s'évapore.</p>
+            <p>Leur lien commence avant les mots. Ils chassent ensemble dans le silence absolu — communication par signes, affinité instinctive entre deux prédateurs naturels. Son amour s'exprime entièrement par l'action.</p>
           </div>
         </div>
         <div class="relation-block">
@@ -742,21 +1144,7 @@ const characters=[
             </a>
           </div>
           <div class="relation-body">
-            <p>Respect martial entre combattants, pas de transfert paternel. Tetsuga le traite comme un égal — rare et précieux. Première mission : catastrophique (Tetsuga crie pour attirer les monstres, brisant le plan de Hyuun). Tetsuga rit après. Hyuun ne comprend pas qu'on puisse rire ainsi. Sa colère se dissout dans l'incompréhension. Les missions suivantes s'améliorent : le marteau et le scalpel.</p>
-          </div>
-        </div>
-        <div class="relation-block">
-          <div class="relation-header">
-            <a class="rel-link" href="#" onclick="openPanel(charById['scylla']);return false;">
-              <div class="rel-avatar" id="rel-av-scylla-Sc"></div>
-              <div class="rel-meta">
-                <span class="relation-name">Scylla</span>
-                <span class="relation-role">Mère toxique · Lien le plus destructeur</span>
-              </div>
-            </a>
-          </div>
-          <div class="relation-body">
-            <p>Devant Scylla, tous ses acquis disparaissent. Ses premières larmes de la série sont pour elle. Sa magie s'effondre non parce qu'elle la coupe (elle ne peut pas) mais parce que sa conviction se brise. Il utilise le langage de la meute contre elle ("N'oublie pas ta place"). Sa menace finale : "Un loup sans meute finit toujours par se raccrocher aux autres, il suffit simplement que la tienne disparaisse."</p>
+            <p>Respect martial entre combattants, pas de transfert paternel. Tetsuga le traite comme un égal — rare et précieux. Première mission catastrophique, puis complémentarité redoutable : le marteau et le scalpel.</p>
           </div>
         </div>`
       },
@@ -1055,7 +1443,14 @@ const characters=[
   },
 ];
 
-/* ══ GROUPES (ordre d'affichage) ══ */
+/* ════════════════════════════════════════════════════════════════════════════
+   ██  GROUPES & CATÉGORIES  ██
+   ════════════════════════════════════════════════════════════════════════════
+   Chaque groupe = une section visuelle dans la page.
+   `ids` = ordre d'affichage des personnages dans ce groupe.
+   Pour ajouter un personnage existant : ajouter son `id` dans le bon tableau.
+   Pour créer un groupe : ajouter un objet { id, label, ids:[] } dans groups.
+   ════════════════════════════════════════════════════════════════════════════ */
 const groups=[
   {
     id:'protagoniste',
@@ -1072,9 +1467,22 @@ const groups=[
     label:'Groupe du Désert',
     ids:['minako','tetsuga','arsene'],
   },
+  /* ── Ajouter un nouveau groupe ici ──
+  {
+    id:'arc5',
+    label:'Arc 5 — Mont de l\'Épée',
+    ids:['garcon-sans-magie','fille-exploratrice'],
+  },
+  ── */
 ];
 
-/* ══ NOUVEAUX PERSONNAGES ══ */
+/* ════════════════════════════════════════════════════════════════════════════
+   ██  PERSONNAGES SUPPLÉMENTAIRES  ██
+   ════════════════════════════════════════════════════════════════════════════
+   Même structure que `characters` ci-dessus.
+   Ajouter un nouveau personnage ici et son id dans groups[].ids.
+   Voir le GUIDE en tête de fichier pour le template complet.
+   ════════════════════════════════════════════════════════════════════════════ */
 const extraChars=[
   {
     id:'maelle',
@@ -1324,6 +1732,126 @@ function fieldFull(label,value,unknown=false){
   </div>`;
 }
 function tagHtml(t){ return `<span class="ctag ctag-${t.style}">${t.label}</span>`; }
+
+/* ════════════════════════════════════════════════════════════════════
+   ██  HELPERS SECTIONS — utilisables dans render:()  ██
+   ════════════════════════════════════════════════════════════════════
+
+   infoGrid(fields_html)
+     Wraps des field() / fieldFull() dans une grille.
+     Usage : infoGrid( field('Age','18') + field('Genre','Homme') )
+
+   infoSection(title, fields_html)
+     Même chose mais avec un titre de sous-section au-dessus.
+     Usage : infoSection('Mieux le Connaître', field('Likes','—',true) + ...)
+
+   divineEye(deity, imgSrc, desc)
+     Bloc "Pupille Divine" pour un personnage marqué.
+     deity  : nom de la divinité (ex: 'Scylla')
+     imgSrc : chemin vers l'image de la pupille, ou '' pour placeholder
+     desc   : description texte du marqueur
+
+   descWithImage(imgSrc, paragraphsHtml)
+     Description avec image du personnage sur la gauche.
+     imgSrc : chemin vers l'image, ou '' pour placeholder
+     paragraphsHtml : balises <p>...</p>
+
+   buildTimeline(events)
+     Timeline cliquable. events = tableau d'objets :
+     {
+       label:   'Nom du point' (court, affiché sous le dot),
+       title:   'Titre complet affiché dans le bloc',
+       event:   'Texte décrivant ce qui se passe (1–2 phrases)',
+       dev:     'Texte sur le développement du personnage',
+       linked:  ['id1','id2']  — ids de personnages liés (optionnel)
+     }
+   ════════════════════════════════════════════════════════════════════ */
+
+function infoGrid(fieldsHtml){
+  return `<div class="info-grid">${fieldsHtml}</div>`;
+}
+function infoSection(title, fieldsHtml){
+  return `<p class="info-section-title">${title}</p><div class="info-grid">${fieldsHtml}</div>`;
+}
+
+function divineEye(deity, imgSrc='', desc=''){
+  const imgHtml = imgSrc
+    ? `<img src="${imgSrc}" alt="Pupille divine"/>`
+    : `<div class="divine-eye-img-placeholder">Image de la<br>pupille<br>·</div>`;
+  return `<div class="divine-eye-block">
+    <div class="divine-eye-header">
+      <span class="divine-eye-title">Pupille Divine</span>
+      <span class="divine-eye-deity">${deity}</span>
+    </div>
+    <div class="divine-eye-body">
+      <div class="divine-eye-img">${imgHtml}</div>
+      <div class="divine-eye-desc">${desc}</div>
+    </div>
+  </div>`;
+}
+
+function descWithImage(imgSrc='', paragraphsHtml=''){
+  const imgHtml = imgSrc
+    ? `<img src="${imgSrc}" alt=""/>`
+    : `<div class="desc-char-img-ph">Image<br>du personnage<br>·</div>`;
+  return `<div class="desc-with-image">
+    <div class="desc-char-img">${imgHtml}</div>
+    <div class="desc-text">${paragraphsHtml}</div>
+  </div>`;
+}
+
+function buildTimeline(events){
+  if(!events||!events.length) return '';
+  /* Génère un id unique pour cette timeline (plusieurs persos peuvent en avoir) */
+  const uid = 'tl_'+Math.random().toString(36).slice(2,7);
+  const dots = events.map((e,i)=>`
+    <div class="tl-point${i===0?' active':''}" data-tl="${uid}" data-idx="${i}" onclick="tlClick('${uid}',${i})">
+      <div class="tl-dot"></div>
+      <span class="tl-label">${e.label}</span>
+    </div>`).join('');
+
+  /* Pré-render tous les blocs de contenu, cachés sauf le premier */
+  const contents = events.map((e,i)=>{
+    const linkedHtml = (e.linked&&e.linked.length)
+      ? `<div class="tl-linked">
+          <span class="tl-linked-label">Liés</span>
+          ${e.linked.map(lid=>{
+            const lc = charById[lid];
+            if(!lc) return '';
+            return `<div class="tl-linked-char" onclick="openPanel(charById['${lid}'])">
+              <div class="tl-linked-avatar">${lc.avatar}</div>
+              <span class="tl-linked-name">${lc.name}</span>
+            </div>`;
+          }).join('')}
+        </div>`
+      : '';
+    return `<div class="timeline-content" data-tl-content="${uid}" data-idx="${i}"
+        style="${i!==0?'display:none':''}">
+      <div class="tl-event-title">${e.title||e.label}</div>
+      ${e.event?`<div class="tl-event-body">${e.event}</div>`:''}
+      ${e.dev?`<p class="tl-dev-label">Développement du personnage</p>
+               <div class="tl-dev-body">${e.dev}</div>`:''}
+      ${linkedHtml}
+    </div>`;
+  }).join('');
+
+  return `<div class="timeline-wrap">
+    <div class="timeline-track">${dots}</div>
+    <div id="tlc_${uid}">${contents}</div>
+  </div>`;
+}
+
+/* Appelé par les points de la timeline */
+function tlClick(uid, idx){
+  /* Dots */
+  document.querySelectorAll(`[data-tl="${uid}"]`).forEach((el,i)=>{
+    el.classList.toggle('active', i===idx);
+  });
+  /* Contenus */
+  document.querySelectorAll(`[data-tl-content="${uid}"]`).forEach((el,i)=>{
+    el.style.display = i===idx ? '' : 'none';
+  });
+}
 
 /* Avatar SVG placeholder — remplacer par <img src="..."> dans characters[].avatar */
 function makeAvatar(c1,c2,initials='?'){
@@ -1608,6 +2136,33 @@ window.addEventListener('beforeunload',()=>{
     }));
   }
 });
+
+/* ── Hamburger responsive ── */
+(function(){
+  var nav = document.querySelector('nav');
+  if(!nav) return;
+  // Wrap all <a> inside nav into .nav-links div
+  var links = nav.querySelectorAll('a');
+  var wrapper = document.createElement('div');
+  wrapper.className = 'nav-links';
+  links.forEach(function(a){ wrapper.appendChild(a); });
+  nav.insertBefore(wrapper, nav.firstChild);
+  // Create hamburger
+  var ham = document.createElement('div');
+  ham.className = 'nav-hamburger fixed';
+  ham.setAttribute('aria-label','Menu');
+  ham.innerHTML = '<div class="ham-line"></div><div class="ham-line"></div><div class="ham-line"></div>';
+  nav.appendChild(ham);
+  ham.addEventListener('click', function(){
+    ham.classList.toggle('open');
+    wrapper.classList.toggle('open');
+  });
+  // Close on link click
+  wrapper.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ ham.classList.remove('open'); wrapper.classList.remove('open'); });
+  });
+})();
+
 </script>
 </body>
 </html>
