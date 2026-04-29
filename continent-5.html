@@ -7,16 +7,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@200;300;400;500&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
-  <style>
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  <link rel="stylesheet" href="css/shared.css"/>
+  
+  <style>*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     :root{--nav-h:56px;}
     html,body{width:100%;height:100%;overflow:hidden;background:#06060f;}
     .svg-defs{position:absolute;width:0;height:0;overflow:hidden}
-    nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;justify-content:center;gap:3rem;background:rgba(6,6,15,.4);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border-bottom:.5px solid rgba(255,255,255,.06);}
     nav a{font-family:'Raleway',sans-serif;font-weight:300;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.68);text-decoration:none;transition:color .3s;position:relative;}
     nav a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:.5px;background:rgba(200,120,48,.8);transform:scaleX(0);transform-origin:center;transition:transform .35s ease;}
     nav a:hover{color:#fff;}nav a:hover::after{transform:scaleX(1);}
-    .vinyl-zone{position:fixed;right:18px;top:0;height:var(--nav-h);display:flex;align-items:center;gap:9px;z-index:201;}
     .track-info{display:flex;align-items:center;gap:6px;}
     #track-label{font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);max-width:130px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;transition:color .4s;}
     #track-label.on{color:rgba(200,120,48,.8);}
@@ -26,8 +25,7 @@
     .chevron-btn.open svg{transform:rotate(180deg);}
     .vinyl{position:relative;width:40px;height:40px;cursor:pointer;flex-shrink:0;}
     .disc-wrap{width:40px;height:40px;border-radius:50%;overflow:hidden;transform-origin:center;animation:spin 4s linear infinite;animation-play-state:paused;transition:box-shadow .5s;}
-    .vinyl.spinning .disc-wrap{animation-play-state:running;box-shadow:0 0 10px rgba(200,120,48,.5);}
-    @keyframes spin{to{transform:rotate(360deg);}}
+    .vinyl.spinning .disc-wrap{animation-play-state:running;box-shadow:0 0 10px rgba(200,120,48,.5);}}
     .disc-wrap img,.disc-wrap svg.vinyl-svg{width:40px;height:40px;display:block;}
     .vinyl-icon{position:absolute;inset:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);opacity:0;transition:opacity .2s;}
     .vinyl:hover .vinyl-icon{opacity:1;}
@@ -36,8 +34,7 @@
     #vinyl-popup.visible{opacity:1;transform:translateY(0);}
     #vinyl-popup::before{content:'';position:absolute;bottom:100%;right:20px;border:5px solid transparent;border-bottom-color:rgba(200,120,48,.35);}
     #vinyl-popup::after{content:'';position:absolute;bottom:calc(100% - 1px);right:21px;border:4px solid transparent;border-bottom-color:rgba(10,6,2,.9);}
-    .popup-dot{width:6px;height:6px;border-radius:50%;background:rgba(200,120,48,.85);flex-shrink:0;animation:dotPulse 1.6s ease-in-out infinite;}
-    @keyframes dotPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+    .popup-dot{width:6px;height:6px;border-radius:50%;background:rgba(200,120,48,.85);flex-shrink:0;animation:dotPulse 1.6s ease-in-out infinite;}50%{opacity:1;transform:scale(1.3)}}
     .popup-text{font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,120,48,.85);}
     .dropdown{position:fixed;top:calc(var(--nav-h)+6px);right:16px;width:220px;z-index:400;background:rgba(8,8,20,.88);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border:.5px solid rgba(255,255,255,.08);border-radius:8px;overflow:hidden;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .22s ease,transform .22s ease;}
     .dropdown.open{opacity:1;transform:translateY(0);pointer-events:all;}
@@ -51,8 +48,7 @@
     .track-title{font-family:'Raleway',sans-serif;font-size:10px;color:rgba(255,255,255,.75);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
     .track-item.active .track-title{color:rgba(200,120,48,.95);}
     .playing-dot{width:5px;height:5px;border-radius:50%;background:rgba(200,120,48,.9);flex-shrink:0;opacity:0;animation:blink 1.4s ease-in-out infinite;}
-    .track-item.active .playing-dot{opacity:1;}
-    @keyframes blink{0%,100%{opacity:.5}50%{opacity:1}}
+    .track-item.active .playing-dot{opacity:1;}50%{opacity:1}}
     .page{position:fixed;inset:0;top:var(--nav-h);overflow:hidden;}
     .page-bg{position:absolute;inset:0;pointer-events:none;}
     .bg-grad{position:absolute;inset:0;background:linear-gradient(160deg,#040e10 0%,#060e14 20%,#081218 40%,#060e12 70%,#040408 100%);}
@@ -81,95 +77,9 @@
     .placeholder{font-style:italic;color:rgba(255,255,255,.2);border:.5px dashed rgba(255,255,255,.08);border-radius:5px;padding:14px 18px;font-size:12px;}
     .back-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);text-decoration:none;border:.5px solid rgba(255,255,255,.1);padding:7px 16px;border-radius:999px;transition:color .2s,border-color .2s;margin-bottom:48px;}
     .back-btn:hover{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.25);}
-    .back-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;}
-  
-
-    /* nav-links wrapper (créé par JS hamburger) */
-    .nav-links { display:flex; align-items:center; gap:3rem; }
-    .nav-hamburger { display:none; }
-    /* ══ RESPONSIVE ══════════════════════════════════════════════ */
-    @media (max-width: 900px) {
-      nav { gap: 1.8rem; }
-    }
-    @media (max-width: 680px) {
-      /* Hamburger menu */
-      .nav-links { display:none; flex-direction:column; position:fixed; top:var(--nav-h); left:0; right:0; z-index:199; background:rgba(6,6,15,.97); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:.5px solid rgba(255,255,255,.06); padding:16px 0; gap:0; }
-      .nav-links.open { display:flex; }
-      .nav-links a { padding:13px 28px; font-size:12px; letter-spacing:.2em; border-bottom:.5px solid rgba(255,255,255,.04); color:rgba(255,255,255,.7); }
-      .nav-links a:last-child { border:none; }
-      .nav-hamburger { display:flex; flex-direction:column; gap:5px; cursor:pointer; padding:8px; margin-left:auto; z-index:202; position:fixed; left:16px; top:50%; transform:translateY(-50%); margin-top:0; margin-left:0; }
-      .nav-hamburger.fixed { top:calc(var(--nav-h)/2); }
-      .ham-line { width:22px; height:1.5px; background:rgba(255,255,255,.65); border-radius:2px; transition:transform .3s, opacity .3s; }
-      .nav-hamburger.open .ham-line:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
-      .nav-hamburger.open .ham-line:nth-child(2) { opacity:0; }
-      .nav-hamburger.open .ham-line:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
-      /* Reduce vinyl zone */
-      .vinyl-zone { right:12px; }
-      #track-label { max-width:80px; display:none; }
-    }
-    /* ── index.html ── */
-    @media (max-width:680px) {
-      .logo-text { font-size:clamp(48px,16vw,80px) !important; letter-spacing:.18em !important; }
-      .subtitle { letter-spacing:.28em !important; }
-      .cards-grid { grid-template-columns:1fr !important; grid-template-rows:auto !important; gap:12px !important; }
-      .card-univers { grid-column:1 !important; }
-      .discover { padding:calc(var(--nav-h) + 20px) 20px 28px !important; gap:12px !important; }
-    }
-    /* ── personnages ── */
-    @media (max-width:680px) {
-      .chars-grid { grid-template-columns:repeat(2,1fr) !important; gap:10px !important; }
-      .page-inner { padding:28px 20px 60px !important; }
-      .filter-bar { gap:5px !important; }
-      #char-panel { width:100vw !important; border-left:none !important; border-top:.5px solid rgba(255,255,255,.07); }
-      .panel-header { padding:20px 20px 14px !important; }
-      .cs-section-header { padding:13px 20px !important; }
-      .cs-section-inner { padding:0 20px 18px !important; }
-    }
-    @media (max-width:400px) {
-      .chars-grid { grid-template-columns:1fr !important; }
-    }
-    /* ── magie ── */
-    @media (max-width:900px) {
-      .magic-grid { grid-template-columns:repeat(2,1fr) !important; }
-      .page-inner { padding:24px 24px 20px !important; }
-    }
-    @media (max-width:560px) {
-      .magic-grid { grid-template-columns:1fr !important; overflow-y:auto; }
-      .magic-card { min-height:160px; }
-    }
-    /* ── univers ── */
-    @media (max-width:680px) {
-      .conts-grid { grid-template-columns:repeat(2,1fr) !important; gap:10px !important; }
-      .page-inner { padding:28px 20px 40px !important; }
-      .map-hint-text { display:none; }
-    }
-    @media (max-width:420px) {
-      .conts-grid { grid-template-columns:1fr !important; }
-    }
-    /* ── continent pages ── */
-    @media (max-width:680px) {
-      .continent-layout { grid-template-columns:1fr !important; }
-      .page-inner { padding:28px 24px 60px !important; }
-      .cont-minimap { display:none; }
-      .bc-link { font-size:8px; letter-spacing:.1em; }
-      .back-btn { padding:6px 12px !important; font-size:8px !important; }
-    }
-    /* ── modal ── */
-    @media (max-width:680px) {
-      #magic-modal { width:100vw !important; max-height:95vh !important; top:auto !important; bottom:0 !important; left:0 !important; transform:none !important; border-radius:10px 10px 0 0 !important; }
-      #magic-modal.open { transform:none !important; }
-    }
-
-    </style>
+    .back-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;}</style>
 </head>
 <body>
-<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <filter id="ca-red" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/></filter>
-    <filter id="ca-blue" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/></filter>
-  </defs>
-</svg>
-<div id="vinyl-popup"><div class="popup-dot"></div><span class="popup-text">Lancer une piste</span></div>
 <nav>
   <a href="index.html">Accueil</a>
   <a href="personnages.html">Personnages</a>
@@ -180,7 +90,9 @@
   <div class="vinyl-zone">
     <div class="track-info">
       <span id="track-label">Aucune piste</span>
-      <button class="chevron-btn" id="chevron-btn"><svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></button>
+      <button class="chevron-btn" id="chevron-btn">
+        <svg viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </button>
     </div>
     <div class="vinyl" id="vinyl">
       <div class="disc-wrap" id="disc-wrap">
@@ -208,6 +120,8 @@
   <div class="dropdown-header">Pistes</div>
   <div id="track-list"></div>
 </div>
+<div id="vinyl-popup"><div class="popup-dot"></div><span class="popup-text">Lancer une piste</span></div>
+<audio id="player" preload="metadata"></audio>
 <div class="page">
   <div class="page-bg">
     <div class="bg-grad"></div>
@@ -232,15 +146,11 @@
     </div>
   </div>
 </div>
-<audio id="player" preload="metadata"></audio>
-<script>
-function makeCover(c1,c2){return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='0,0 100,0 0,100' fill='${c1}'/><polygon points='100,0 100,100 0,100' fill='${c2}'/></svg>`);}
-const tracks=[{title:'Aube sur la Montagne',src:null,cover:makeCover('#c84030','#e8a020')},{title:'Le Désert de Sel',src:null,cover:makeCover('#1a3a8c','#7a20c8')},{title:'Nuit à Albarossa',src:null,cover:makeCover('#0e4a2e','#1e6888')}];
-const player=document.getElementById('player'),vinyl=document.getElementById('vinyl'),vinylSvg=document.getElementById('vinyl-svg'),coverImg=document.getElementById('cover-img'),trackLabel=document.getElementById('track-label'),trackList=document.getElementById('track-list'),dropdown=document.getElementById('dropdown'),chevronBtn=document.getElementById('chevron-btn'),iPlay=document.getElementById('i-play'),iPause=document.getElementById('i-pause'),vinylPopup=document.getElementById('vinyl-popup');
-let currentIdx=-1,isPlaying=false,ddOpen=false;
-tracks.forEach((t,i)=>{const el=document.createElement('div');el.className='track-item';el.innerHTML=`<div class="track-thumb"><img src="${t.cover}"></div><div class="track-meta"><div class="track-title">${t.title}</div></div><div class="playing-dot"></div>`;el.addEventListener('click',()=>selectTrack(i));trackList.appendChild(el);});
-let popupTimer=setTimeout(()=>{if(currentIdx===-1)vinylPopup.classList.add('visible');},2500);
-function hidePopup(){vinylPopup.classList.remove('visible');clearTimeout(popupTimer);}
+
+<script src="data/tracks.js"></script>
+<script src="js/shared.js"></script>
+
+<script>function hidePopup(){vinylPopup.classList.remove('visible');clearTimeout(popupTimer);}
 function selectTrack(idx){hidePopup();currentIdx=idx;const t=tracks[idx];vinylSvg.style.display='none';coverImg.src=t.cover;coverImg.style.display='block';trackLabel.textContent=t.title;trackLabel.classList.add('on');if(t.src){player.src=t.src;player.play().then(()=>setState(true)).catch(()=>setState(true));}else setState(true);document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===idx));closeDropdown();}
 function setState(on){isPlaying=on;vinyl.classList.toggle('spinning',on);iPlay.style.display=on?'none':'block';iPause.style.display=on?'block':'none';}
 vinyl.addEventListener('click',()=>{if(currentIdx===-1){toggleDropdown();return;}if(isPlaying){if(tracks[currentIdx].src)player.pause();setState(false);}else{if(tracks[currentIdx].src)player.play().catch(()=>{});setState(true);}});
@@ -250,35 +160,6 @@ function closeDropdown(){ddOpen=false;dropdown.classList.remove('open');chevronB
 function toggleDropdown(){ddOpen?closeDropdown():openDropdown();}
 chevronBtn.addEventListener('click',e=>{e.stopPropagation();toggleDropdown();});
 document.addEventListener('click',e=>{if(ddOpen&&!dropdown.contains(e.target)&&!chevronBtn.contains(e.target))closeDropdown();});
-try{const saved=JSON.parse(sessionStorage.getItem('aven-player')||'null');if(saved&&saved.idx>=0&&saved.idx<tracks.length){const t=tracks[saved.idx];currentIdx=saved.idx;vinylSvg.style.display='none';coverImg.src=t.cover;coverImg.style.display='block';trackLabel.textContent=t.title;trackLabel.classList.add('on');document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===saved.idx));if(t.src&&saved.playing){player.src=t.src;if(saved.time)player.currentTime=saved.time;player.play().then(()=>setState(true)).catch(()=>setState(saved.playing));}else setState(saved.playing||false);}}catch(e){}
-window.addEventListener('beforeunload',()=>{if(currentIdx>=0)sessionStorage.setItem('aven-player',JSON.stringify({idx:currentIdx,playing:isPlaying,time:tracks[currentIdx].src?player.currentTime:0}));});
-
-/* ── Hamburger responsive ── */
-(function(){
-  var nav = document.querySelector('nav');
-  if(!nav) return;
-  // Wrap all <a> inside nav into .nav-links div
-  var links = nav.querySelectorAll('a');
-  var wrapper = document.createElement('div');
-  wrapper.className = 'nav-links';
-  links.forEach(function(a){ wrapper.appendChild(a); });
-  nav.insertBefore(wrapper, nav.firstChild);
-  // Create hamburger
-  var ham = document.createElement('div');
-  ham.className = 'nav-hamburger fixed';
-  ham.setAttribute('aria-label','Menu');
-  ham.innerHTML = '<div class="ham-line"></div><div class="ham-line"></div><div class="ham-line"></div>';
-  nav.appendChild(ham);
-  ham.addEventListener('click', function(){
-    ham.classList.toggle('open');
-    wrapper.classList.toggle('open');
-  });
-  // Close on link click
-  wrapper.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click', function(){ ham.classList.remove('open'); wrapper.classList.remove('open'); });
-  });
-})();
-
-</script>
+try{const saved=JSON.parse(sessionStorage.getItem('aven-player')||'null');if(saved&&saved.idx>=0&&saved.idx<tracks.length){const t=tracks[saved.idx];currentIdx=saved.idx;vinylSvg.style.display='none';coverImg.src=t.cover;coverImg.style.display='block';trackLabel.textContent=t.title;trackLabel.classList.add('on');document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===saved.idx));if(t.src&&saved.playing){player.src=t.src;if(saved.time)player.currentTime=saved.time;player.play().then(()=>setState(true)).catch(()=>setState(saved.playing));}else setState(saved.playing||false);}}catch(e){}</script>
 </body>
 </html>
