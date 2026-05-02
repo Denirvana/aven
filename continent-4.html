@@ -3,81 +3,60 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Continent IV — Aven Univers</title>
+  <title>Continent IV — Aven</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@200;300;400;500&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/shared.css"/>
+  <style>
+    .page-scroll { overflow-y: auto; }
+    .page-inner { padding: 44px 64px 80px; max-width: 1000px; }
+    .cont-num-label {
+      font-family:'Raleway',sans-serif;font-size:10px;font-weight:300;
+      letter-spacing:.3em;text-transform:uppercase;
+      color:rgba(200,120,48,.6);margin-bottom:8px;
+    }
+    .cont-title {
+      font-family:'Cinzel',serif;font-weight:700;
+      font-size:clamp(30px,4vw,52px);letter-spacing:.16em;
+      color:#fff;line-height:1.1;margin-bottom:10px;
+      text-shadow:0 0 80px rgba(80,120,220,.2);
+    }
+    .cont-arc-tag {
+      display:inline-block;font-family:'Raleway',sans-serif;
+      font-size:9px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;
+      color:rgba(255,255,255,.4);border:.5px solid rgba(255,255,255,.1);
+      padding:4px 12px;border-radius:999px;margin-bottom:32px;
+    }
+    .section { margin-bottom:36px; }
+    .section-title {
+      font-family:'Cinzel',serif;font-weight:400;font-size:14px;
+      letter-spacing:.12em;color:rgba(255,255,255,.6);
+      margin-bottom:12px;padding-bottom:8px;
+      border-bottom:.5px solid rgba(255,255,255,.06);
+    }
+    .section-text {
+      font-family:'DM Sans',sans-serif;font-size:13.5px;
+      color:rgba(255,255,255,.55);line-height:1.82;
+    }
+    .section-text p { margin-bottom:12px; }
+    .section-text p:last-child { margin:0; }
+    .places { display:flex;flex-direction:column;gap:10px; }
+    .place {
+      display:flex;gap:12px;align-items:flex-start;
+      padding:12px 14px;
+      background:rgba(255,255,255,.025);
+      border:.5px solid rgba(255,255,255,.055);
+      border-radius:6px;
+    }
+    .place-dot { width:5px;height:5px;border-radius:50%;background:rgba(200,120,48,.7);flex-shrink:0;margin-top:6px; }
+    .place-name { font-family:'Raleway',sans-serif;font-size:11.5px;font-weight:500;color:rgba(255,255,255,.8);margin-bottom:4px; }
+    .place-desc { font-family:'DM Sans',sans-serif;font-size:12.5px;color:rgba(255,255,255,.42);line-height:1.65; }
+    .placeholder { font-style:italic;color:rgba(255,255,255,.2);border:.5px dashed rgba(255,255,255,.08);border-radius:5px;padding:14px 18px;font-size:12px; }
+    @media(max-width:680px) { .page-inner { padding:28px 24px 60px; } }
+  </style>
   
-  <style>*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    :root{--nav-h:56px;}
-    html,body{width:100%;height:100%;overflow:hidden;background:#06060f;}
-    .svg-defs{position:absolute;width:0;height:0;overflow:hidden}
-    nav a{font-family:'Raleway',sans-serif;font-weight:300;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.68);text-decoration:none;transition:color .3s;position:relative;}
-    nav a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:.5px;background:rgba(200,120,48,.8);transform:scaleX(0);transform-origin:center;transition:transform .35s ease;}
-    nav a:hover{color:#fff;}nav a:hover::after{transform:scaleX(1);}
-    .track-info{display:flex;align-items:center;gap:6px;}
-    #track-label{font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);max-width:130px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;transition:color .4s;}
-    #track-label.on{color:rgba(200,120,48,.8);}
-    .chevron-btn{background:none;border:none;cursor:pointer;padding:2px 4px;display:flex;align-items:center;opacity:.4;transition:opacity .2s;color:white;}
-    .chevron-btn:hover{opacity:.9;}
-    .chevron-btn svg{width:10px;height:10px;fill:currentColor;transition:transform .25s;}
-    .chevron-btn.open svg{transform:rotate(180deg);}
-    .vinyl{position:relative;width:40px;height:40px;cursor:pointer;flex-shrink:0;}
-    .disc-wrap{width:40px;height:40px;border-radius:50%;overflow:hidden;transform-origin:center;animation:spin 4s linear infinite;animation-play-state:paused;transition:box-shadow .5s;}
-    .vinyl.spinning .disc-wrap{animation-play-state:running;box-shadow:0 0 10px rgba(200,120,48,.5);}}
-    .disc-wrap img,.disc-wrap svg.vinyl-svg{width:40px;height:40px;display:block;}
-    .vinyl-icon{position:absolute;inset:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);opacity:0;transition:opacity .2s;}
-    .vinyl:hover .vinyl-icon{opacity:1;}
-    .vinyl-icon svg{width:13px;height:13px;fill:rgba(255,255,255,.92);}
-    #vinyl-popup{position:fixed;top:calc(var(--nav-h)+10px);right:14px;z-index:300;background:rgba(10,6,2,.9);border:.5px solid rgba(200,120,48,.35);border-radius:20px;padding:7px 14px;display:flex;align-items:center;gap:7px;white-space:nowrap;pointer-events:none;opacity:0;transform:translateY(-6px);transition:opacity .5s ease,transform .5s ease;}
-    #vinyl-popup.visible{opacity:1;transform:translateY(0);}
-    #vinyl-popup::before{content:'';position:absolute;bottom:100%;right:20px;border:5px solid transparent;border-bottom-color:rgba(200,120,48,.35);}
-    #vinyl-popup::after{content:'';position:absolute;bottom:calc(100% - 1px);right:21px;border:4px solid transparent;border-bottom-color:rgba(10,6,2,.9);}
-    .popup-dot{width:6px;height:6px;border-radius:50%;background:rgba(200,120,48,.85);flex-shrink:0;animation:dotPulse 1.6s ease-in-out infinite;}50%{opacity:1;transform:scale(1.3)}}
-    .popup-text{font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,120,48,.85);}
-    .dropdown{position:fixed;top:calc(var(--nav-h)+6px);right:16px;width:220px;z-index:400;background:rgba(8,8,20,.88);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border:.5px solid rgba(255,255,255,.08);border-radius:8px;overflow:hidden;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .22s ease,transform .22s ease;}
-    .dropdown.open{opacity:1;transform:translateY(0);pointer-events:all;}
-    .dropdown-header{padding:10px 14px 8px;font-family:'Raleway',sans-serif;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);border-bottom:.5px solid rgba(255,255,255,.06);}
-    .track-item{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;transition:background .15s;}
-    .track-item:hover{background:rgba(255,255,255,.05);}
-    .track-item.active{background:rgba(200,120,48,.08);}
-    .track-thumb{width:26px;height:26px;border-radius:4px;overflow:hidden;flex-shrink:0;}
-    .track-thumb img{width:26px;height:26px;display:block;}
-    .track-meta{flex:1;min-width:0;}
-    .track-title{font-family:'Raleway',sans-serif;font-size:10px;color:rgba(255,255,255,.75);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
-    .track-item.active .track-title{color:rgba(200,120,48,.95);}
-    .playing-dot{width:5px;height:5px;border-radius:50%;background:rgba(200,120,48,.9);flex-shrink:0;opacity:0;animation:blink 1.4s ease-in-out infinite;}
-    .track-item.active .playing-dot{opacity:1;}50%{opacity:1}}
-    .page{position:fixed;inset:0;top:var(--nav-h);overflow:hidden;}
-    .page-bg{position:absolute;inset:0;pointer-events:none;}
-    .bg-grad{position:absolute;inset:0;background:linear-gradient(160deg,#040810 0%,#060a1a 20%,#080e22 40%,#060a14 70%,#040408 100%);}
-    .bg-layer{position:absolute;inset:0;opacity:.6;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,transparent 35%,rgba(0,0,0,.6) 60%,black 82%);mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,transparent 35%,rgba(0,0,0,.6) 60%,black 82%);}
-    .bg-r{filter:url(#ca-red);}
-    .bg-b{filter:url(#ca-blue);}
-    .bg-r .bg-grad,.bg-b .bg-grad{position:absolute;inset:0;background:linear-gradient(160deg,#040810 0%,#060a1a 20%,#080e22 40%,#060a14 70%,#040408 100%);}
-    .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 75% at 50% 50%,transparent 28%,rgba(2,2,10,.55) 65%,rgba(2,2,10,.92) 100%);}
-    .edge-blur{position:absolute;inset:0;pointer-events:none;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-mask-image:radial-gradient(ellipse 78% 72% at 50% 50%,transparent 32%,rgba(0,0,0,.5) 55%,black 78%);mask-image:radial-gradient(ellipse 78% 72% at 50% 50%,transparent 32%,rgba(0,0,0,.5) 55%,black 78%);}
-    .page-scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;}
-    .page-scroll::-webkit-scrollbar{width:3px;}
-    .page-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px;}
-    .page-inner{padding:44px 64px 80px;max-width:1000px;}
-    .breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:32px;flex-wrap:wrap;}
-    .bc-link{font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.28);text-decoration:none;transition:color .2s;}
-    .bc-link:hover{color:rgba(255,255,255,.6);}
-    .bc-sep{color:rgba(255,255,255,.15);font-size:10px;}
-    .bc-current{font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,120,48,.7);}
-    .cont-num-label{font-family:'Raleway',sans-serif;font-size:10px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:rgba(200,120,48,.6);margin-bottom:8px;}
-    .cont-title{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(30px,4vw,52px);letter-spacing:.16em;color:#fff;line-height:1.1;margin-bottom:10px;text-shadow:0 0 80px rgba(80,120,220,.2);}
-    .cont-arc-tag{display:inline-block;font-family:'Raleway',sans-serif;font-size:9px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);border:.5px solid rgba(255,255,255,.1);padding:4px 12px;border-radius:999px;margin-bottom:36px;}
-    .section{margin-bottom:36px;}
-    .section-title{font-family:'Cinzel',serif;font-weight:400;font-size:14px;letter-spacing:.12em;color:rgba(255,255,255,.6);margin-bottom:12px;padding-bottom:8px;border-bottom:.5px solid rgba(255,255,255,.06);}
-    .section-text{font-family:'DM Sans',sans-serif;font-size:13.5px;color:rgba(255,255,255,.55);line-height:1.82;}
-    .section-text p{margin-bottom:12px;}
-    .placeholder{font-style:italic;color:rgba(255,255,255,.2);border:.5px dashed rgba(255,255,255,.08);border-radius:5px;padding:14px 18px;font-size:12px;}
-    .back-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);text-decoration:none;border:.5px solid rgba(255,255,255,.1);padding:7px 16px;border-radius:999px;transition:color .2s,border-color .2s;margin-bottom:48px;}
-    .back-btn:hover{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.25);}
-    .back-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;}</style>
+  
 </head>
 <body>
 <nav>
@@ -122,11 +101,12 @@
 </div>
 <div id="vinyl-popup"><div class="popup-dot"></div><span class="popup-text">Lancer une piste</span></div>
 <audio id="player" preload="metadata"></audio>
+
 <div class="page">
   <div class="page-bg">
-    <div class="bg-grad"></div>
-    <div class="bg-layer bg-r"><div class="bg-grad"></div></div>
-    <div class="bg-layer bg-b"><div class="bg-grad"></div></div>
+    <div class="bg-grad" style="background:linear-gradient(160deg,#040810 0%,#060a1a 20%,#080e22 40%,#060a14 70%,#040408 100%);"></div>
+    <div class="bg-layer bg-r"><div class="bg-grad" style="background:linear-gradient(160deg,#040810 0%,#060a1a 20%,#080e22 40%,#060a14 70%,#040408 100%);"></div></div>
+    <div class="bg-layer bg-b"><div class="bg-grad" style="background:linear-gradient(160deg,#040810 0%,#060a1a 20%,#080e22 40%,#060a14 70%,#040408 100%);"></div></div>
     <div class="vignette"></div>
     <div class="edge-blur"></div>
   </div>
@@ -149,8 +129,8 @@
 
 <script src="data/tracks.js"></script>
 <script src="js/shared.js"></script>
-
-<script>function hidePopup(){vinylPopup.classList.remove('visible');clearTimeout(popupTimer);}
+<script>
+function hidePopup(){vinylPopup.classList.remove('visible');clearTimeout(popupTimer);}
 function selectTrack(idx){hidePopup();currentIdx=idx;const t=tracks[idx];vinylSvg.style.display='none';coverImg.src=t.cover;coverImg.style.display='block';trackLabel.textContent=t.title;trackLabel.classList.add('on');if(t.src){player.src=t.src;player.play().then(()=>setState(true)).catch(()=>setState(true));}else setState(true);document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===idx));closeDropdown();}
 function setState(on){isPlaying=on;vinyl.classList.toggle('spinning',on);iPlay.style.display=on?'none':'block';iPause.style.display=on?'block':'none';}
 vinyl.addEventListener('click',()=>{if(currentIdx===-1){toggleDropdown();return;}if(isPlaying){if(tracks[currentIdx].src)player.pause();setState(false);}else{if(tracks[currentIdx].src)player.play().catch(()=>{});setState(true);}});
@@ -160,6 +140,7 @@ function closeDropdown(){ddOpen=false;dropdown.classList.remove('open');chevronB
 function toggleDropdown(){ddOpen?closeDropdown():openDropdown();}
 chevronBtn.addEventListener('click',e=>{e.stopPropagation();toggleDropdown();});
 document.addEventListener('click',e=>{if(ddOpen&&!dropdown.contains(e.target)&&!chevronBtn.contains(e.target))closeDropdown();});
-try{const saved=JSON.parse(sessionStorage.getItem('aven-player')||'null');if(saved&&saved.idx>=0&&saved.idx<tracks.length){const t=tracks[saved.idx];currentIdx=saved.idx;vinylSvg.style.display='none';coverImg.src=t.cover;coverImg.style.display='block';trackLabel.textContent=t.title;trackLabel.classList.add('on');document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===saved.idx));if(t.src&&saved.playing){player.src=t.src;if(saved.time)player.currentTime=saved.time;player.play().then(()=>setState(true)).catch(()=>setState(saved.playing));}else setState(saved.playing||false);}}catch(e){}</script>
+try{const saved=JSON.parse(sessionStorage.getItem('aven-player')||'null');if(saved&&saved.idx>=0&&saved.idx<tracks.length){const t=tracks[saved.idx];currentIdx=saved.idx;vinylSvg.style.display='none';coverImg.src=t.cover;coverImg.style.display='block';trackLabel.textContent=t.title;trackLabel.classList.add('on');document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===saved.idx));if(t.src&&saved.playing){player.src=t.src;if(saved.time)player.currentTime=saved.time;player.play().then(()=>setState(true)).catch(()=>setState(saved.playing));}else setState(saved.playing||false);}}catch(e){}
+</script>
 </body>
 </html>

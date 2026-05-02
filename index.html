@@ -8,187 +8,185 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@200;300;400;500&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/shared.css"/>
-  
-  <style>*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    :root { --nav-h:56px; }
-    html, body { width:100%; height:100%; overflow:hidden; background:#06060f; }
-    .svg-defs { position:absolute; width:0; height:0; overflow:hidden; }
+  <style>
+    html, body { overflow: hidden; }
 
-    /* ══ SCROLL ROOT ══════════════════════════════════
-       scroll-behavior: smooth → le navigateur anime
-       le scrollTo() avec son propre easing fluide.
-       scroll-snap-type: y mandatory → ancrage aux sections
-       Les deux ensemble donnent un scroll smooth + magnétique.
-    ═════════════════════════════════════════════════ */
     .scroll-root {
-      width:100%; height:100vh;
-      overflow-y:scroll; overflow-x:hidden;
-      scroll-behavior:smooth;
-      scroll-snap-type:y mandatory;
-      scrollbar-width:none;
+      width: 100%; height: 100vh;
+      overflow-y: scroll; overflow-x: hidden;
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+      scrollbar-width: none;
     }
-    .scroll-root::-webkit-scrollbar { display:none; }
+    .scroll-root::-webkit-scrollbar { display: none; }
 
     section {
-      width:100vw; height:100vh;
-      scroll-snap-align:start;
-      position:relative; overflow:hidden;
+      width: 100vw; height: 100vh;
+      scroll-snap-align: start;
+      position: relative; overflow: hidden;
     }
 
-    
-    
-    /* ══ DISQUE ══ */
-    .vinyl { position:relative; width:40px; height:40px; cursor:pointer; flex-shrink:0; }
-    .disc-wrap {
-      width:40px; height:40px; border-radius:50%; overflow:hidden;
-      transform-origin:center;
-      animation:spin 4s linear infinite;
-      animation-play-state:paused;
-      transition:box-shadow .5s;
-    }
-    .vinyl.spinning .disc-wrap {
-      animation-play-state:running;
-      box-shadow:0 0 10px rgba(200,120,48,.5);
-    } }
-    .disc-wrap img, .disc-wrap svg.vinyl-svg { width:40px; height:40px; display:block; }
-    .vinyl-icon {
-      position:absolute; inset:0; border-radius:50%;
-      display:flex; align-items:center; justify-content:center;
-      background:rgba(0,0,0,.45); opacity:0; transition:opacity .2s;
-    }
-    .vinyl:hover .vinyl-icon { opacity:1; }
-    .vinyl-icon svg { width:13px; height:13px; fill:rgba(255,255,255,.92); }
+    /* ── HERO ── */
+    .hero { display: flex; align-items: center; justify-content: center; }
 
-    
-    
-    /* ══ SECTION 1 — HERO ══ */
-    .hero { display:flex; align-items:center; justify-content:center; }
-    .bg { position:absolute; inset:-60px; will-change:transform; }
-    .bg-gradient {
-      position:absolute; inset:0;
-      background:linear-gradient(to bottom,
+    .bg-hero-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom,
         #03030b 0%,#090618 9%,#150d28 18%,#200f38 27%,
         #341230 37%,#541e1a 47%,#7c3010 57%,
         #b85210 65%,#d67020 72%,#e28a34 78%,
         #c46a1a 86%,#7c381a 93%,#1e0c04 100%);
     }
-    .bg-shape { position:absolute; inset:0; display:flex; align-items:flex-end; }
-    .bg-shape svg { width:100%; height:100%; }
-    .bg-r, .bg-b {
-      position:absolute; inset:-60px; will-change:transform; pointer-events:none;
-      opacity:.7; mix-blend-mode:screen;
-      -webkit-mask-image:radial-gradient(ellipse 84% 80% at 50% 50%, transparent 38%, rgba(0,0,0,.65) 62%, black 84%);
-      mask-image:        radial-gradient(ellipse 84% 80% at 50% 50%, transparent 38%, rgba(0,0,0,.65) 62%, black 84%);
+
+    .bg-parallax {
+      position: absolute; inset: -60px;
+      will-change: transform;
     }
-    .bg-r { filter:url(#ca-red); }
-    .bg-b { filter:url(#ca-blue); }
-    .bg-r .bg-gradient, .bg-b .bg-gradient {
-      position:absolute; inset:0;
-      background:linear-gradient(to bottom,
-        #03030b 0%,#090618 9%,#150d28 18%,#200f38 27%,
-        #341230 37%,#541e1a 47%,#7c3010 57%,
-        #b85210 65%,#d67020 72%,#e28a34 78%,
-        #c46a1a 86%,#7c381a 93%,#1e0c04 100%);
+
+    .bg-mountains {
+      position: absolute; inset: 0;
+      display: flex; align-items: flex-end;
     }
-    .bg-r .bg-shape, .bg-b .bg-shape { position:absolute; inset:0; display:flex; align-items:flex-end; }
-    .bg-r .bg-shape svg, .bg-b .bg-shape svg { width:100%; height:100%; }
-    .vignette {
-      position:absolute; inset:0; z-index:3; pointer-events:none;
-      background:radial-gradient(ellipse 68% 64% at 50% 48%, transparent 28%, rgba(3,3,11,.62) 62%, rgba(3,3,11,.94) 100%);
+
+    .bg-mountains svg { width: 100%; height: 100%; }
+
+    .bg-abberation {
+      position: absolute; inset: -60px;
+      will-change: transform;
+      opacity: .65; mix-blend-mode: screen;
+      -webkit-mask-image: radial-gradient(ellipse 84% 80% at 50% 50%, transparent 38%, rgba(0,0,0,.65) 62%, black 84%);
+      mask-image: radial-gradient(ellipse 84% 80% at 50% 50%, transparent 38%, rgba(0,0,0,.65) 62%, black 84%);
+      pointer-events: none;
     }
-    .edge-blur {
-      position:absolute; inset:0; z-index:4; pointer-events:none;
-      backdrop-filter:blur(7px); -webkit-backdrop-filter:blur(7px);
-      -webkit-mask-image:radial-gradient(ellipse 70% 66% at 50% 48%, transparent 34%, rgba(0,0,0,.55) 54%, black 76%);
-      mask-image:        radial-gradient(ellipse 70% 66% at 50% 48%, transparent 34%, rgba(0,0,0,.55) 54%, black 76%);
-    }
-    .noise {
-      position:absolute; inset:0; z-index:5; pointer-events:none; opacity:.03;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size:180px;
-    }
-    .hero-content {
-      position:relative; z-index:10;
-      display:flex; flex-direction:column; align-items:center; text-align:center;
-      margin-top:calc(var(--nav-h) / -2); user-select:none;
-      opacity:0; transform:translateY(14px);
-      animation:fadeUp 1.4s cubic-bezier(.22,1,.36,1) .4s forwards;
-    }
+
     .logo-text {
-      font-family:'Cinzel',serif; font-weight:700;
-      font-size:clamp(74px,11.5vw,136px); letter-spacing:.28em; color:#fff; line-height:1;
-      text-shadow:0 0 80px rgba(200,120,48,.42),0 0 160px rgba(200,120,48,.14),0 2px 8px rgba(0,0,0,.55);
-    }
-    .ornament { display:flex; align-items:center; gap:14px; margin-top:10px; }
-    .orn-l { height:.5px; width:56px; background:linear-gradient(to right,transparent,rgba(200,120,48,.52)); }
-    .orn-l.r { background:linear-gradient(to left,transparent,rgba(200,120,48,.52)); }
-    .orn-d { width:5px; height:5px; background:rgba(200,120,48,.72); transform:rotate(45deg); }
-    .subtitle {
-      font-family:'Raleway',sans-serif; font-weight:200;
-      font-size:clamp(10px,1.2vw,13px); letter-spacing:.46em;
-      color:rgba(255,255,255,.42); text-transform:uppercase; margin-top:16px;
-    }
-    .scroll-hint {
-      position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
-      z-index:10; display:flex; flex-direction:column; align-items:center; gap:8px;
-      cursor:pointer; opacity:0; animation:fadeUp 1s ease 2.2s forwards;
-    }
-    .scroll-hint span {
-      font-family:'Raleway',sans-serif; font-size:9px;
-      letter-spacing:.3em; text-transform:uppercase; color:rgba(255,255,255,.26); transition:color .3s;
-    }
-    .scroll-hint:hover span { color:rgba(255,255,255,.5); }
-    .scroll-line {
-      width:1px; height:28px;
-      background:linear-gradient(to bottom,rgba(255,255,255,.3),transparent);
-      animation:pulse 2.2s ease-in-out infinite;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(74px, 11.5vw, 136px);
+      letter-spacing: 0.28em;
+      color: #fff;
+      line-height: 1;
+      text-shadow: 0 0 80px rgba(200,120,48,.42), 0 2px 8px rgba(0,0,0,.55);
     }
 
-    /* ══ SECTION 2 — DÉCOUVRIR ══ */
+    .ornament { display: flex; align-items: center; gap: 14px; margin-top: 10px; }
+    .orn-l { height: .5px; width: 56px; background: linear-gradient(to right, transparent, rgba(200,120,48,.52)); }
+    .orn-l.r { background: linear-gradient(to left, transparent, rgba(200,120,48,.52)); }
+    .orn-d { width: 5px; height: 5px; background: rgba(200,120,48,.72); transform: rotate(45deg); }
+
+    .subtitle {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 200;
+      font-size: clamp(10px, 1.2vw, 13px);
+      letter-spacing: 0.46em;
+      color: rgba(255,255,255,.42);
+      text-transform: uppercase;
+      margin-top: 16px;
+    }
+
+    .hero-content {
+      position: relative; z-index: 10;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      margin-top: calc(var(--nav-h) / -2);
+      user-select: none;
+    }
+
+    .scroll-hint {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      z-index: 10;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      cursor: pointer;
+    }
+
+    .scroll-hint span {
+      font-family: 'Raleway', sans-serif;
+      font-size: 9px; letter-spacing: .3em; text-transform: uppercase;
+      color: rgba(255,255,255,.26); transition: color .3s;
+    }
+
+    .scroll-hint:hover span { color: rgba(255,255,255,.5); }
+
+    .scroll-line {
+      width: 1px; height: 28px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.3), transparent);
+      animation: aven-line-pulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes aven-line-pulse { 0%,100%{opacity:.3} 50%{opacity:.7} }
+
+    /* ── SECTION 2 ── */
     .discover {
-      background:#07070f;
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-      padding:calc(var(--nav-h) + 32px) 48px 40px; gap:16px;
+      background: #07070f;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: calc(var(--nav-h) + 32px) 48px 40px;
+      gap: 16px;
     }
+
     .section-label {
-      font-family:'Raleway',sans-serif; font-weight:200;
-      font-size:9px; letter-spacing:.35em; text-transform:uppercase;
-      color:rgba(255,255,255,.22); margin-bottom:4px; align-self:flex-start;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 200; font-size: 9px;
+      letter-spacing: .32em; text-transform: uppercase;
+      color: rgba(255,255,255,.2);
+      margin-bottom: 4px; align-self: flex-start;
     }
+
     .cards-grid {
-      width:100%; max-width:1000px; flex:1;
-      display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1.1fr .9fr; gap:14px;
+      width: 100%; max-width: 1000px; flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1.1fr .9fr;
+      gap: 14px;
     }
+
     .card {
-      position:relative; overflow:hidden; border-radius:6px;
-      cursor:pointer; text-decoration:none;
-      border:.5px solid rgba(255,255,255,.06);
-      transition:border-color .3s, transform .35s cubic-bezier(.22,1,.36,1);
+      position: relative; overflow: hidden; border-radius: 6px;
+      cursor: pointer; text-decoration: none;
+      border: .5px solid rgba(255,255,255,.06);
+      transition: border-color .3s, transform .35s cubic-bezier(.22,1,.36,1);
     }
-    .card:hover { border-color:rgba(255,255,255,.14); transform:translateY(-3px); }
-    .card-univers { grid-column:1 / -1; }
+
+    .card:hover { border-color: rgba(255,255,255,.14); transform: translateY(-3px); }
+    .card-univers { grid-column: 1 / -1; }
+
     .card-img {
-      position:absolute; inset:0; background-size:cover; background-position:center;
-      transition:transform .6s cubic-bezier(.22,1,.36,1), filter .4s;
-      filter:brightness(.55) saturate(.8);
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transition: transform .6s cubic-bezier(.22,1,.36,1), filter .4s;
+      filter: brightness(.55) saturate(.8);
     }
-    .card:hover .card-img { transform:scale(1.04); filter:brightness(.7) saturate(1); }
+
+    .card:hover .card-img { transform: scale(1.04); filter: brightness(.7) saturate(1); }
+
     .card-overlay {
-      position:absolute; inset:0;
-      background:linear-gradient(to top,rgba(4,4,12,.85) 0%,transparent 60%);
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(4,4,12,.85) 0%, transparent 60%);
     }
-    .card-body { position:absolute; bottom:0; left:0; right:0; padding:18px 20px; }
+
+    .card-body { position: absolute; bottom: 0; left: 0; right: 0; padding: 18px 20px; }
+
     .card-tag {
-      font-family:'Raleway',sans-serif; font-size:8px; font-weight:400;
-      letter-spacing:.22em; text-transform:uppercase; color:rgba(200,120,48,.8); margin-bottom:6px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 8px; font-weight: 400;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: rgba(200,120,48,.8); margin-bottom: 6px;
     }
+
     .card-name {
-      font-family:'Cinzel',serif; font-weight:400;
-      font-size:clamp(18px,2.2vw,28px); letter-spacing:.12em; color:#fff;
-      text-shadow:0 2px 12px rgba(0,0,0,.6);
+      font-family: 'Cinzel', serif; font-weight: 400;
+      font-size: clamp(18px, 2.2vw, 28px);
+      letter-spacing: .12em; color: #fff;
+      text-shadow: 0 2px 12px rgba(0,0,0,.6);
     }
-    .card-univers .card-name { font-size:clamp(22px,3vw,38px); }
- } 50%{opacity:.7} }</style>
+
+    .card-univers .card-name { font-size: clamp(22px, 3vw, 38px); }
+
+    @media (max-width: 680px) {
+      .cards-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+      .card-univers { grid-column: 1; }
+      .discover { padding: calc(var(--nav-h) + 20px) 20px 28px; gap: 12px; }
+    }
+  </style>
 </head>
 <body>
 <nav>
@@ -208,13 +206,17 @@
     <div class="vinyl" id="vinyl">
       <div class="disc-wrap" id="disc-wrap">
         <svg id="vinyl-svg" class="vinyl-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="50" fill="#111"/><circle cx="50" cy="50" r="47" fill="none" stroke="#1e1e1e" stroke-width=".9"/>
-          <circle cx="50" cy="50" r="43" fill="none" stroke="#1e1e1e" stroke-width=".9"/><circle cx="50" cy="50" r="38" fill="none" stroke="#1a1a1a" stroke-width=".7"/>
-          <circle cx="50" cy="50" r="33" fill="none" stroke="#1e1e1e" stroke-width=".7"/><circle cx="50" cy="50" r="28" fill="none" stroke="#1a1a1a" stroke-width=".6"/>
+          <circle cx="50" cy="50" r="50" fill="#111"/>
+          <circle cx="50" cy="50" r="47" fill="none" stroke="#1e1e1e" stroke-width=".9"/>
+          <circle cx="50" cy="50" r="43" fill="none" stroke="#1e1e1e" stroke-width=".9"/>
+          <circle cx="50" cy="50" r="38" fill="none" stroke="#1a1a1a" stroke-width=".7"/>
+          <circle cx="50" cy="50" r="33" fill="none" stroke="#1e1e1e" stroke-width=".7"/>
+          <circle cx="50" cy="50" r="28" fill="none" stroke="#1a1a1a" stroke-width=".6"/>
           <circle cx="50" cy="50" r="23" fill="none" stroke="#1e1e1e" stroke-width=".6"/>
           <ellipse cx="38" cy="30" rx="8" ry="3.5" fill="white" opacity=".04" transform="rotate(-25 38 30)"/>
-          <circle cx="50" cy="50" r="19" fill="#180a02"/><circle cx="50" cy="50" r="18.5" fill="none" stroke="rgba(200,120,48,.45)" stroke-width=".7"/>
-          <text x="50" y="48" text-anchor="middle" font-family="'Cinzel',serif" font-size="5.5" fill="rgba(200,120,48,.85)" letter-spacing=".5">AVEN</text>
+          <circle cx="50" cy="50" r="19" fill="#180a02"/>
+          <circle cx="50" cy="50" r="18.5" fill="none" stroke="rgba(200,120,48,.45)" stroke-width=".7"/>
+          <text x="50" y="48" text-anchor="middle" font-family="Cinzel,serif" font-size="5.5" fill="rgba(200,120,48,.85)" letter-spacing=".5">AVEN</text>
           <text x="50" y="55.5" text-anchor="middle" font-family="sans-serif" font-size="2.6" fill="rgba(200,120,48,.4)" letter-spacing=".8">JOURNEY</text>
           <circle cx="50" cy="50" r="3" fill="#0a0a0a"/>
         </svg>
@@ -231,30 +233,21 @@
   <div class="dropdown-header">Pistes</div>
   <div id="track-list"></div>
 </div>
-<div id="vinyl-popup"><div class="popup-dot"></div><span class="popup-text">Lancer une piste</span></div>
+<div id="vinyl-popup">
+  <div class="popup-dot"></div>
+  <span class="popup-text">Lancer une piste</span>
+</div>
 <audio id="player" preload="metadata"></audio>
+
 <div class="scroll-root" id="scroll-root">
 
+  <!-- SECTION 1 : HERO -->
   <section class="hero">
-    <div class="bg" id="bg">
-      <div class="bg-gradient"></div>
-      <div class="bg-shape">
-        <svg viewBox="0 0 1400 800" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="0,800 180,420 360,560 520,300 700,480 860,220 1040,400 1200,180 1400,350 1400,800" fill="rgba(0,0,0,.32)"/>
-          <polygon points="0,800 120,550 280,650 460,420 640,580 800,360 980,520 1140,340 1300,480 1400,440 1400,800" fill="rgba(0,0,0,.22)"/>
-          <rect x="0" y="720" width="1400" height="80" fill="rgba(0,0,0,.45)"/>
-          <rect x="60" y="680" width="6" height="40" fill="rgba(0,0,0,.5)"/>
-          <polygon points="63,640 48,685 78,685" fill="rgba(0,0,0,.5)"/>
-          <rect x="1320" y="675" width="6" height="45" fill="rgba(0,0,0,.5)"/>
-          <polygon points="1323,632 1308,680 1338,680" fill="rgba(0,0,0,.5)"/>
-          <rect x="1350" y="688" width="5" height="32" fill="rgba(0,0,0,.4)"/>
-          <polygon points="1352,654 1340,692 1365,692" fill="rgba(0,0,0,.4)"/>
-        </svg>
-      </div>
-    </div>
-    <div class="bg-r" id="bg-r">
-      <div class="bg-gradient"></div>
-      <div class="bg-shape">
+
+    <!-- Fond parallax -->
+    <div class="bg-parallax" id="bg-main">
+      <div class="bg-hero-grad"></div>
+      <div class="bg-mountains">
         <svg viewBox="0 0 1400 800" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
           <polygon points="0,800 180,420 360,560 520,300 700,480 860,220 1040,400 1200,180 1400,350 1400,800" fill="rgba(0,0,0,.32)"/>
           <polygon points="0,800 120,550 280,650 460,420 640,580 800,360 980,520 1140,340 1300,480 1400,440 1400,800" fill="rgba(0,0,0,.22)"/>
@@ -266,62 +259,53 @@
         </svg>
       </div>
     </div>
-    <div class="bg-b" id="bg-b">
-      <div class="bg-gradient"></div>
-      <div class="bg-shape">
-        <svg viewBox="0 0 1400 800" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="0,800 180,420 360,560 520,300 700,480 860,220 1040,400 1200,180 1400,350 1400,800" fill="rgba(0,0,0,.32)"/>
-          <polygon points="0,800 120,550 280,650 460,420 640,580 800,360 980,520 1140,340 1300,480 1400,440 1400,800" fill="rgba(0,0,0,.22)"/>
-          <rect x="0" y="720" width="1400" height="80" fill="rgba(0,0,0,.45)"/>
-          <rect x="60" y="680" width="6" height="40" fill="rgba(0,0,0,.5)"/>
-          <polygon points="63,640 48,685 78,685" fill="rgba(0,0,0,.5)"/>
-          <rect x="1320" y="675" width="6" height="45" fill="rgba(0,0,0,.5)"/>
-          <polygon points="1323,632 1308,680 1338,680" fill="rgba(0,0,0,.5)"/>
-        </svg>
-      </div>
+
+    <!-- Aberration rouge -->
+    <div class="bg-abberation" id="bg-r" style="filter:url(#ca-red);">
+      <div class="bg-hero-grad"></div>
     </div>
+
+    <!-- Aberration bleue -->
+    <div class="bg-abberation" id="bg-b" style="filter:url(#ca-blue);">
+      <div class="bg-hero-grad"></div>
+    </div>
+
     <div class="vignette"></div>
     <div class="edge-blur"></div>
-    <div class="noise"></div>
+
     <div class="hero-content">
+      <!-- Remplacer par <img src="img/logo.svg"> quand prêt -->
       <div class="logo-text">AVEN</div>
       <div class="ornament">
         <div class="orn-l"></div><div class="orn-d"></div><div class="orn-l r"></div>
       </div>
       <p class="subtitle">The Unwritten Journey</p>
     </div>
+
     <div class="scroll-hint" id="scroll-hint">
       <span>Découvrir</span>
       <div class="scroll-line"></div>
     </div>
   </section>
 
+  <!-- SECTION 2 : CATÉGORIES -->
   <section class="discover">
     <p class="section-label">Explorer l'univers</p>
     <div class="cards-grid">
 
       <a class="card card-univers" href="univers.html">
-        <div class="card-img" style="background:linear-gradient(135deg,#0a0820 0%,#1a1040 35%,#0e2030 65%,#080a1a 100%);">
+        <div class="card-img" style="background:linear-gradient(135deg,#0a0820,#1a1040,#0e2030,#080a1a);">
           <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.5" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="80"  cy="60"  r="1.2" fill="white" opacity=".9"/>
-            <circle cx="210" cy="30"  r=".8"  fill="white" opacity=".7"/>
-            <circle cx="340" cy="80"  r="1.5" fill="white" opacity=".8"/>
-            <circle cx="500" cy="20"  r="1"   fill="white" opacity=".6"/>
-            <circle cx="620" cy="55"  r="1.3" fill="white" opacity=".85"/>
-            <circle cx="720" cy="35"  r=".9"  fill="white" opacity=".7"/>
-            <circle cx="150" cy="120" r=".7"  fill="white" opacity=".5"/>
+            <circle cx="80" cy="60" r="1.2" fill="white" opacity=".9"/>
+            <circle cx="210" cy="30" r=".8" fill="white" opacity=".7"/>
+            <circle cx="340" cy="80" r="1.5" fill="white" opacity=".8"/>
+            <circle cx="500" cy="20" r="1" fill="white" opacity=".6"/>
+            <circle cx="620" cy="55" r="1.3" fill="white" opacity=".85"/>
+            <circle cx="720" cy="35" r=".9" fill="white" opacity=".7"/>
             <circle cx="400" cy="140" r="1.1" fill="white" opacity=".75"/>
-            <circle cx="560" cy="100" r=".8"  fill="white" opacity=".6"/>
-            <circle cx="680" cy="130" r="1.4" fill="white" opacity=".8"/>
-            <circle cx="50"  cy="180" r=".9"  fill="white" opacity=".55"/>
-            <circle cx="280" cy="200" r="1"   fill="white" opacity=".65"/>
-            <circle cx="750" cy="180" r=".7"  fill="white" opacity=".6"/>
-            <line x1="80"  y1="60"  x2="210" y2="30"  stroke="rgba(180,160,255,.15)" stroke-width=".8"/>
-            <line x1="210" y1="30"  x2="340" y2="80"  stroke="rgba(180,160,255,.15)" stroke-width=".8"/>
-            <line x1="500" y1="20"  x2="620" y2="55"  stroke="rgba(180,160,255,.12)" stroke-width=".8"/>
-            <line x1="340" y1="80"  x2="500" y2="20"  stroke="rgba(180,160,255,.1)"  stroke-width=".8"/>
-            <line x1="400" y1="140" x2="560" y2="100" stroke="rgba(180,160,255,.12)" stroke-width=".8"/>
-            <line x1="560" y1="100" x2="680" y2="130" stroke="rgba(180,160,255,.1)"  stroke-width=".8"/>
+            <line x1="80" y1="60" x2="210" y2="30" stroke="rgba(180,160,255,.15)" stroke-width=".8"/>
+            <line x1="210" y1="30" x2="340" y2="80" stroke="rgba(180,160,255,.15)" stroke-width=".8"/>
+            <line x1="500" y1="20" x2="620" y2="55" stroke="rgba(180,160,255,.12)" stroke-width=".8"/>
           </svg>
         </div>
         <div class="card-overlay"></div>
@@ -332,16 +316,7 @@
       </a>
 
       <a class="card" href="personnages.html">
-        <div class="card-img" style="background:linear-gradient(135deg,#1a0a10 0%,#3a1020 40%,#1e0c14 100%);">
-          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.45" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="140" cy="100" rx="18" ry="20" fill="rgba(255,200,160,.6)"/>
-            <rect x="122" y="118" width="36" height="80" rx="6" fill="rgba(255,200,160,.4)"/>
-            <ellipse cx="260" cy="90"  rx="16" ry="18" fill="rgba(180,220,255,.6)"/>
-            <rect x="244" y="106" width="32" height="75" rx="5" fill="rgba(180,220,255,.4)"/>
-            <ellipse cx="200" cy="108" rx="14" ry="16" fill="rgba(255,220,180,.5)"/>
-            <rect x="186" y="122" width="28" height="70" rx="5" fill="rgba(255,220,180,.3)"/>
-          </svg>
-        </div>
+        <div class="card-img" style="background:linear-gradient(135deg,#1a0a10,#3a1020,#1e0c14);"></div>
         <div class="card-overlay"></div>
         <div class="card-body">
           <p class="card-tag">Casting</p>
@@ -350,18 +325,7 @@
       </a>
 
       <a class="card" href="projet.html">
-        <div class="card-img" style="background:linear-gradient(135deg,#080e1a 0%,#0e1e30 40%,#0a1420 100%);">
-          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.4" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-            <rect x="100" y="60" width="200" height="180" rx="4" fill="none" stroke="rgba(200,180,140,.4)" stroke-width="1.5"/>
-            <rect x="108" y="68" width="184" height="164" rx="3" fill="none" stroke="rgba(200,180,140,.2)" stroke-width=".8"/>
-            <line x1="130" y1="100" x2="270" y2="100" stroke="rgba(200,180,140,.3)"  stroke-width=".8"/>
-            <line x1="130" y1="116" x2="270" y2="116" stroke="rgba(200,180,140,.25)" stroke-width=".8"/>
-            <line x1="130" y1="132" x2="240" y2="132" stroke="rgba(200,180,140,.2)"  stroke-width=".8"/>
-            <line x1="130" y1="148" x2="260" y2="148" stroke="rgba(200,180,140,.2)"  stroke-width=".8"/>
-            <line x1="130" y1="164" x2="220" y2="164" stroke="rgba(200,180,140,.15)" stroke-width=".8"/>
-            <rect x="100" y="60" width="8" height="180" rx="4" fill="rgba(200,140,60,.25)"/>
-          </svg>
-        </div>
+        <div class="card-img" style="background:linear-gradient(135deg,#080e1a,#0e1e30,#0a1420);"></div>
         <div class="card-overlay"></div>
         <div class="card-body">
           <p class="card-tag">Light Novel</p>
@@ -374,117 +338,63 @@
 
 </div>
 
+<script>
+(function(){
+  var root = document.getElementById('scroll-root');
+  var bgM  = document.getElementById('bg-main');
+  var bgR  = document.getElementById('bg-r');
+  var bgB  = document.getElementById('bg-b');
+  var hint = document.getElementById('scroll-hint');
+
+  var tx=0,ty=0,cx=0,cy=0;
+  var FORCE=30, SMOOTH=0.055, CA=6;
+  var currentSection=0, locked=false;
+
+  document.addEventListener('mousemove', function(e){
+    if (currentSection !== 0) return;
+    tx = (e.clientX/innerWidth  - 0.5) * FORCE;
+    ty = (e.clientY/innerHeight - 0.5) * FORCE;
+  });
+
+  (function raf(){
+    cx += (tx-cx)*SMOOTH; cy += (ty-cy)*SMOOTH;
+    var sc = 'scale(1.08)';
+    bgM.style.transform = 'translate('+cx+'px,'+cy+'px) '+sc;
+    bgR.style.transform = 'translate('+(cx-CA)+'px,'+(cy-2)+'px) '+sc;
+    bgB.style.transform = 'translate('+(cx+CA)+'px,'+(cy+2)+'px) '+sc;
+    requestAnimationFrame(raf);
+  })();
+
+  function goSection(idx){
+    idx = Math.max(0,Math.min(1,idx));
+    if(idx===currentSection||locked) return;
+    locked=true; currentSection=idx;
+    root.scrollTo({top:idx*root.clientHeight,behavior:'smooth'});
+    if(idx>0){tx=0;ty=0;}
+    setTimeout(function(){locked=false;},900);
+  }
+
+  var wd=0, wt=null;
+  root.addEventListener('wheel',function(e){
+    e.preventDefault();
+    wd+=e.deltaY;
+    clearTimeout(wt);
+    wt=setTimeout(function(){
+      if(Math.abs(wd)>20) goSection(currentSection+(wd>0?1:-1));
+      wd=0;
+    },60);
+  },{passive:false});
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'||e.key==='PageDown') goSection(currentSection+1);
+    if(e.key==='ArrowUp'  ||e.key==='PageUp'  ) goSection(currentSection-1);
+  });
+
+  hint.addEventListener('click',function(){ goSection(1); });
+})();
+</script>
 
 <script src="data/tracks.js"></script>
 <script src="js/shared.js"></script>
-
-<script>/* ══ DOM ══ */
-
-function hidePopup(){ vinylPopup.classList.remove('visible'); clearTimeout(popupTimer); }
-
-/* ── Sélection piste ── */
-function selectTrack(idx){
-  hidePopup();
-  currentIdx=idx;
-  const t=tracks[idx];
-  vinylSvg.style.display='none';
-  coverImg.src=t.cover; coverImg.style.display='block';
-  trackLabel.textContent=t.title; trackLabel.classList.add('on');
-  if(t.src){ player.src=t.src; player.play().then(()=>setState(true)).catch(()=>setState(true)); }
-  else{ setState(true); }
-  document.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===idx));
-  closeDropdown();
-}
-
-function setState(on){
-  isPlaying=on;
-  vinyl.classList.toggle('spinning',on);
-  iPlay.style.display =on?'none' :'block';
-  iPause.style.display=on?'block':'none';
-}
-
-vinyl.addEventListener('click',()=>{
-  if(currentIdx===-1){toggleDropdown();return;}
-  if(isPlaying){ if(tracks[currentIdx].src) player.pause(); setState(false); }
-  else         { if(tracks[currentIdx].src) player.play().catch(()=>{}); setState(true); }
-});
-player.addEventListener('ended',()=>{
-  if(tracks.length===1){ player.currentTime=0; player.play().catch(()=>{}); }
-  else { selectTrack((currentIdx+1)%tracks.length); }
-});
-
-/* ── Dropdown ── */
-function openDropdown() { ddOpen=true;  dropdown.classList.add('open');    chevronBtn.classList.add('open');    hidePopup(); }
-function closeDropdown(){ ddOpen=false; dropdown.classList.remove('open'); chevronBtn.classList.remove('open'); }
-function toggleDropdown(){ ddOpen?closeDropdown():openDropdown(); }
-chevronBtn.addEventListener('click',e=>{e.stopPropagation();toggleDropdown();});
-document.addEventListener('click',e=>{
-  if(ddOpen&&!dropdown.contains(e.target)&&!chevronBtn.contains(e.target)) closeDropdown();
-});
-
-/* ══ SCROLL SMOOTH + SNAP ════════════════════════════════════════════════
-   On laisse CSS scroll-snap gérer l'ancrage.
-   On intercale juste un debounce sur la molette pour que chaque coup
-   de roue = exactement un changement de section, proprement animé
-   par scroll-behavior:smooth du navigateur (easing natif = très fluide).
-══════════════════════════════════════════════════════════════════════════ */
-const SECTIONS=2;
-
-function goTo(idx){
-  idx=Math.max(0,Math.min(SECTIONS-1,idx));
-  if(idx===currentSection||scrollLocked) return;
-  scrollLocked=true;
-  currentSection=idx;
-  scrollRoot.scrollTo({top:idx*scrollRoot.clientHeight,behavior:'smooth'});
-  /* Le smooth scroll natif dure ~500-800ms selon le navigateur */
-  setTimeout(()=>{ scrollLocked=false; },900);
-  /* Stoppe le parallax en section 2 */
-  if(idx>0){tx=0;ty=0;}
-}
-
-/* Molette : un tick = une section */
-let wheelDelta=0, wheelTimer=null;
-scrollRoot.addEventListener('wheel',e=>{
-  e.preventDefault();
-  wheelDelta+=e.deltaY;
-  clearTimeout(wheelTimer);
-  wheelTimer=setTimeout(()=>{
-    if(Math.abs(wheelDelta)>20) goTo(currentSection+(wheelDelta>0?1:-1));
-    wheelDelta=0;
-  },60);
-},{passive:false});
-
-/* Clavier */
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowDown'||e.key==='PageDown') goTo(currentSection+1);
-  if(e.key==='ArrowUp'  ||e.key==='PageUp'  ) goTo(currentSection-1);
-});
-
-/* Bouton Découvrir */
-scrollHint.addEventListener('click',()=>goTo(1));
-
-/* ══ PARALLAX ════════════════════════════════════════════════════════════ */
-const bg=document.getElementById('bg');
-const bgR=document.getElementById('bg-r');
-const bgB=document.getElementById('bg-b');
-const FORCE=32,SMOOTH=0.055,CA_OFF=6;
-let tx=0,ty=0,cx=0,cy=0;
-
-document.addEventListener('mousemove',e=>{
-  if(currentSection!==0) return;
-  tx=(e.clientX/innerWidth -.5)*FORCE;
-  ty=(e.clientY/innerHeight-.5)*FORCE;
-});
-
-(function raf(){
-  cx+=(tx-cx)*SMOOTH; cy+=(ty-cy)*SMOOTH;
-  const sc='scale(1.08)';
-  bg.style.transform =`translate(${cx}px,${cy}px) ${sc}`;
-  bgR.style.transform=`translate(${cx-CA_OFF}px,${cy-2}px) ${sc}`;
-  bgB.style.transform=`translate(${cx+CA_OFF}px,${cy+2}px) ${sc}`;
-  requestAnimationFrame(raf);
-})();
-
-/* Sauvegarde état audio avant navigation */</script>
 </body>
 </html>

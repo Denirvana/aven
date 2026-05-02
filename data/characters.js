@@ -1,13 +1,30 @@
-/* ════════════════════════════════════════════════════════════════════════════
+/* ============================================================
    AVEN — data/characters.js
    Base de données des personnages.
-   C'est ici que tu ajoutes, modifies et organises tes personnages.
-   Lire le GUIDE ci-dessous avant de commencer.
-   ════════════════════════════════════════════════════════════════════════════ */
 
+   AJOUTER UN PERSONNAGE :
+   1. Copier un bloc existant dans extraChars[]
+   2. Changer l'id (unique, minuscules)
+   3. Ajouter l'id dans groups[]
 
+   STYLES DE TAGS : 'amber' | 'coral' | 'gray' | 'pink' | 'blue'
+   ============================================================ */
 
+/* ══ COVERS ══ */
+function makeCover(c1,c2){
+  return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+      <polygon points='0,0 100,0 0,100' fill='${c1}'/>
+      <polygon points='100,0 100,100 0,100' fill='${c2}'/>
+    </svg>`);
+}
 
+/* ══ PISTES (identique index.html) ══ */
+const tracks=[
+  {title:'Aube sur la Montagne',src:null,cover:makeCover('#c84030','#e8a020')},
+  {title:'Le Désert de Sel',    src:null,cover:makeCover('#1a3a8c','#7a20c8')},
+  {title:'Nuit à Albarossa',   src:null,cover:makeCover('#0e4a2e','#1e6888')},
+];
 
 /* ════════════════════════════════════════════════════════════════════════════
    ██  GUIDE — PERSONNAGES  ██
@@ -170,14 +187,14 @@ const characters=[
             field('Role','Protagoniste · Chasseur · Infiltrateur · Combat corps-à-corps')
           ) +
           infoSection('Mieux le Connaître',
-            field('Sexuality',       '—', true) +
-            field('Favorite animal', 'Loup (implicite)') +
-            field('Favorite food',   '—', true) +
-            field('Favorite drink',  '—', true) +
-            field('Favorite color',  '—', true) +
-            field('Likes',           '—', true) +
-            field('Dislikes',        '—', true) +
-            field('Hobbies',         '—', true)
+            field('Sexuality','—',true) +
+            field('Favorite animal','Loup (implicite)') +
+            field('Favorite food','—',true) +
+            field('Favorite drink','—',true) +
+            field('Favorite color','—',true) +
+            fieldFull('Hobbies','—',true) +
+            field('Likes','—',true) +
+            field('Dislikes','—',true)
           )
       },
 

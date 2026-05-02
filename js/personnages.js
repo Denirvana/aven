@@ -1,9 +1,8 @@
-/* ════════════════════════════════════════════════════════════════════════════
+/* ============================================================
    AVEN — js/personnages.js
-   Moteur de rendu des fiches personnages :
-   helpers de contenu, build des cards, panneau latéral, filtre.
-   Requiert : data/characters.js chargé avant.
-   ════════════════════════════════════════════════════════════════════════════ */
+   Moteur de rendu des fiches personnages.
+   Requiert data/characters.js chargé avant.
+   ============================================================ */
 
 /* ══ HELPERS HTML ══ */
 function field(label,value,unknown=false){
